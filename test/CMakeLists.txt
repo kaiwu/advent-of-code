@@ -1,5 +1,6 @@
 set(TEST_FILES
     catch_main.cpp
+    test_common.cpp
     test_2015.cpp
 )
 
