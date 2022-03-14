@@ -20,13 +20,5 @@ line_view load_file(const char* path) {
 }
 
 line_view next_line(line_view file) {
-  static size_t offset = 0;
-  line_view lv;
-  lv.line = file.line + offset;
-  lv.length = 0;
-  while (offset < file.length && file.line[offset] != '\n') {
-    lv.length += 1;
-    offset++;
-  }
-  return lv;
+  return {nullptr, 0};
 }
