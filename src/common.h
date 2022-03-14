@@ -30,7 +30,8 @@ struct line_view {
 line_view load_file(const char*);
 line_view next_line(line_view, size_t*);
 
-template <typename F, typename... Args> void per_line(line_view file, F&& f, Args&&... args) {
+template <typename F, typename... Args>
+void per_line(line_view file, F&& f, Args&&... args) {
   size_t offset = 0;
   line_view lv;
   do {
