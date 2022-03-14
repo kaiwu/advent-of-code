@@ -4,6 +4,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -Wno-unused-para
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_EXTENSIONS Off)
 
+set(COMMON_FILES
+    "src/common.cpp"
+)
+
+add_library(common SHARED ${COMMON_FILES})
+add_subdirectory(src)
+
 enable_testing()
 add_subdirectory(test)
 
