@@ -3,9 +3,9 @@
 #include <stdlib.h>
 
 struct line_view {
-  char* line;
+  const char* line;
   size_t length;
 };
 
 line_view load_file(const char*);
-line_view next_line(const char*, size_t);
+line_view next_line(line_view);
