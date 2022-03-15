@@ -1,6 +1,7 @@
 #include "2015/day1/aoc.h"
 #include "2015/day2/aoc.h"
 #include "2015/day3/aoc.h"
+#include "2015/day4/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
@@ -33,4 +34,12 @@ TEST_CASE("Perfectly Spherical Houses in a Vacuum", "[day3]") {
   auto p = aoc2015::day3(lv);
   REQUIRE(p.first == 2565);
   REQUIRE(p.second == 2639);
+}
+
+TEST_CASE("The Ideal Stocking Stuffer", "[day4]") {
+  char s[] = "abcdef609043";
+  uint8_t* md5 = md5String(s);
+  for (auto i = 0; i < 16; i++) {
+    printf("%x", md5[i]);
+  }
 }
