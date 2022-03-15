@@ -3,6 +3,7 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 line_view load_file(const char* path) {
   int fd;
@@ -16,6 +17,7 @@ line_view load_file(const char* path) {
   line_view lv;
   lv.length = fs.st_size;
   lv.line = static_cast<const char*>(mmap(NULL, lv.length, PROT_READ, MAP_PRIVATE, fd, 0));
+  close(fd);
   return lv;
 }
 
