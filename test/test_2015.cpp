@@ -22,5 +22,7 @@ TEST_CASE("parse box", "[day2]") {
 
 TEST_CASE("I Was Told There Would Be No Math", "[day2]") {
   line_view lv = load_file("../src/2015/day2/input");
-  printf("%d\n", aoc2015::day2(lv));
+  auto p = aoc2015::day2(lv);
+  REQUIRE(p.first == 1586300);
+  REQUIRE(p.second == 3737498);
 }
