@@ -1,5 +1,6 @@
 #include "2015/day1/aoc.h"
 #include "2015/day2/aoc.h"
+#include "2015/day3/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
@@ -25,4 +26,11 @@ TEST_CASE("I Was Told There Would Be No Math", "[day2]") {
   auto p = aoc2015::day2(lv);
   REQUIRE(p.first == 1586300);
   REQUIRE(p.second == 3737498);
+}
+
+TEST_CASE("Perfectly Spherical Houses in a Vacuum", "[day3]") {
+  line_view lv = load_file("../src/2015/day3/input");
+  auto p = aoc2015::day3(lv);
+  REQUIRE(p.first == 2565);
+  REQUIRE(p.second == 2639);
 }
