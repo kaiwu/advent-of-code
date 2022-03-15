@@ -37,9 +37,9 @@ TEST_CASE("Perfectly Spherical Houses in a Vacuum", "[day3]") {
 }
 
 TEST_CASE("The Ideal Stocking Stuffer", "[day4]") {
-  char s[] = "abcdef609043";
-  uint8_t* md5 = md5String(s);
-  for (auto i = 0; i < 16; i++) {
-    printf("%x", md5[i]);
-  }
+  char s1[] = "abcdef609043";
+  char s2[] = "pqrstuv1048970";
+
+  REQUIRE(aoc2015::lead_zeros(aoc2015::md5sum(s1)) >= 5);
+  REQUIRE(aoc2015::lead_zeros(aoc2015::md5sum(s2)) >= 5);
 }
