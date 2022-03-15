@@ -2,6 +2,7 @@
 #include "2015/day2/aoc.h"
 #include "2015/day3/aoc.h"
 #include "2015/day4/aoc.h"
+#include "2015/day5/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
@@ -46,4 +47,9 @@ TEST_CASE("The Ideal Stocking Stuffer", "[day4]") {
   REQUIRE(aoc2015::lead_zeros(aoc2015::md5sum(s2)) >= 5);
   REQUIRE(aoc2015::lead_zeros(aoc2015::md5sum(s3)) >= 5);
   REQUIRE(aoc2015::lead_zeros(aoc2015::md5sum(s4)) >= 6);
+}
+
+TEST_CASE("Doesn't He Have Intern-Elves For This?", "[day5]") {
+  //line_view lv = load_file("../src/2015/day5/input");
+
 }
