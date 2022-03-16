@@ -50,6 +50,19 @@ TEST_CASE("The Ideal Stocking Stuffer", "[day4]") {
 }
 
 TEST_CASE("Doesn't He Have Intern-Elves For This?", "[day5]") {
-  //line_view lv = load_file("../src/2015/day5/input");
+  line_view lv{"adcccfadd", 9};
+  REQUIRE(aoc2015::count_vowels(lv, "aeiou") == 2);
+  REQUIRE(aoc2015::count_vowels(lv, "eiou") == 0);
+  REQUIRE(aoc2015::is_nice(lv, 2));
+  REQUIRE(aoc2015::is_nice(lv, 3));
+  REQUIRE(!aoc2015::is_nice(lv, 4));
 
+  const char* sub1[] = {"xy", "dx"};
+  const char* sub2[] = {"xy", "fadd", "dx"};
+  REQUIRE(lv.contains(sub2[1]));
+  REQUIRE(aoc2015::is_nice(lv, sub1, ARRAY_SIZE(sub1)));
+  REQUIRE(!aoc2015::is_nice(lv, sub2, ARRAY_SIZE(sub2)));
+
+  line_view ss = load_file("../src/2015/day5/input");
+  REQUIRE(aoc2015::day5(ss) == 255);
 }

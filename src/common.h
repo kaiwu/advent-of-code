@@ -5,6 +5,8 @@
 #include <string.h>
 #include <utility>
 
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof(*x))
+
 struct line_view {
   const char* line;
   size_t length;
@@ -32,15 +34,14 @@ struct line_view {
   bool contains(const char* s) {
     size_t len = strlen(s);
     const char* p = line;
-    while (p + len < line + length) {
+    while (p + len <= line + length) {
       if (*p == *s) {
         line_view x{p, len};
         if (x == s) {
           return true;
-        } else {
-          p++;
         }
       }
+      p++;
     }
     return false;
   }
