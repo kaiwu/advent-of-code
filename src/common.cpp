@@ -31,3 +31,14 @@ line_view next_line(line_view file, size_t* offset) {
   *offset = p2 - file.line + 1;
   return {p1, static_cast<size_t>(p2 - p1 + 1)};
 }
+
+bool is_repeated(const char* p1, const char* p2) {
+  char c = *p1;
+  while (p1 != p2) {
+    if (*p1 != c) {
+      return false;
+    }
+    p1++;
+  }
+  return true;
+}

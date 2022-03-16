@@ -13,3 +13,13 @@ TEST_CASE("load file", "[]") {
       },
       lines);
 }
+
+TEST_CASE("char count", "[]") {
+  line_view line{"accad1\n", 7};
+  ascii_count ac{line};
+  REQUIRE(ac['\n'] == 1);
+  REQUIRE(ac['a'] == 2);
+  REQUIRE(ac['c'] == 2);
+  REQUIRE(ac['d'] == 1);
+  REQUIRE(ac['1'] == 1);
+}

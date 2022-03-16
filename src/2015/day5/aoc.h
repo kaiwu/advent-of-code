@@ -3,9 +3,9 @@
 
 namespace aoc2015 {
 
-int count_vowels(line_view, char*);
-bool contains_repeated(line_view, int);
-bool has_no_disallowed(line_view, char*[]);
+int count_vowels(line_view, const char*);
+bool is_nice(line_view, int);
+bool is_nice(line_view, const char*[]);
 
 int day5(line_view);
 
