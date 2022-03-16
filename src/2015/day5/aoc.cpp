@@ -25,8 +25,20 @@ bool is_nice(line_view lv, int repeated) {
   return false;
 }
 
+bool is_interleaved(line_view lv) {
+  const char* p = lv.line;
+  while (p + 3 <= lv.line + lv.length) {
+    if (*p == *(p + 2)) {
+      return true;
+    } else {
+      p++;
+    }
+  }
+  return false;
+}
+
 bool is_nice(line_view lv, const char* disallowed[], size_t size) {
-  return not std::any_of(disallowed, disallowed + size, [&lv](const char* s) -> bool { return lv.contains(s); });
+  return std::all_of(disallowed, disallowed + size, [&lv](const char* s) -> bool { return lv.contains(s) == nullptr; });
 }
 
 int day5(line_view file) {

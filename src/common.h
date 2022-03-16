@@ -13,11 +13,46 @@ struct line_view {
 
   line_view(const char* s = nullptr) : line(s) { length = s == nullptr ? 0 : strlen(s); }
   line_view(const char* s, size_t l) : line(s), length(l) {}
+  line_view(const char* p1, const char* p2) : line(p1), length(p2 - p1 + 1) {}
   friend std::ostream& operator<<(std::ostream& o, const line_view& lv) {
     for (size_t i = 0; i < lv.length; i++) {
       o << lv.line[i];
     }
     return o;
+  }
+
+  bool operator==(const line_view& lv) const noexcept {
+    const char* p1 = line;
+    const char* p2 = lv.line;
+    if (length != lv.length) {
+      return false;
+    }
+    while (p1 < p1 + length) {
+      if (*p1 != *p2) {
+        return false;
+      }
+      p1++;
+      p2++;
+    }
+    return true;
+  }
+
+  const char* contains(const line_view& lv) const noexcept {
+    const char* p1 = line;
+    const char* p2 = line + length;
+    if (length < lv.length) {
+      return nullptr;
+    }
+    while (p1 + lv.length <= p2) {
+      if (*p1 == *lv.line) {
+        line_view x{p1, lv.length};
+        if (x == lv) {
+          return p1;
+        }
+      }
+      p1++;
+    }
+    return nullptr;
   }
 
   bool operator==(const char* l) const noexcept {
@@ -31,19 +66,19 @@ struct line_view {
     return l[i] == '\0';
   }
 
-  bool contains(const char* s) {
+  const char* contains(const char* s) const noexcept {
     size_t len = strlen(s);
     const char* p = line;
     while (p + len <= line + length) {
       if (*p == *s) {
         line_view x{p, len};
         if (x == s) {
-          return true;
+          return p;
         }
       }
       p++;
     }
-    return false;
+    return nullptr;
   }
 };
 
