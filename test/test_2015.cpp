@@ -72,3 +72,9 @@ TEST_CASE("Doesn't He Have Intern-Elves For This?", "[day5]") {
   REQUIRE(p.first == 255);
   REQUIRE(p.second == 55);
 }
+
+TEST_CASE("Probably a Fire Hazard", "[day6]") {
+  aoc2015::grid<1024> grid;
+  grid.turn_on({0,0}, {0,999});
+  REQUIRE(grid.count() == 1000);
+}
