@@ -59,10 +59,15 @@ TEST_CASE("Doesn't He Have Intern-Elves For This?", "[day5]") {
 
   const char* sub1[] = {"xy", "dx"};
   const char* sub2[] = {"xy", "fadd", "dx"};
-  REQUIRE(lv.contains(sub2[1]));
+  REQUIRE(lv.contains("fadd"));
+  REQUIRE(lv.contains("ad"));
   REQUIRE(aoc2015::is_nice(lv, sub1, ARRAY_SIZE(sub1)));
   REQUIRE(!aoc2015::is_nice(lv, sub2, ARRAY_SIZE(sub2)));
+  REQUIRE(aoc2015::is_interleaved(lv));
+  REQUIRE(aoc2015::has_no_overlap_pair(lv));
 
   line_view ss = load_file("../src/2015/day5/input");
-  REQUIRE(aoc2015::day5(ss) == 255);
+  auto p = aoc2015::day5(ss);
+  REQUIRE(p.first == 255);
+  REQUIRE(p.second == 55);
 }

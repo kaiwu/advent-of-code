@@ -10,9 +10,9 @@ line_view load_file(const char* path) {
   struct stat fs;
   fd = open(path, O_RDONLY);
   if (fd == -1)
-    return {nullptr, 0};
+    return {nullptr, size_t(0)};
   if (fstat(fd, &fs) == -1)
-    return {nullptr, 0};
+    return {nullptr, size_t(0)};
 
   line_view lv;
   lv.length = fs.st_size;

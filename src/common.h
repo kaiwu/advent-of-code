@@ -24,15 +24,14 @@ struct line_view {
   bool operator==(const line_view& lv) const noexcept {
     const char* p1 = line;
     const char* p2 = lv.line;
+    const char* p3 = p1 + length;
     if (length != lv.length) {
       return false;
     }
-    while (p1 < p1 + length) {
-      if (*p1 != *p2) {
+    while (p1 < p3) {
+      if (*p1++ != *p2++) {
         return false;
       }
-      p1++;
-      p2++;
     }
     return true;
   }
