@@ -4,16 +4,36 @@
 
 namespace aoc2015 {
 
+struct Bit;
+
+template <typename T, size_t N>
+struct store;
+
 template <size_t N>
-struct grid {
+struct store<int8_t, N> {
+  int8_t pool[N * N] = {0};
+
+  void toggle(int x, int y) { pool[y * N + x] += 2; }
+  void set(int x, int y) { pool[y * N + x] += 1; }
+  void reset(int x, int y) {
+    if (pool[y * N + x] > 0) {
+      pool[y * N + x] -= 1;
+    }
+  }
+  int count() const noexcept {
+    int total{0};
+    for (auto i : pool) {
+      total += i;
+    }
+    return total;
+  }
+};
+
+template <size_t N>
+struct store<Bit, N> {
   constexpr static size_t size = N * N / 64 + 1;
 
   uint64_t pool[size] = {0};
-
-  struct unit {
-    int x;
-    int y;
-  };
 
   void set(int x, int y) {
     uint64_t p = y * N + x;
@@ -49,6 +69,15 @@ struct grid {
     }
     return total;
   }
+};
+
+template <typename T, size_t N>
+struct grid {
+  struct unit {
+    int x;
+    int y;
+  };
+  store<T, N> store_;
 
   template <typename F, typename... Args>
   void traverse(unit u1, unit u2, F&& f, Args&&... args) {
@@ -60,13 +89,13 @@ struct grid {
   }
 
   void turn_on(unit u1, unit u2) {
-    traverse(u1, u2, [this](int i, int j) { set(i, j); });
+    traverse(u1, u2, [this](int i, int j) { store_.set(i, j); });
   }
   void turn_off(unit u1, unit u2) {
-    traverse(u1, u2, [this](int i, int j) { reset(i, j); });
+    traverse(u1, u2, [this](int i, int j) { store_.reset(i, j); });
   }
   void toggle(unit u1, unit u2) {
-    traverse(u1, u2, [this](int i, int j) { toggle(i, j); });
+    traverse(u1, u2, [this](int i, int j) { store_.toggle(i, j); });
   }
 
   std::pair<unit, unit> parse(const char* p1, const char* p2) {
@@ -108,6 +137,6 @@ struct grid {
   }
 };
 
-int day6(line_view);
+std::pair<int,int> day6(line_view);
 
 } // namespace aoc2015

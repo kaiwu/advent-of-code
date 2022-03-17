@@ -74,10 +74,16 @@ TEST_CASE("Doesn't He Have Intern-Elves For This?", "[day5]") {
 }
 
 TEST_CASE("Probably a Fire Hazard", "[day6]") {
-  aoc2015::grid<1000> grid;
+  aoc2015::grid<aoc2015::Bit, 1000> grid;
   grid.turn_on({0, 0}, {0, 999});
-  REQUIRE(grid.count() == 1000);
+  REQUIRE(grid.store_.count() == 1000);
+
+  aoc2015::grid<int8_t, 1000> grid2;
+  grid2.toggle({0, 0}, {0, 999});
+  REQUIRE(grid2.store_.count() == 2000);
 
   line_view lv = load_file("../src/2015/day6/input");
-  REQUIRE(543903 == aoc2015::day6(lv));
+  auto p = aoc2015::day6(lv);
+  REQUIRE(543903 == p.first);
+  REQUIRE(14687245 == p.second);
 }

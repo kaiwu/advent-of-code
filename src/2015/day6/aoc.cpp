@@ -1,12 +1,14 @@
 #include "aoc.h"
 
 namespace aoc2015 {
-int day6(line_view file) {
-  grid<1000> grid;
-  per_line(file, [&grid](line_view lv) {
-    grid.parse(lv);
+std::pair<int, int> day6(line_view file) {
+  grid<Bit, 1000> grid1;
+  grid<int8_t, 1000> grid2;
+  per_line(file, [&grid1, &grid2](line_view lv) {
+    grid1.parse(lv);
+    grid2.parse(lv);
     return true;
   });
-  return grid.count();
+  return {grid1.store_.count(), grid2.store_.count()};
 }
 } // namespace aoc2015
