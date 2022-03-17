@@ -91,6 +91,14 @@ TEST_CASE("Probably a Fire Hazard", "[day6]") {
 
 TEST_CASE("Some Assembly Required", "[day 7]") {
   aoc2015::cals cals;
-  cals.parse("1 OR 2 -> ab");
-  printf("%d\n", cals.compute("ab").value);
+  cals.parse("1 -> ab");
+  cals.parse("8 RSHIFT ab -> x");
+  cals.parse("1 LSHIFT x -> ac");
+  cals.parse("ac OR ab -> ae");
+  cals.parse("NOT x -> f");
+  REQUIRE(1 == cals.compute("ab").value);
+  REQUIRE(4 == cals.compute("x").value);
+  REQUIRE(16 == cals.compute("ac").value);
+  REQUIRE(17 == cals.compute("ae").value);
+  REQUIRE(65531 == cals.compute("f").value);
 }

@@ -66,6 +66,7 @@ struct cals {
   }
 
   result compute(line_view w) const noexcept {
+    // std::cout << "compute " << w << std::endl;
     uint16_t x = 0;
     if (is_value(w, &x)) {
       return {result::c_value, x};
@@ -75,33 +76,33 @@ struct cals {
     }
   }
 
-  std::function<result()> op_and(line_view x, line_view y) const noexcept {
+  std::function<result()> op_and(line_view& x, line_view& y) const noexcept {
     return [&x, &y, this]() -> result { return compute(x).op_and(compute(y)); };
   }
 
-  std::function<result()> op_or(line_view x, line_view y) const noexcept {
+  std::function<result()> op_or(line_view& x, line_view& y) const noexcept {
     return [&x, &y, this]() -> result { return compute(x).op_or(compute(y)); };
   }
 
-  std::function<result()> op_leftshift(line_view x, line_view y) const noexcept {
+  std::function<result()> op_leftshift(line_view& x, line_view& y) const noexcept {
     return [&x, &y, this]() -> result { return compute(x).op_leftshift(compute(y)); };
   }
 
-  std::function<result()> op_rightshift(line_view x, line_view y) const noexcept {
+  std::function<result()> op_rightshift(line_view& x, line_view& y) const noexcept {
     return [&x, &y, this]() -> result { return compute(x).op_rightshift(compute(y)); };
   }
 
-  std::function<result()> op_not(line_view x, line_view y) const noexcept {
+  std::function<result()> op_not(line_view& x, line_view& y) const noexcept {
     return [&x, this]() -> result { return compute(x).op_not(); };
   }
 
-  std::function<result()> op_value(line_view x, line_view y) const noexcept {
+  std::function<result()> op_value(line_view& x, line_view& y) const noexcept {
     return [&x, this]() -> result { return compute(x); };
   }
 
   std::function<result()> parse(line_view line, line_view* x, line_view* y, line_view* w) const noexcept {
     static struct _ {
-      std::function<result()> (cals::*op)(line_view, line_view) const noexcept;
+      std::function<result()> (cals::*op)(line_view&, line_view&) const noexcept;
       const char* label;
     } ops[] = {
         {&cals::op_and, "AND"},

@@ -27,9 +27,14 @@ struct line_view {
     size_t i = 0;
     size_t j = 0;
     while (i < length && j < lv.length) {
-      if (line[i++] < line[j++]) {
+      if (line[i] < lv.line[j]) {
         return true;
       }
+      if (line[i] > lv.line[j]) {
+        return false;
+      }
+      i++;
+      j++;
     }
     return j < lv.length;
   }
