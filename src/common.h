@@ -21,6 +21,10 @@ struct line_view {
     return o;
   }
 
+  bool operator<(const line_view& lv) const noexcept {
+    return std::string(line, length) < std::string(lv.line, lv.length);
+  }
+
   bool operator==(const line_view& lv) const noexcept {
     const char* p1 = line;
     const char* p2 = lv.line;
