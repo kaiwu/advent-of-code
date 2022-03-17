@@ -90,5 +90,7 @@ TEST_CASE("Probably a Fire Hazard", "[day6]") {
 }
 
 TEST_CASE("Some Assembly Required", "[day 7]") {
-
+  aoc2015::cals cals;
+  cals.parse("1 OR 2 -> ab");
+  printf("%d\n", cals.compute("ab").value);
 }

@@ -13,16 +13,25 @@ struct line_view {
 
   line_view(const char* s = nullptr) : line(s) { length = s == nullptr ? 0 : strlen(s); }
   line_view(const char* s, size_t l) : line(s), length(l) {}
-  line_view(const char* p1, const char* p2) : line(p1), length(p2 - p1 + 1) {}
+  line_view(const char* p1, const char* p2) : line(p1), length(p2 - p1) {}
   friend std::ostream& operator<<(std::ostream& o, const line_view& lv) {
+    o << "[" << lv.length << ":";
     for (size_t i = 0; i < lv.length; i++) {
       o << lv.line[i];
     }
+    o << "]";
     return o;
   }
 
   bool operator<(const line_view& lv) const noexcept {
-    return std::string(line, length) < std::string(lv.line, lv.length);
+    size_t i = 0;
+    size_t j = 0;
+    while (i < length && j < lv.length) {
+      if (line[i++] < line[j++]) {
+        return true;
+      }
+    }
+    return j < lv.length;
   }
 
   bool operator==(const line_view& lv) const noexcept {
