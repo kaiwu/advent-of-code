@@ -45,7 +45,7 @@ struct grid {
   int count() const noexcept {
     int total = 0;
     for (uint64_t i : pool) {
-       total += __builtin_popcountll(i);
+      total += __builtin_popcountll(i);
     }
     return total;
   }
@@ -67,6 +67,44 @@ struct grid {
   }
   void toggle(unit u1, unit u2) {
     traverse(u1, u2, [this](int i, int j) { toggle(i, j); });
+  }
+
+  std::pair<unit, unit> parse(const char* p1, const char* p2) {
+    unit u1;
+    unit u2;
+    int* is[] = {&u1.x, &u1.y, &u2.x, &u2.y};
+    int i = 0;
+    const char* p = p1;
+    while (i < 4 && p < p2) {
+      int x = 0;
+      while (*p >= '0' && *p <= '9') {
+        x = x * 10 + *p - '0';
+        p++;
+      }
+      *is[i++] = x;
+      while (*p < '0' || *p > '9') {
+        p++;
+      }
+    }
+
+    return {u1, u2};
+  }
+
+  void parse(line_view lv) {
+    static struct _ {
+      void (grid::*action)(unit, unit);
+      const char* key;
+    } keywords[] = {{&grid::toggle, "toggle"}, {&grid::turn_off, "turn off"}, {&grid::turn_on, "turn on"}};
+
+    for (auto k : keywords) {
+      if (lv.contains(k.key)) {
+        const char* p1 = lv.line + strlen(k.key) + 1;
+        const char* p2 = lv.line + lv.length;
+        auto p = parse(p1, p2);
+        (this->*k.action)(p.first, p.second);
+        break;
+      }
+    }
   }
 };
 
