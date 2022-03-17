@@ -50,7 +50,7 @@ struct result {
 };
 
 struct cals {
-  std::map<line_view, std::function<result()>> calls;
+  std::map<line_view, std::pair<std::function<result()>, result>> calls;
 
   bool is_value(line_view v, uint16_t* x) const noexcept {
     const char* p = v.line;
@@ -65,44 +65,52 @@ struct cals {
     return true;
   }
 
-  result compute(line_view w) const noexcept {
-    // std::cout << "compute " << w << std::endl;
+  result compute(line_view w) {
     uint16_t x = 0;
     if (is_value(w, &x)) {
       return {result::c_value, x};
     } else {
       auto it = calls.find(w);
-      return it != calls.end() ? it->second() : result{result::c_unknown, 0};
+      if (it != calls.end()) {
+        auto& r = it->second.second;
+        if (r.type == result::c_unknown) {
+          // std::cout << "compute " << w << std::endl;
+          auto& f = it->second.first;
+          r = f();
+        }
+        return r;
+      }
+      return {result::c_unknown, 0};
     }
   }
 
-  std::function<result()> op_and(line_view& x, line_view& y) const noexcept {
+  std::function<result()> op_and(line_view& x, line_view& y) {
     return [&x, &y, this]() -> result { return compute(x).op_and(compute(y)); };
   }
 
-  std::function<result()> op_or(line_view& x, line_view& y) const noexcept {
+  std::function<result()> op_or(line_view& x, line_view& y) {
     return [&x, &y, this]() -> result { return compute(x).op_or(compute(y)); };
   }
 
-  std::function<result()> op_leftshift(line_view& x, line_view& y) const noexcept {
+  std::function<result()> op_leftshift(line_view& x, line_view& y) {
     return [&x, &y, this]() -> result { return compute(x).op_leftshift(compute(y)); };
   }
 
-  std::function<result()> op_rightshift(line_view& x, line_view& y) const noexcept {
+  std::function<result()> op_rightshift(line_view& x, line_view& y) {
     return [&x, &y, this]() -> result { return compute(x).op_rightshift(compute(y)); };
   }
 
-  std::function<result()> op_not(line_view& x, line_view& y) const noexcept {
+  std::function<result()> op_not(line_view& x, line_view& y) {
     return [&x, this]() -> result { return compute(x).op_not(); };
   }
 
-  std::function<result()> op_value(line_view& x, line_view& y) const noexcept {
+  std::function<result()> op_value(line_view& x, line_view& y) {
     return [&x, this]() -> result { return compute(x); };
   }
 
-  std::function<result()> parse(line_view line, line_view* x, line_view* y, line_view* w) const noexcept {
+  std::function<result()> parse(line_view line, line_view* x, line_view* y, line_view* w) {
     static struct _ {
-      std::function<result()> (cals::*op)(line_view&, line_view&) const noexcept;
+      std::function<result()> (cals::*op)(line_view&, line_view&);
       const char* label;
     } ops[] = {
         {&cals::op_and, "AND"},
@@ -111,7 +119,7 @@ struct cals {
         {&cals::op_rightshift, "RSHIFT"},
     };
     const char* arrow = line.contains("->");
-    *w = line_view(arrow + 3, line.line + line.length);
+    *w = line_view(arrow + 3, line.line + line.length - 1);
 
     for (auto op : ops) {
       const char* p = line.contains(op.label);
@@ -137,8 +145,10 @@ struct cals {
     line_view* y = new line_view();
     line_view* w = new line_view();
     auto f = parse(line, x, y, w);
-    calls.insert({*w, f});
+    calls.insert({*w, {f, {result::c_unknown, 0}}});
   }
 };
+
+result day7(line_view, const char*);
 
 } // namespace aoc2015
