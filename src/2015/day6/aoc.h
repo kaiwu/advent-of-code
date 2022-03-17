@@ -6,8 +6,7 @@ namespace aoc2015 {
 
 template <size_t N>
 struct grid {
-  static_assert(N > 0 && ((N & (N - 1)) == 0), "N must be power of 2");
-  constexpr static size_t size = N * N / 64;
+  constexpr static size_t size = N * N / 64 + 1;
 
   uint64_t pool[size] = {0};
 
@@ -17,29 +16,29 @@ struct grid {
   };
 
   void set(int x, int y) {
-    uint64_t p = x * N + y;
+    uint64_t p = y * N + x;
     uint64_t r = p >> 6;
     uint64_t c = p & 63;
     uint64_t& byte = pool[r];
-    uint64_t mask = 1 << c;
+    uint64_t mask = 1ll << c;
     byte |= mask;
   }
 
   void reset(int x, int y) {
-    uint64_t p = x * N + y;
+    uint64_t p = y * N + x;
     uint64_t r = p >> 6;
     uint64_t c = p & 63;
     uint64_t& byte = pool[r];
-    uint64_t mask = ~(1 << c);
+    uint64_t mask = ~(1ll << c);
     byte &= mask;
   }
 
   void toggle(int x, int y) {
-    uint64_t p = x * N + y;
+    uint64_t p = y * N + x;
     uint64_t r = p >> 6;
     uint64_t c = p & 63;
     uint64_t& byte = pool[r];
-    uint64_t mask = 1 << c;
+    uint64_t mask = 1ll << c;
     byte ^= mask;
   }
 
