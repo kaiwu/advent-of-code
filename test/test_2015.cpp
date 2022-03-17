@@ -4,6 +4,7 @@
 #include "2015/day4/aoc.h"
 #include "2015/day5/aoc.h"
 #include "2015/day6/aoc.h"
+#include "2015/day7/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
@@ -86,4 +87,8 @@ TEST_CASE("Probably a Fire Hazard", "[day6]") {
   auto p = aoc2015::day6(lv);
   REQUIRE(543903 == p.first);
   REQUIRE(14687245 == p.second);
+}
+
+TEST_CASE("Some Assembly Required", "[day 7]") {
+
 }
