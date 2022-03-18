@@ -6,6 +6,7 @@
 #include "2015/day6/aoc.h"
 #include "2015/day7/aoc.h"
 #include "2015/day8/aoc.h"
+#include "2015/day9/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
@@ -116,4 +117,9 @@ TEST_CASE("Matchsticks", "[day8]") {
   auto p = aoc2015::day8(lv);
   REQUIRE(1371 == p.first);
   REQUIRE(2117 == p.second);
+}
+
+TEST_CASE("All in a Single Night", "[day9]") {
+  line_view lv = load_file("../src/2015/day9/input");
+  aoc2015::day9(lv);
 }
