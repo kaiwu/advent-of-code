@@ -8,6 +8,7 @@
 #include "2015/day8/aoc.h"
 #include "2015/day9/aoc.h"
 #include "2015/day10/aoc.h"
+#include "2015/day11/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
@@ -130,4 +131,9 @@ TEST_CASE("All in a Single Night", "[day9]") {
 TEST_CASE("Elves Look, Elves Say", "[day10]") {
   REQUIRE(329356 == aoc2015::day10("3113322113", 40));
   REQUIRE(4666278 == aoc2015::day10("3113322113", 50));
+}
+
+TEST_CASE("Corporate Policy", "[day11]") {
+  REQUIRE(strcmp(aoc2015::day11("hxbxwxba"), "hxbxxyzz") == 0);
+  REQUIRE(strcmp(aoc2015::day11("hxbxxyzz"), "hxcaabcc") == 0);
 }
