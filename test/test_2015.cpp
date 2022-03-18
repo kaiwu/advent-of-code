@@ -90,7 +90,6 @@ TEST_CASE("Probably a Fire Hazard", "[day6]") {
 }
 
 TEST_CASE("Some Assembly Required", "[day 7]") {
-  /*
   aoc2015::cals cals;
   cals.parse("1 -> ab");
   cals.parse("8 RSHIFT ab -> x");
@@ -102,9 +101,11 @@ TEST_CASE("Some Assembly Required", "[day 7]") {
   REQUIRE(16 == cals.compute("ac").value);
   REQUIRE(17 == cals.compute("ae").value);
   REQUIRE(65531 == cals.compute("f").value);
-  */
 
   line_view lv = load_file("../src/2015/day7/input");
-  auto r = aoc2015::day7(lv, "a");
-  REQUIRE(3176 == r.value);
+  auto r1 = aoc2015::day7(lv, "a");
+  auto r2 = aoc2015::day7(lv, "a", "3176 -> b");
+
+  REQUIRE(3176 == r1.value);
+  REQUIRE(14710 == r2.value);
 }

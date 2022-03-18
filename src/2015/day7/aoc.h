@@ -119,7 +119,7 @@ struct cals {
         {&cals::op_rightshift, "RSHIFT"},
     };
     const char* arrow = line.contains("->");
-    *w = line_view(arrow + 3, line.line + line.length - 1);
+    *w = line_view(arrow + 3, line.line + line.length);
 
     for (auto op : ops) {
       const char* p = line.contains(op.label);
@@ -145,10 +145,13 @@ struct cals {
     line_view* y = new line_view();
     line_view* w = new line_view();
     auto f = parse(line, x, y, w);
-    calls.insert({*w, {f, {result::c_unknown, 0}}});
+    auto p = calls.insert({*w, {f, {result::c_unknown, 0}}});
+    if (p.second == false) {
+      p.first->second = {f, {result::c_unknown, 0}};
+    }
   }
 };
 
-result day7(line_view, const char*);
+result day7(line_view, const char*, const char* = nullptr);
 
 } // namespace aoc2015
