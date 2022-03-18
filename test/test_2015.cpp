@@ -111,6 +111,8 @@ TEST_CASE("Some Assembly Required", "[day7]") {
   REQUIRE(14710 == r2.value);
 }
 
-TEST_CASE("", "[day8]") {
-
+TEST_CASE("Matchsticks", "[day8]") {
+  line_view lv = load_file("../src/2015/day8/input");
+  auto p = aoc2015::day8(lv);
+  REQUIRE(1371 == p);
 }
