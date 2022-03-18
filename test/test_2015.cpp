@@ -114,5 +114,6 @@ TEST_CASE("Some Assembly Required", "[day7]") {
 TEST_CASE("Matchsticks", "[day8]") {
   line_view lv = load_file("../src/2015/day8/input");
   auto p = aoc2015::day8(lv);
-  REQUIRE(1371 == p);
+  REQUIRE(1371 == p.first);
+  REQUIRE(2117 == p.second);
 }
