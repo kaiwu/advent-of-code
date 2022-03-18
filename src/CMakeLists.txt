@@ -14,3 +14,4 @@ set(SOLUTION_FILES
 
 add_library(solution SHARED ${SOLUTION_FILES})
 target_include_directories(solution PRIVATE ${PROJECT_SOURCE_DIR}/src)
+target_link_libraries(solution PRIVATE common)
