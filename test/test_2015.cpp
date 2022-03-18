@@ -5,6 +5,7 @@
 #include "2015/day5/aoc.h"
 #include "2015/day6/aoc.h"
 #include "2015/day7/aoc.h"
+#include "2015/day8/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
@@ -89,7 +90,7 @@ TEST_CASE("Probably a Fire Hazard", "[day6]") {
   REQUIRE(14687245 == p.second);
 }
 
-TEST_CASE("Some Assembly Required", "[day 7]") {
+TEST_CASE("Some Assembly Required", "[day7]") {
   aoc2015::cals cals;
   cals.parse("1 -> ab");
   cals.parse("8 RSHIFT ab -> x");
@@ -108,4 +109,8 @@ TEST_CASE("Some Assembly Required", "[day 7]") {
 
   REQUIRE(3176 == r1.value);
   REQUIRE(14710 == r2.value);
+}
+
+TEST_CASE("", "[day8]") {
+
 }
