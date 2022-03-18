@@ -121,5 +121,7 @@ TEST_CASE("Matchsticks", "[day8]") {
 
 TEST_CASE("All in a Single Night", "[day9]") {
   line_view lv = load_file("../src/2015/day9/input");
-  aoc2015::day9(lv);
+  auto p = aoc2015::day9(lv);
+  REQUIRE(117 == p.first);
+  REQUIRE(909 == p.second);
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "common.h"
 #include <map>
+#include <set>
 #include <vector>
 
 namespace aoc2015 {
@@ -49,8 +50,53 @@ struct world_day9 {
       }
     }
   }
+
+  // backtrace
+  void plan(location* city, std::set<location*>& visited, std::vector<int>& distances, int* d) {
+    if (visited.size() == locations.size()) {
+      // std::cout << city->name << std::endl;
+      distances.push_back(*d);
+      return;
+    }
+    for (auto& kv : city->routes) {
+      auto it = visited.find(kv.first);
+      if (it != visited.end()) {
+        continue;
+      } else { // not visited
+        // std::cout << city->name << " -> ";
+        location* next = kv.first;
+        visited.insert(next);
+        *d += kv.second;
+        plan(next, visited, distances, d);
+        visited.erase(next);
+        *d -= kv.second;
+      }
+    }
+  }
+
+  std::pair<int, int> minmax(const std::vector<int>& ds) {
+    int d1 = INT32_MAX;
+    int d2 = INT32_MIN;
+    for (auto x : ds) {
+      if (x < d1) {
+        d1 = x;
+      }
+      if (x > d2) {
+        d2 = x;
+      }
+    }
+    return {d1, d2};
+  }
+
+  std::pair<int, int> plan(location* city) {
+    std::vector<int> ds;
+    std::set<location*> visited{city};
+    int d{0};
+    plan(city, visited, ds, &d);
+    return minmax(ds);
+  }
 };
 
-int day9(line_view);
+std::pair<int, int> day9(line_view);
 
 } // namespace aoc2015
