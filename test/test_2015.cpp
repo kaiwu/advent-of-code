@@ -10,6 +10,7 @@
 #include "2015/day10/aoc.h"
 #include "2015/day11/aoc.h"
 #include "2015/day12/aoc.h"
+#include "2015/day13/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
