@@ -142,4 +142,5 @@ TEST_CASE("Corporate Policy", "[day11]") {
 TEST_CASE("", "[day12]") {
   line_view lv = load_file("../src/2015/day12/input");
   REQUIRE(156366 == aoc2015::day12(lv));
+  printf("%d\n", aoc2015::day12_part2("{{red1} 2 {red3 {4}}} 10"));
 }
