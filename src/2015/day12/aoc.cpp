@@ -1,5 +1,4 @@
 #include "aoc.h"
-#include <stack>
 
 namespace aoc2015 {
 
@@ -13,7 +12,7 @@ int get_number(const char* p1, const char* p2) {
   return sign * d;
 }
 
-int parse_day12(line_view s) {
+int parse_range(line_view s) {
   int total = 0;
   const char* p1 = s.line;
   const char* p2 = p1;
@@ -38,54 +37,75 @@ int parse_day12(line_view s) {
   return total;
 }
 
-int day12(line_view file) { return parse_day12(file); }
+int day12(line_view file) { return parse_range(file); }
 
-struct day12_object {
-  const char* p1;
-
-  int fold(const char* p2) {
-    line_view lv{p1, p2};
-    const char* p = lv.contains("red");
-    return (p != nullptr) ? 0 : parse_day12(lv);
+bool is_red(const char* p) {
+  static const char* red = "red";
+  for (int i = 0; i < 3; i++) {
+    if (p[i] != red[i]) {
+      return false;
+    }
   }
-};
+  return true;
+}
 
-// {{x}   x} = 0
-// {{x} ...} = ...
-// {{...} x} = 0
-// {{...} .} = ... + .
-int day12_part2(line_view file) {
-  int total = 0;
-  std::stack<day12_object> os;
-  std::stack<int> is;
-  const char* p = file.line;
-  const char* p1 = p;
-  while (p < file.line + file.length) {
+// {{}...{}...{}}
+void fix_range(const char* p, const char** pe) {
+  int x = 1;
+  while (x > 0) {
     if (*p == '{') {
-      if (os.empty()) {
-        total += parse_day12({p1, p});
-        p1 = p;
-      }
-      os.push({p});
+      x += 1;
     }
     if (*p == '}') {
-      auto o = os.top();
-      is.push(o.fold(p));
-      os.pop();
-      if (os.empty()) {
-        while (!is.empty()) {
-          total += is.top();
-          is.pop();
-        }
-        p1 = p;
-      } else {
-        auto& oo = os.top();
-        oo.p1 = p;
-      }
+      x -= 1;
     }
     p++;
   }
-  total += parse_day12({p1, p});
+  *pe = p;
+}
+
+void parse_range(const char* p1, const char* p2, int* total) {
+  const char* p = p1;
+  int sub = 0;
+  std::cout << line_view{p1 - 1, p2};
+  while (p != p2) {
+    if (*p == 'r' && is_red(p)) {
+      sub = 0;
+      break;
+    }
+    if (*p == '{') {
+      sub += parse_range({p1, p});
+      const char* pe = nullptr;
+      fix_range(p + 1, &pe);
+      parse_range(p + 1, pe, &sub);
+      p1 = pe;
+      p = pe;
+    }
+    else {
+      p++;
+    }
+  }
+  std::cout << " sub:" << sub << std::endl;
+  *total += sub;
+}
+
+int day12_part2(line_view file) {
+  int total = 0;
+  const char* p1 = file.line;
+  const char* p = p1;
+  while (p != file.line + file.length) {
+    if (*p == '{') {
+      const char* pe = nullptr;
+      fix_range(p + 1, &pe);
+      total += parse_range({p1, p});
+      parse_range(p + 1, pe, &total);
+      p1 = pe;
+      p = pe;
+    } else {
+      p++;
+    }
+  }
+  total += parse_range({p1, p});
   return total;
 }
 
