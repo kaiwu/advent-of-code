@@ -40,8 +40,8 @@ int parse_range(line_view s) {
 int day12(line_view file) { return parse_range(file); }
 
 bool is_red(const char* p) {
-  static const char* red = "red";
-  for (int i = 0; i < 3; i++) {
+  static const char* red = ":\"red";
+  for (int i = 0; i < 5; i++) {
     if (p[i] != red[i]) {
       return false;
     }
@@ -65,12 +65,13 @@ void fix_range(const char* p, const char** pe) {
 }
 
 void parse_range(const char* p1, const char* p2, int* total) {
+  // const char* p0 = p1;
   const char* p = p1;
   int sub = 0;
-  std::cout << line_view{p1 - 1, p2};
   while (p != p2) {
-    if (*p == 'r' && is_red(p)) {
+    if (*p == ':' && is_red(p)) {
       sub = 0;
+      p1 = p;
       break;
     }
     if (*p == '{') {
@@ -80,12 +81,14 @@ void parse_range(const char* p1, const char* p2, int* total) {
       parse_range(p + 1, pe, &sub);
       p1 = pe;
       p = pe;
-    }
-    else {
+    } else {
       p++;
     }
   }
-  std::cout << " sub:" << sub << std::endl;
+  if (p > p1) {
+    sub += parse_range({p1, p});
+  }
+  // std::cout << line_view{p0 - 1, p2} << " sub:" << sub << std::endl;
   *total += sub;
 }
 
@@ -105,7 +108,9 @@ int day12_part2(line_view file) {
       p++;
     }
   }
-  total += parse_range({p1, p});
+  if (p > p1) {
+    total += parse_range({p1, p});
+  }
   return total;
 }
 

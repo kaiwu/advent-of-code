@@ -140,7 +140,8 @@ TEST_CASE("Corporate Policy", "[day11]") {
 }
 
 TEST_CASE("", "[day12]") {
+  // printf("%d\n", aoc2015::day12_part2("[{ 5 {red1} {3{4 {10}}3}} 10 red 10]"));
   line_view lv = load_file("../src/2015/day12/input");
   REQUIRE(156366 == aoc2015::day12(lv));
-  printf("%d\n", aoc2015::day12_part2("[{ 5 {red1} {3{4}}} 10 red 10]"));
+  REQUIRE(96852 == aoc2015::day12_part2(lv));
 }
