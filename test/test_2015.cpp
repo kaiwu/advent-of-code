@@ -1,4 +1,8 @@
 #include "2015/day1/aoc.h"
+#include "2015/day10/aoc.h"
+#include "2015/day11/aoc.h"
+#include "2015/day12/aoc.h"
+#include "2015/day13/aoc.h"
 #include "2015/day2/aoc.h"
 #include "2015/day3/aoc.h"
 #include "2015/day4/aoc.h"
@@ -7,10 +11,6 @@
 #include "2015/day7/aoc.h"
 #include "2015/day8/aoc.h"
 #include "2015/day9/aoc.h"
-#include "2015/day10/aoc.h"
-#include "2015/day11/aoc.h"
-#include "2015/day12/aoc.h"
-#include "2015/day13/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
@@ -140,9 +140,23 @@ TEST_CASE("Corporate Policy", "[day11]") {
   REQUIRE(strcmp(aoc2015::day11("hxbxxyzz"), "hxcaabcc") == 0);
 }
 
-TEST_CASE("", "[day12]") {
+TEST_CASE("JSAbacusFramework.io", "[day12]") {
   // printf("%d\n", aoc2015::day12_part2("[{ 5 {red1} {3{4 {10}}3}} 10 red 10]"));
   line_view lv = load_file("../src/2015/day12/input");
   REQUIRE(156366 == aoc2015::day12(lv));
   REQUIRE(96852 == aoc2015::day12_part2(lv));
+}
+
+TEST_CASE("Knights of the Dinner Table", "[day13]") {
+  line_view lv = load_file("../src/2015/day13/input");
+  auto p1 = aoc2015::day13(lv);
+  REQUIRE(-638 == p1.first);
+  REQUIRE(709 == p1.second);
+
+  /*
+  auto p2 = aoc2015::day13(lv, "Wukai");
+  REQUIRE(-679 == p2.first);
+  REQUIRE(668 == p2.second);
+  */
+
 }
