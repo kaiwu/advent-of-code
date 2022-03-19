@@ -153,10 +153,7 @@ TEST_CASE("Knights of the Dinner Table", "[day13]") {
   REQUIRE(-638 == p1.first);
   REQUIRE(709 == p1.second);
 
-  /*
   auto p2 = aoc2015::day13(lv, "Wukai");
   REQUIRE(-679 == p2.first);
   REQUIRE(668 == p2.second);
-  */
-
 }

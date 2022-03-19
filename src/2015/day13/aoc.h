@@ -78,6 +78,7 @@ struct party {
       arrange_t arrangement = new std::vector<guest*>;
       std::set<guest*> gs;
       arrange(g, gs, arrangement, combos);
+      break;
     }
 
     int hmax = INT32_MIN;
