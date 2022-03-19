@@ -3,6 +3,7 @@
 #include "2015/day11/aoc.h"
 #include "2015/day12/aoc.h"
 #include "2015/day13/aoc.h"
+#include "2015/day14/aoc.h"
 #include "2015/day2/aoc.h"
 #include "2015/day3/aoc.h"
 #include "2015/day4/aoc.h"
@@ -156,4 +157,8 @@ TEST_CASE("Knights of the Dinner Table", "[day13]") {
   auto p2 = aoc2015::day13(lv, "Wukai");
   REQUIRE(-679 == p2.first);
   REQUIRE(668 == p2.second);
+}
+
+TEST_CASE("Reindeer Olympics", "[day14]") {
+  // line_view lv = load_file("../src/2015/day14/input");
 }
