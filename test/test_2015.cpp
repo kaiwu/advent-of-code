@@ -9,6 +9,7 @@
 #include "2015/day9/aoc.h"
 #include "2015/day10/aoc.h"
 #include "2015/day11/aoc.h"
+#include "2015/day12/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
@@ -136,4 +137,7 @@ TEST_CASE("Elves Look, Elves Say", "[day10]") {
 TEST_CASE("Corporate Policy", "[day11]") {
   REQUIRE(strcmp(aoc2015::day11("hxbxwxba"), "hxbxxyzz") == 0);
   REQUIRE(strcmp(aoc2015::day11("hxbxxyzz"), "hxcaabcc") == 0);
+}
+
+TEST_CASE("", "[day12]") {
 }
