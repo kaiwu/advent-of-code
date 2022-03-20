@@ -22,28 +22,33 @@ struct ingredient {
 struct recipe {
   std::vector<ingredient> ingredients;
 
-  int score(const std::vector<int>& is) {
+  int score(const std::vector<int>& is, int* cals) {
     int capacity = 0;
     int durability = 0;
     int flavor = 0;
     int texture = 0;
+    int calories = 0;
     for (size_t i = 0; i < ingredients.size(); i++) {
       capacity += is[i] * ingredients[i].capacity;
       durability += is[i] * ingredients[i].durability;
       flavor += is[i] * ingredients[i].flavor;
       texture += is[i] * ingredients[i].texture;
+      calories += is[i] * ingredients[i].calories;
     }
     if (capacity < 0 || durability < 0 || flavor < 0 || texture < 0) {
+      return 0;
+    }
+    if (cals != nullptr && calories != *cals) {
       return 0;
     }
     return capacity * durability * flavor * texture;
   }
 
   // backtrace
-  void measure(int total, size_t index, std::vector<int>& combos, int* best) {
+  void measure(int total, size_t index, std::vector<int>& combos, int* best, int* cals) {
     if (index == ingredients.size() - 1) { // last ingredient
       combos.push_back(total);
-      int s = score(combos);
+      int s = score(combos, cals);
 
       // std::cout << "{" << s << " -> ";
       // for (auto i : {0, 1, 2, 3}) {
@@ -60,7 +65,7 @@ struct recipe {
 
     for (int x = 1; x < total; x++) {
       combos.push_back(x);
-      measure(total - x, index + 1, combos, best);
+      measure(total - x, index + 1, combos, best, cals);
       combos.pop_back();
     }
   }
@@ -94,6 +99,6 @@ struct recipe {
   }
 };
 
-int day15(line_view);
+int day15(line_view, int* cals = nullptr);
 
 } // namespace aoc2015

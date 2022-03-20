@@ -170,4 +170,6 @@ TEST_CASE("Reindeer Olympics", "[day14]") {
 TEST_CASE("Science for Hungry People", "[day15]") {
   line_view lv = load_file("../src/2015/day15/input");
   REQUIRE(21367368 == aoc2015::day15(lv));
+  int cals = 500;
+  REQUIRE(1766400 == aoc2015::day15(lv, &cals));
 }
