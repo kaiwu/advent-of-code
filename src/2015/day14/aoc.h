@@ -81,9 +81,9 @@ struct olympics {
     for (int i = 1; i <= s; i++) {
       score(i);
     }
-    for (size_t i = 0; i < reindeers.size(); i++) {
-      std::cout << reindeers[i].name << ": " << points[i] << std::endl;
-    }
+    // for (size_t i = 0; i < reindeers.size(); i++) {
+    //   std::cout << reindeers[i].name << ": " << points[i] << std::endl;
+    // }
     int x = 0;
     for (size_t i = 1; i < points.size(); i++) {
       if (points[i] > points[x]) {

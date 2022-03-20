@@ -4,6 +4,7 @@
 #include "2015/day12/aoc.h"
 #include "2015/day13/aoc.h"
 #include "2015/day14/aoc.h"
+#include "2015/day15/aoc.h"
 #include "2015/day2/aoc.h"
 #include "2015/day3/aoc.h"
 #include "2015/day4/aoc.h"
@@ -164,4 +165,9 @@ TEST_CASE("Reindeer Olympics", "[day14]") {
   auto p = aoc2015::day14(lv, 2503);
   REQUIRE(2640 == p.first);
   REQUIRE(1102 == p.second);
+}
+
+TEST_CASE("Science for Hungry People", "[day15]") {
+  line_view lv = load_file("../src/2015/day15/input");
+  REQUIRE(21367368 == aoc2015::day15(lv));
 }
