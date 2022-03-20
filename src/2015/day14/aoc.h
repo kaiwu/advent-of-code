@@ -65,9 +65,10 @@ struct olympics {
           x.pop();
         }
         x.push(i);
-      }
-      if (ps[i] == ps[x.top()]) {
-        x.push(i);
+      } else {
+        if (ps[i] == ps[x.top()]) {
+          x.push(i);
+        }
       }
     }
     while (!x.empty()) {
