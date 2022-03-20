@@ -176,5 +176,8 @@ TEST_CASE("Science for Hungry People", "[day15]") {
 }
 
 TEST_CASE("Aunt Sue", "[day16]") {
-  // line_view lv = load_file("../src/2015/day16/input");
+  line_view lv = load_file("../src/2015/day16/input");
+  auto p = aoc2015::day16(lv);
+  REQUIRE(103 == p.first);
+  REQUIRE(405 == p.second);
 }
