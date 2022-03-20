@@ -6,6 +6,7 @@
 #include "2015/day14/aoc.h"
 #include "2015/day15/aoc.h"
 #include "2015/day16/aoc.h"
+#include "2015/day17/aoc.h"
 #include "2015/day2/aoc.h"
 #include "2015/day3/aoc.h"
 #include "2015/day4/aoc.h"
@@ -180,4 +181,8 @@ TEST_CASE("Aunt Sue", "[day16]") {
   auto p = aoc2015::day16(lv);
   REQUIRE(103 == p.first);
   REQUIRE(405 == p.second);
+}
+
+TEST_CASE("No Such Thing as Too Much", "[day17]") {
+  // line_view lv = load_file("../src/2015/day17/input");
 }
