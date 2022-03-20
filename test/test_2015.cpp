@@ -161,5 +161,7 @@ TEST_CASE("Knights of the Dinner Table", "[day13]") {
 
 TEST_CASE("Reindeer Olympics", "[day14]") {
   line_view lv = load_file("../src/2015/day14/input");
-  REQUIRE(0 == aoc2015::day14(lv, 2503));
+  auto p = aoc2015::day14(lv, 2503);
+  REQUIRE(2640 == p.first);
+  REQUIRE(0 == p.second);
 }
