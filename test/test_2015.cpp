@@ -189,8 +189,9 @@ TEST_CASE("No Such Thing as Too Much", "[day17]") {
   auto p = aoc2015::day17(lv, 150);
   REQUIRE(654 == p.first);
   REQUIRE(57 == p.second);
-
 }
 
 TEST_CASE("Like a GIF For Your Yard", "[day18]") {
+  line_view lv = load_file("../src/2015/day18/input");
+  REQUIRE(821 == aoc2015::day18(lv, 100));
 }
