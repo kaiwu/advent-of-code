@@ -24,7 +24,15 @@ struct neolight {
     if (x < 0 || y < 0 || x > 99 || y > 99) {
       return false;
     }
-    return bs[y * 100 + x] > 0;
+    return is_corner(x, y) ? true : bs[y * 100 + x] > 0;
+  }
+
+  bool is_corner(int x, int y) const noexcept {
+    bool b1 = x == 0 && y == 0;
+    bool b2 = x == 0 && y == 99;
+    bool b3 = x == 99 && y == 0;
+    bool b4 = x == 99 && y == 99;
+    return b1 || b2 || b3 || b4;
   }
 
   int count(int x, int y) const noexcept {
@@ -37,6 +45,16 @@ struct neolight {
       }
     }
     return d;
+  }
+
+  void turn_on_corners() {
+    struct _ {
+      int x;
+      int y;
+    } corners[] = {{0, 0}, {0, 99}, {99, 0}, {99, 99}};
+    for (auto c : corners) {
+      turn(c.x, c.y, 1);
+    }
   }
 };
 
@@ -59,6 +77,7 @@ struct yard {
       }
       n->turn(x, y, v);
     }
+    n->turn_on_corners();
   }
 
   neolight* next(neolight* g) {
@@ -82,7 +101,7 @@ struct yard {
   void parse(line_view file) {
     int x = 0;
     int y = 0;
-    const char *p = file.line;
+    const char* p = file.line;
     while (p != file.line + file.length) {
       if (*p == '#') {
         lights->turn(x++, y, 1);
@@ -96,6 +115,7 @@ struct yard {
       }
       p++;
     }
+    lights->turn_on_corners();
   }
 };
 

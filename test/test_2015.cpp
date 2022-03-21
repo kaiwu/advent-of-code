@@ -193,5 +193,6 @@ TEST_CASE("No Such Thing as Too Much", "[day17]") {
 
 TEST_CASE("Like a GIF For Your Yard", "[day18]") {
   line_view lv = load_file("../src/2015/day18/input");
-  REQUIRE(821 == aoc2015::day18(lv, 100));
+  // REQUIRE(821 == aoc2015::day18(lv, 100));
+  REQUIRE(886 == aoc2015::day18(lv, 100));
 }
