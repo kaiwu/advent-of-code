@@ -184,5 +184,9 @@ TEST_CASE("Aunt Sue", "[day16]") {
 }
 
 TEST_CASE("No Such Thing as Too Much", "[day17]") {
-  // line_view lv = load_file("../src/2015/day17/input");
+  line_view lv = load_file("../src/2015/day17/input");
+  auto p = aoc2015::day17(lv, 150);
+  REQUIRE(654 == p.first);
+  REQUIRE(57 == p.second);
+
 }
