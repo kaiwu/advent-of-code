@@ -1,5 +1,6 @@
 #pragma once
 #include "common.h"
+#include <functional>
 
 namespace aoc2015 {
 struct sue {
