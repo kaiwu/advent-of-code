@@ -8,6 +8,7 @@
 #include "2015/day16/aoc.h"
 #include "2015/day17/aoc.h"
 #include "2015/day18/aoc.h"
+#include "2015/day19/aoc.h"
 #include "2015/day2/aoc.h"
 #include "2015/day3/aoc.h"
 #include "2015/day4/aoc.h"
@@ -195,4 +196,8 @@ TEST_CASE("Like a GIF For Your Yard", "[day18]") {
   line_view lv = load_file("../src/2015/day18/input");
   // REQUIRE(821 == aoc2015::day18(lv, 100));
   REQUIRE(886 == aoc2015::day18(lv, 100));
+}
+
+TEST_CASE("Medicine for Rudolph", "[day19]") {
+  // line_view lv = load_file("../src/2015/day19/input");
 }
