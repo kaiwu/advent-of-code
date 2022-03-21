@@ -7,6 +7,7 @@
 #include "2015/day15/aoc.h"
 #include "2015/day16/aoc.h"
 #include "2015/day17/aoc.h"
+#include "2015/day18/aoc.h"
 #include "2015/day2/aoc.h"
 #include "2015/day3/aoc.h"
 #include "2015/day4/aoc.h"
@@ -189,4 +190,7 @@ TEST_CASE("No Such Thing as Too Much", "[day17]") {
   REQUIRE(654 == p.first);
   REQUIRE(57 == p.second);
 
+}
+
+TEST_CASE("Like a GIF For Your Yard", "[day18]") {
 }
