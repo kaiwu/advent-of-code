@@ -90,6 +90,32 @@ struct molecule {
     return d;
   }
 
+  line_view replace(line_view lv, const replacement& r, const char* p) const noexcept { return {}; }
+
+  void deduct(line_view lv, int steps, int* shortest) const noexcept {
+    if (lv == "e") {
+      if (*shortest > steps) {
+        *shortest = steps;
+      }
+    } else {
+      const char* p1 = lv.line;
+      const char* p2 = lv.line + lv.length;
+      for (auto& r : replacements) {
+        do {
+          line_view v{p1, p2};
+          const char* p = v.contains(r.to);
+          if (p != nullptr) {
+            line_view n = replace(v, r, p);
+            deduct(n, steps + 1, shortest);
+            p1 = p + r.to.length;
+          } else {
+            break;
+          }
+        } while (p1 < p2);
+      }
+    }
+  }
+
   void parse(line_view lv) {
     const char* p = lv.contains("=>");
     if (p != nullptr) {
