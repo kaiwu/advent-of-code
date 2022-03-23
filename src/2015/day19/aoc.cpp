@@ -2,7 +2,7 @@
 
 namespace aoc2015 {
 
-int day19(line_view file) {
+std::pair<int, int> day19(line_view file) {
   molecule m;
   per_line(file, [&m](line_view lv) {
     m.parse(lv);
@@ -10,7 +10,9 @@ int day19(line_view file) {
   });
   std::map<int, std::vector<molecule::change>> changes;
   m.check(changes);
-  return m.distinct(changes);
+  int shortest = INT32_MAX;
+  m.deduct(m.original, 0, &shortest);
+  return {m.distinct(changes), shortest};
 }
 
 } // namespace aoc2015

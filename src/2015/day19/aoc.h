@@ -90,14 +90,40 @@ struct molecule {
     return d;
   }
 
-  line_view replace(line_view lv, const replacement& r, const char* p) const noexcept { return {}; }
+  // r.to -> r.from at p
+  line_view replace(line_view lv, const replacement& r, const char* p) const noexcept {
+    size_t len = lv.length + r.from.length - r.to.length;
+    char* s = (char*)malloc(len);
+    memset(s, 0x0, len);
+    const char* ps[] = {lv.line, p, p + r.to.length, lv.line + lv.length};
+    char* x = s;
+    for (size_t i = 0; i < 3; i++) {
+      if (i != 1) {
+        const char* p1 = ps[i];
+        const char* p2 = ps[i + 1];
+        // std::cout << line_view{p1, p2} << std::endl;
+        memcpy(x, p1, p2 - p1);
+        x += (p2 - p1);
+      } else {
+        const char* p1 = r.from.line;
+        const char* p2 = r.from.line + r.from.length;
+        // std::cout << line_view{p1, p2} << std::endl;
+        memcpy(x, p1, p2 - p1);
+        x += (p2 - p1);
+      }
+    }
+    return {s, len};
+  }
 
   void deduct(line_view lv, int steps, int* shortest) const noexcept {
+    std::cout << lv << " " << steps << std::endl;
     if (lv == "e") {
       if (*shortest > steps) {
         *shortest = steps;
       }
-    } else {
+      return;
+    }
+    if (lv.length > 1) {
       const char* p1 = lv.line;
       const char* p2 = lv.line + lv.length;
       for (auto& r : replacements) {
@@ -126,8 +152,8 @@ struct molecule {
       }
     }
   }
-};
+}; // namespace aoc2015
 
-int day19(line_view);
+std::pair<int, int> day19(line_view);
 
 } // namespace aoc2015
