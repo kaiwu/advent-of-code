@@ -115,29 +115,37 @@ struct molecule {
     return {s, len};
   }
 
+  void step(int i) const noexcept {
+    while (i-- > 0) {
+      std::cout << "\t";
+    }
+  }
+
   void deduct(line_view lv, int steps, int* shortest) const noexcept {
-    std::cout << lv << " " << steps << std::endl;
     if (lv == "e") {
       if (*shortest > steps) {
         *shortest = steps;
       }
       return;
     }
-    if (lv.length > 1) {
-      const char* p1 = lv.line;
-      const char* p2 = lv.line + lv.length;
+    else {
       for (auto& r : replacements) {
-        do {
+        const char* p1 = lv.line;
+        const char* p2 = lv.line + lv.length;
+        while (p1 < p2) {
           line_view v{p1, p2};
           const char* p = v.contains(r.to);
           if (p != nullptr) {
-            line_view n = replace(v, r, p);
+            line_view n = replace(lv, r, p);
+            // step(steps);
+            // std::cout << lv << " " << p - lv.line << " " << r.to << " -> " << n << std::endl;
             deduct(n, steps + 1, shortest);
+            delete n.line;
             p1 = p + r.to.length;
           } else {
             break;
           }
-        } while (p1 < p2);
+        }
       }
     }
   }
