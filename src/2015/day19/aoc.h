@@ -15,6 +15,7 @@ struct replacement {
 
 struct molecule {
   std::vector<replacement> replacements;
+  std::map<line_view, std::vector<line_view>> transfers;
   line_view original;
 
   struct change {
@@ -127,8 +128,7 @@ struct molecule {
         *shortest = steps;
       }
       return;
-    }
-    else {
+    } else {
       for (auto& r : replacements) {
         const char* p1 = lv.line;
         const char* p2 = lv.line + lv.length;
@@ -150,10 +150,33 @@ struct molecule {
     }
   }
 
+  void parse(line_view lv, std::vector<line_view>& ms) const noexcept {}
+
+  void transfer(line_view lv, int steps, int* shortest) {
+    if (lv.length > original.length) {
+      return;
+    }
+    if (lv == original) {
+      if (*shortest > steps) {
+        *shortest = steps;
+      }
+    } else {
+      std::vector<line_view> ms;
+      parse(lv, ms);
+      for (auto& from : ms) {
+        for (auto& to : transfers[from]) {
+          line_view next = replace(lv, {from, to}, from.line);
+          transfer(next, steps + 1, shortest);
+        }
+      }
+    }
+  }
+
   void parse(line_view lv) {
     const char* p = lv.contains("=>");
     if (p != nullptr) {
       replacements.push_back({{lv.line, p - 1}, {p + 3, lv.line + lv.length - 1}});
+      transfers[{lv.line, p - 1}].push_back({p + 3, lv.line + lv.length - 1});
     } else {
       if (lv.length > 1) {
         original = {lv.line, lv.line + lv.length - 1};
