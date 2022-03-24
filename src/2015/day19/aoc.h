@@ -24,6 +24,32 @@ struct molecule {
     replacement c;
   };
 
+  //...Rn.Y.Y.Ar
+  const char* parse_pattern(line_view lv, std::vector<line_view>& ps) {
+    const char* p1 = lv.line;
+    const char* p2 = lv.line + lv.length;
+    const char* p = p1;
+    while (p < p2) {
+      if (*p == 'R') {
+        const char* a = parse_pattern({p+2, p2}, ps);
+        p = a + 2;
+        continue;
+      }
+      if (*p == 'A' && *(p + 1) == 'r') {
+        ps.push_back({p1, p});
+        return p;
+      }
+      if (*p == 'Y') {
+        ps.push_back({p1, p});
+        p++;
+        p1 = p;
+        continue;
+      }
+      p++;
+    }
+    return nullptr;
+  }
+
   void check(size_t i, replacement r, std::map<int, std::vector<change>>& vr) const noexcept {
     const char* p1 = original.line;
     const char* p2 = original.line + original.length;
@@ -123,7 +149,7 @@ struct molecule {
     }
   }
 
-  // exponetial down
+  // exponential down
   void deduct(line_view lv, int steps, int* shortest) const noexcept {
     if (lv == "e") {
       if (*shortest > steps) {
@@ -176,7 +202,7 @@ struct molecule {
     }
   }
 
-  // exponetial up
+  // exponential up
   void transfer(line_view lv, int steps, int* shortest) {
     if (lv.length > original.length) {
       return;
