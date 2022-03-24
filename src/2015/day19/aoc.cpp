@@ -11,7 +11,8 @@ std::pair<int, int> day19(line_view file) {
   std::map<int, std::vector<molecule::change>> changes;
   m.check(changes);
   int shortest = INT32_MAX;
-  m.deduct(m.original, 0, &shortest);
+  // m.deduct(m.original, 0, &shortest);
+  m.transfer("e", 0, &shortest);
   return {m.distinct(changes), shortest};
 }
 

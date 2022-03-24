@@ -201,9 +201,9 @@ TEST_CASE("Like a GIF For Your Yard", "[day18]") {
 }
 
 TEST_CASE("Medicine for Rudolph", "[day19]") {
-  // line_view lv = load_file("../src/2015/day19/input");
-  line_view lv = line_view{"e => H\ne => O\nH => HO\nH => OH\nO => HH\n\nHOHOHO\n"};
+  line_view lv = load_file("../src/2015/day19/input");
+  // line_view lv = line_view{"e => H\ne => O\nH => HO\nH => OH\nO => HH\n\nHOHOHO\n"};
   auto p = aoc2015::day19(lv);
   // REQUIRE(509 == p.first);
-  REQUIRE(6 == p.second);
+  REQUIRE(0 == p.second);
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.h"
+#include <algorithm>
 #include <map>
 #include <set>
 #include <string>
@@ -93,10 +94,10 @@ struct molecule {
 
   // r.to -> r.from at p
   line_view replace(line_view lv, const replacement& r, const char* p) const noexcept {
-    size_t len = lv.length + r.from.length - r.to.length;
+    size_t len = lv.length + r.to.length - r.from.length;
     char* s = (char*)malloc(len);
     memset(s, 0x0, len);
-    const char* ps[] = {lv.line, p, p + r.to.length, lv.line + lv.length};
+    const char* ps[] = {lv.line, p, p + r.from.length, lv.line + lv.length};
     char* x = s;
     for (size_t i = 0; i < 3; i++) {
       if (i != 1) {
@@ -106,8 +107,8 @@ struct molecule {
         memcpy(x, p1, p2 - p1);
         x += (p2 - p1);
       } else {
-        const char* p1 = r.from.line;
-        const char* p2 = r.from.line + r.from.length;
+        const char* p1 = r.to.line;
+        const char* p2 = r.to.line + r.to.length;
         // std::cout << line_view{p1, p2} << std::endl;
         memcpy(x, p1, p2 - p1);
         x += (p2 - p1);
@@ -136,7 +137,7 @@ struct molecule {
           line_view v{p1, p2};
           const char* p = v.contains(r.to);
           if (p != nullptr) {
-            line_view n = replace(lv, r, p);
+            line_view n = replace(lv, {r.to, r.from}, p);
             // step(steps);
             // std::cout << lv << " " << p - lv.line << " " << r.to << " -> " << n << std::endl;
             deduct(n, steps + 1, shortest);
@@ -150,13 +151,36 @@ struct molecule {
     }
   }
 
-  void parse(line_view lv, std::vector<line_view>& ms) const noexcept {}
+  void parse(line_view lv, std::vector<line_view>& ms) const noexcept {
+    const char* p1 = lv.line;
+    const char* p2 = lv.line + lv.length;
+    while (p1 < p2) {
+      if (transfers.find({p1, 1}) != transfers.end()) {
+        ms.push_back({p1, 1});
+        p1 += 1;
+        continue;
+      }
+      if (p1 < p2 - 1 && transfers.find({p1, 2}) != transfers.end()) {
+        ms.push_back({p1, 2});
+        p1 += 2;
+        continue;
+      }
+      p1++;
+    }
+  }
+
+  void sort() {
+    for (auto& kv : transfers) {
+      std::sort(kv.second.begin(), kv.second.end());
+    }
+  }
 
   void transfer(line_view lv, int steps, int* shortest) {
     if (lv.length > original.length) {
       return;
     }
     if (lv == original) {
+      printf("e: %d\n", steps);
       if (*shortest > steps) {
         *shortest = steps;
       }
@@ -167,6 +191,7 @@ struct molecule {
         for (auto& to : transfers[from]) {
           line_view next = replace(lv, {from, to}, from.line);
           transfer(next, steps + 1, shortest);
+          delete next.line;
         }
       }
     }
