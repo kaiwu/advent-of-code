@@ -123,6 +123,7 @@ struct molecule {
     }
   }
 
+  // exponetial down
   void deduct(line_view lv, int steps, int* shortest) const noexcept {
     if (lv == "e") {
       if (*shortest > steps) {
@@ -175,6 +176,7 @@ struct molecule {
     }
   }
 
+  // exponetial up
   void transfer(line_view lv, int steps, int* shortest) {
     if (lv.length > original.length) {
       return;
@@ -200,8 +202,10 @@ struct molecule {
   void parse(line_view lv) {
     const char* p = lv.contains("=>");
     if (p != nullptr) {
-      replacements.push_back({{lv.line, p - 1}, {p + 3, lv.line + lv.length - 1}});
-      transfers[{lv.line, p - 1}].push_back({p + 3, lv.line + lv.length - 1});
+      line_view k{lv.line, p - 1};
+      line_view v{p + 3, lv.line + lv.length - 1};
+      replacements.push_back({k, v});
+      transfers[k].push_back(v);
     } else {
       if (lv.length > 1) {
         original = {lv.line, lv.line + lv.length - 1};
