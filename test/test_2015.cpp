@@ -204,6 +204,6 @@ TEST_CASE("Medicine for Rudolph", "[day19]") {
   line_view lv = load_file("../src/2015/day19/input");
   // line_view lv = line_view{"e => H\ne => O\nH => HO\nH => OH\nO => HH\n\nHOHOHO\n"};
   auto p = aoc2015::day19(lv);
-  // REQUIRE(509 == p.first);
+  REQUIRE(509 == p.first);
   REQUIRE(0 == p.second);
 }

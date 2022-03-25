@@ -24,30 +24,30 @@ struct molecule {
     replacement c;
   };
 
-  //...Rn.Y.Y.Ar
-  const char* parse_pattern(line_view lv, std::vector<line_view>& ps) {
+  struct pattern {
+    int depth;
+    line_view lv;
+  };
+
+  //...Rn..Ar
+  void parse_pattern(line_view lv, int depth, std::vector<pattern>& ps, const char** a) {
     const char* p1 = lv.line;
     const char* p2 = lv.line + lv.length;
     const char* p = p1;
     while (p < p2) {
       if (*p == 'R') {
-        const char* a = parse_pattern({p+2, p2}, ps);
-        p = a + 2;
+        parse_pattern({p + 2, p2}, depth + 1, ps, a);
+        p = *a + 2;
         continue;
       }
       if (*p == 'A' && *(p + 1) == 'r') {
-        ps.push_back({p1, p});
-        return p;
-      }
-      if (*p == 'Y') {
-        ps.push_back({p1, p});
-        p++;
-        p1 = p;
-        continue;
+        ps.push_back({depth, {p1, p}});
+        *a = p;
+        return;
       }
       p++;
     }
-    return nullptr;
+    ps.push_back({depth, {p1, p}});
   }
 
   void check(size_t i, replacement r, std::map<int, std::vector<change>>& vr) const noexcept {
