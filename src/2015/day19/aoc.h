@@ -17,6 +17,7 @@ struct replacement {
 struct molecule {
   std::vector<replacement> replacements;
   std::map<line_view, std::vector<line_view>> transfers;
+  std::map<line_view, line_view> backwards;
   line_view original;
 
   struct change {
@@ -28,6 +29,73 @@ struct molecule {
     int depth;
     line_view lv;
   };
+
+  // r.to -> r.from at p
+  line_view replace(line_view lv, const replacement& r, const char* p) const noexcept {
+    size_t len = lv.length + r.to.length - r.from.length;
+    char* s = (char*)malloc(len);
+    memset(s, 0x0, len);
+    const char* ps[] = {lv.line, p, p + r.from.length, lv.line + lv.length};
+    char* x = s;
+    for (size_t i = 0; i < 3; i++) {
+      if (i != 1) {
+        const char* p1 = ps[i];
+        const char* p2 = ps[i + 1];
+        // std::cout << line_view{p1, p2} << std::endl;
+        memcpy(x, p1, p2 - p1);
+        x += (p2 - p1);
+      } else {
+        const char* p1 = r.to.line;
+        const char* p2 = r.to.line + r.to.length;
+        // std::cout << line_view{p1, p2} << std::endl;
+        memcpy(x, p1, p2 - p1);
+        x += (p2 - p1);
+      }
+    }
+    return {s, len};
+  }
+
+  line_view deduce(line_view lv, int* step) {
+    if (transfers.find(lv) == transfers.end()) {
+      auto it = backwards.find(lv);
+      if (it != backwards.end()) {
+        *step += 1;
+        return it->second;
+      } else {
+        const char* p1 = lv.line;
+        const char* p2 = lv.line + lv.length;
+        const char* p = p1 + 1;
+        while (p < p2) {
+          auto jt = backwards.find({p1, p});
+          if (jt != backwards.end()) {
+            replacement r{{p1, p}, jt->second};
+            line_view n = replace(lv, r, p1);
+            *step += 1;
+            return deduce(n, step);
+          } else {
+            p++;
+          }
+        }
+      }
+    }
+    return lv;
+  }
+
+  void parse_y(line_view lv, std::vector<line_view>& ys) {
+    const char* p1 = lv.line;
+    const char* p2 = lv.line + lv.length;
+    while (p1 < p2) {
+      line_view x{p1, p2};
+      const char* p = x.contains("Y");
+      if (p != nullptr) {
+        ys.push_back({p1, p});
+        p1 = p + 1;
+      } else {
+        break;
+      }
+    }
+    ys.push_back({p1, p2});
+  }
 
   //...Rn..Ar
   void parse_pattern(line_view lv, int depth, std::vector<pattern>& ps, const char** a) {
@@ -41,6 +109,7 @@ struct molecule {
         continue;
       }
       if (*p == 'A' && *(p + 1) == 'r') {
+        // ps.push_back({depth, {p1 - 2, p + 2}});
         ps.push_back({depth, {p1, p}});
         *a = p;
         return;
@@ -118,31 +187,6 @@ struct molecule {
     return d;
   }
 
-  // r.to -> r.from at p
-  line_view replace(line_view lv, const replacement& r, const char* p) const noexcept {
-    size_t len = lv.length + r.to.length - r.from.length;
-    char* s = (char*)malloc(len);
-    memset(s, 0x0, len);
-    const char* ps[] = {lv.line, p, p + r.from.length, lv.line + lv.length};
-    char* x = s;
-    for (size_t i = 0; i < 3; i++) {
-      if (i != 1) {
-        const char* p1 = ps[i];
-        const char* p2 = ps[i + 1];
-        // std::cout << line_view{p1, p2} << std::endl;
-        memcpy(x, p1, p2 - p1);
-        x += (p2 - p1);
-      } else {
-        const char* p1 = r.to.line;
-        const char* p2 = r.to.line + r.to.length;
-        // std::cout << line_view{p1, p2} << std::endl;
-        memcpy(x, p1, p2 - p1);
-        x += (p2 - p1);
-      }
-    }
-    return {s, len};
-  }
-
   void step(int i) const noexcept {
     while (i-- > 0) {
       std::cout << "\t";
@@ -176,6 +220,19 @@ struct molecule {
         }
       }
     }
+  }
+
+  line_view replace(line_view lv, int* steps) const noexcept {
+    for (auto kv : backwards) {
+      const char* r = kv.first.contains("Rn");
+      const char* p = lv.contains(kv.first);
+      if (r != nullptr && p != nullptr) {
+        *steps += 1;
+        line_view ln = replace(lv, {kv.first, kv.second}, p);
+        return replace(ln, steps);
+      }
+    }
+    return lv;
   }
 
   void parse(line_view lv, std::vector<line_view>& ms) const noexcept {
@@ -232,6 +289,7 @@ struct molecule {
       line_view v{p + 3, lv.line + lv.length - 1};
       replacements.push_back({k, v});
       transfers[k].push_back(v);
+      backwards.insert({v, k});
     } else {
       if (lv.length > 1) {
         original = {lv.line, lv.line + lv.length - 1};
