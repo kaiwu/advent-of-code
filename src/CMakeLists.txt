@@ -20,6 +20,7 @@ set(SOLUTION_FILES
   "2015/day18/aoc.cpp"
   "2015/day19/aoc.cpp"
   "2015/day20/aoc.cpp"
+  "2015/day21/aoc.cpp"
 )
 
 add_library(solution SHARED ${SOLUTION_FILES})

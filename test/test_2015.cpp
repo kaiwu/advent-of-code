@@ -11,6 +11,7 @@
 #include "2015/day19/aoc.h"
 #include "2015/day2/aoc.h"
 #include "2015/day20/aoc.h"
+#include "2015/day21/aoc.h"
 #include "2015/day3/aoc.h"
 #include "2015/day4/aoc.h"
 #include "2015/day5/aoc.h"
@@ -213,4 +214,8 @@ TEST_CASE("Infinite Elves and Infinite Houses", "[day20]") {
   auto p = aoc2015::day20(36000000, 10);
   REQUIRE(831600 == p.first);
   REQUIRE(884520 == p.second);
+}
+
+TEST_CASE("RPG Simulator 20XX", "[day21]") {
+  // line_view lv = load_file("../src/2015/day21/input");
 }
