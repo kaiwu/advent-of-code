@@ -16,16 +16,20 @@ std::pair<int, int> day19(line_view file) {
   int steps = 0;
 
   line_view lv = m.original;
+  std::vector<molecule::pattern> ps;
 
   do {
     lv = m.replace(lv, &steps);
-    printf("%d\n", steps);
+    // printf("%d\n", steps);
 
-    std::vector<molecule::pattern> ps;
+    ps.clear();
     const char* x = nullptr;
     m.parse_pattern(lv, 0, ps, &x);
-    std::for_each(ps.begin(), ps.end(),
-                  [](molecule::pattern p) { std::cout << p.depth << " -> " << p.lv << std::endl; });
+    // std::for_each(ps.begin(), ps.end(),
+    //              [](molecule::pattern p) { std::cout << p.depth << " -> " << p.lv << std::endl; });
+    if (ps[0].lv == "e") {
+      break;
+    }
     if (ps[0].lv.contains("Y")) {
       std::vector<line_view> ys;
       m.parse_y(ps[0].lv, ys);
@@ -38,11 +42,15 @@ std::pair<int, int> day19(line_view file) {
       }
     } else {
       line_view to = m.deduce(ps[0].lv, &steps);
-      lv = m.replace(lv, {ps[0].lv, to}, ps[0].lv.line);
+      if (!(to == ps[0].lv)) {
+        lv = m.replace(lv, {ps[0].lv, to}, ps[0].lv.line);
+      } else {
+        lv = m.deduce(lv, ps[0].lv.line - 2, &steps);
+      }
     }
   } while (true);
 
-  return {m.distinct(changes), 0};
+  return {m.distinct(changes), steps};
 }
 
 } // namespace aoc2015

@@ -81,6 +81,16 @@ struct molecule {
     return lv;
   }
 
+  line_view deduce(line_view lv, const char* p, int* step) {
+    const char* p1 = p;
+    do {
+      p--;
+    } while (backwards.find({p, p1}) == backwards.end());
+    auto it = backwards.find({p, p1});
+    *step += 1;
+    return replace(lv, {it->first, it->second}, p);
+  }
+
   void parse_y(line_view lv, std::vector<line_view>& ys) {
     const char* p1 = lv.line;
     const char* p2 = lv.line + lv.length;
