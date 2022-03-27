@@ -10,6 +10,7 @@
 #include "2015/day18/aoc.h"
 #include "2015/day19/aoc.h"
 #include "2015/day2/aoc.h"
+#include "2015/day20/aoc.h"
 #include "2015/day3/aoc.h"
 #include "2015/day4/aoc.h"
 #include "2015/day5/aoc.h"
@@ -207,3 +208,5 @@ TEST_CASE("Medicine for Rudolph", "[day19]") {
   REQUIRE(509 == p.first);
   REQUIRE(195 == p.second);
 }
+
+TEST_CASE("Infinite Elves and Infinite Houses", "[day20]") {}
