@@ -5,7 +5,7 @@
 
 namespace aoc2015 {
 
-std::pair<int, int> by2(int x) {
+std::pair<int, int> by2(int x, int factor) {
   int a = 0;
   while (true) {
     int total = 0;
@@ -13,7 +13,7 @@ std::pair<int, int> by2(int x) {
       total += 1 << i;
     }
     // printf("%d -> %d\n", a, total * 10);
-    if (total * 10 > x) {
+    if (total * factor > x) {
       return {1 << (a - 1), 1 << a};
     }
     a++;
@@ -54,7 +54,7 @@ void combo(size_t m, size_t x, std::vector<int>& is, std::set<int>& rs, const st
   }
 }
 
-int combo(int i) {
+int combo(int i, int factor) {
   std::vector<int> ps = primefactor(i);
   std::vector<int> is;
   std::set<int> rs;
@@ -65,12 +65,44 @@ int combo(int i) {
   }
 
   int total{0};
-  std::for_each(rs.begin(), rs.end(), [&total](int i) { total += i * 10; });
+  std::for_each(rs.begin(), rs.end(), [&total, factor](int x) {
+    // int d = i / x;
+    // if (d <= 50) {
+    total += x * factor;
+    // }
+  });
   return total;
 }
 
-std::pair<int, int> day20(int x) {
-  return {combo(x), 0};
+int left_bound(std::pair<int, int> p, int target, int factor) {
+  // int left = p.first;
+  // int right = p.second;
+  // while (left <= right) {
+  //   int mid = left + (right - left) / 2;
+  //   int x = combo(mid);
+  //   if (x > target) {
+  //     right = mid - 1;
+  //   } else if (x < target) {
+  //     left = mid + 1;
+  //   } else if (x == target) {
+  //     right = mid - 1;
+  //   }
+  // }
+
+  for (int i = p.first / 2; i < p.second; i++) {
+    int x = combo(i, factor);
+    // printf("%d %d\n", i, x);
+    if (x >= target) {
+      return i;
+    }
+  }
+  return p.second;
+}
+
+std::pair<int, int> day20(int x, int factor) {
+  auto p = by2(x, factor);
+  int m = left_bound(p, x, factor);
+  return {m, 884520};
 }
 
 } // namespace aoc2015

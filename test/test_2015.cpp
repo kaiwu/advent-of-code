@@ -210,7 +210,7 @@ TEST_CASE("Medicine for Rudolph", "[day19]") {
 }
 
 TEST_CASE("Infinite Elves and Infinite Houses", "[day20]") {
-  auto p = aoc2015::day20(4);
-  // auto p = aoc2015::day20(36000000);
-  printf("%d %d\n", p.first, p.second);
+  auto p = aoc2015::day20(36000000, 10);
+  REQUIRE(831600 == p.first);
+  REQUIRE(884520 == p.second);
 }
