@@ -14,7 +14,7 @@ struct Role {
 
 struct RPG {
   struct item {
-    line_view name;
+    const char* name;
     int cost;
     int damage;
     int armor;
@@ -27,43 +27,57 @@ struct RPG {
   };
 
   // 0, 1 in 5
-  item armors[5] = {
+  item armors[6] = {
       {"leather", 13, 0, 1},    {"chainmail", 31, 0, 2},  {"splintmail", 53, 0, 3},
-      {"bandedmail", 75, 0, 4}, {"platemail", 102, 0, 5},
+      {"bandedmail", 75, 0, 4}, {"platemail", 102, 0, 5}, {"none", 0, 0, 0},
   };
 
   // 0, 1, 2 in 6
-  item rings[6] = {
-      {"ring1", 25, 1, 0}, {"ring2", 50, 2, 0}, {"ring3", 100, 3, 0},
-      {"ring4", 20, 0, 1}, {"ring5", 40, 0, 2}, {"ring6", 80, 0, 3},
+  item rings[7] = {
+      {"ring1", 25, 1, 0}, {"ring2", 50, 2, 0}, {"ring3", 100, 3, 0}, {"ring4", 20, 0, 1},
+      {"ring5", 40, 0, 2}, {"ring6", 80, 0, 3}, {"none", 0, 0, 0},
   };
 
-  struct three {
-    int i1;
-    int i2;
-    int i3;
-  };
+  bool has_same_ring(std::vector<item*> is) {
+    int x[ARRAY_SIZE(rings)] = {0};
+    for (item* i : is) {
+      line_view lv{i->name};
+      const char* p = lv.contains("ring");
+      if (p != nullptr && ++(x[*(p + 4) - '1']) > 1) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   // backtrace
-  void shop(int i, three& t1, three& t2, std::vector<item>& is) {
-    if (i == 3) {
-
+  void shop(size_t i, std::vector<item*>& v, std::vector<Role>& rs, const Role& r) {
+    static item* items[] = {weapons, armors, rings, rings};
+    static size_t sizes[] = {ARRAY_SIZE(weapons), ARRAY_SIZE(armors), ARRAY_SIZE(rings), ARRAY_SIZE(rings)};
+    if (i < ARRAY_SIZE(items)) {
+      item* is = items[i];
+      for (size_t x = 0; x < sizes[i]; x++) {
+        v.push_back(&is[x]);
+        shop(i + 1, v, rs, r);
+        v.pop_back();
+      }
+    } else {
+      if (!has_same_ring(v)) {
+        Role x = r;
+        std::for_each(v.begin(), v.end(), [&x](item* i) {
+          x.cost += i->cost;
+          x.armor += i->armor;
+          x.damage += i->damage;
+        });
+        rs.push_back(x);
+      }
     }
   }
 
   std::vector<Role> shop(Role r) {
-    std::vector<item> is;
+    std::vector<item*> is;
     std::vector<Role> rs;
-    three t1;
-    three t2;
-    shop(0, t1, t2, is);
-    std::transform(is.begin(), is.end(), rs.begin(), [&r](const item& i) -> Role {
-      Role x = r;
-      x.cost += i.cost;
-      x.armor += i.armor;
-      x.damage += i.damage;
-      return x;
-    });
+    shop(0, is, rs, r);
     return rs;
   }
 
@@ -76,6 +90,6 @@ struct RPG {
   }
 };
 
-int day21();
+std::pair<int,int> day21();
 
 } // namespace aoc2015

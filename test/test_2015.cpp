@@ -217,5 +217,7 @@ TEST_CASE("Infinite Elves and Infinite Houses", "[day20]") {
 }
 
 TEST_CASE("RPG Simulator 20XX", "[day21]") {
-  // line_view lv = load_file("../src/2015/day21/input");
+  auto p = aoc2015::day21();
+  REQUIRE(91 == p.first);
+  REQUIRE(158 == p.second);
 }
