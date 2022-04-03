@@ -53,8 +53,8 @@ struct position {
   }
 
   position move(const std::vector<instruction>& is) const noexcept {
-    position next;
-    std::for_each(is.begin(), is.end(), [&next, this](const instruction& i) { next = move(i); });
+    position next = *this;
+    std::for_each(is.begin(), is.end(), [&next](const instruction& i) { next = next.move(i); });
     return next;
   }
 };
