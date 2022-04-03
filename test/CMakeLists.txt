@@ -3,6 +3,11 @@ set(TEST_FILES
     test_common.cpp
     test_2015.cpp
     test_2016.cpp
+    test_2017.cpp
+    test_2018.cpp
+    test_2019.cpp
+    test_2020.cpp
+    test_2021.cpp
 )
 
 add_executable(aoc ${TEST_FILES})
