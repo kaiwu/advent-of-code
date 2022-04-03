@@ -59,6 +59,6 @@ struct position {
   }
 };
 
-std::vector<instruction> parse_day1(line_view);
+int day1(line_view);
 
 } // namespace aoc2016
