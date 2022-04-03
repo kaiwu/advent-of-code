@@ -2,6 +2,7 @@ set(TEST_FILES
     catch_main.cpp
     test_common.cpp
     test_2015.cpp
+    test_2016.cpp
 )
 
 add_executable(aoc ${TEST_FILES})
