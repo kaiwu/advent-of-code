@@ -23,13 +23,13 @@
 #include "catch.hpp"
 #include <stdio.h>
 
-TEST_CASE("Not Quite Lisp", "[day1]") {
+TEST_CASE("Not Quite Lisp", "[2015]") {
   line_view lv = load_file("../src/2015/day1/input");
   REQUIRE(aoc2015::day1(lv) == 74);
   REQUIRE(aoc2015::day1(lv, -1) == 1795);
 }
 
-TEST_CASE("parse box", "[day2]") {
+TEST_CASE("parse box", "[2015]") {
   line_view lv1{"27x2x5\n", 7};
   auto b1 = aoc2015::parse_day2(lv1);
   auto a1 = b1.l == 27 && b1.w == 2 && b1.h == 5;
@@ -40,21 +40,21 @@ TEST_CASE("parse box", "[day2]") {
   REQUIRE(a2);
 }
 
-TEST_CASE("I Was Told There Would Be No Math", "[day2]") {
+TEST_CASE("I Was Told There Would Be No Math", "[2015]") {
   line_view lv = load_file("../src/2015/day2/input");
   auto p = aoc2015::day2(lv);
   REQUIRE(p.first == 1586300);
   REQUIRE(p.second == 3737498);
 }
 
-TEST_CASE("Perfectly Spherical Houses in a Vacuum", "[day3]") {
+TEST_CASE("Perfectly Spherical Houses in a Vacuum", "[2015]") {
   line_view lv = load_file("../src/2015/day3/input");
   auto p = aoc2015::day3(lv);
   REQUIRE(p.first == 2565);
   REQUIRE(p.second == 2639);
 }
 
-TEST_CASE("The Ideal Stocking Stuffer", "[day4]") {
+TEST_CASE("The Ideal Stocking Stuffer", "[2015]") {
   char s1[] = "abcdef609043";
   char s2[] = "pqrstuv1048970";
   char s3[] = "bgvyzdsv254575";
@@ -66,7 +66,7 @@ TEST_CASE("The Ideal Stocking Stuffer", "[day4]") {
   REQUIRE(aoc2015::lead_zeros(aoc2015::md5sum(s4)) >= 6);
 }
 
-TEST_CASE("Doesn't He Have Intern-Elves For This?", "[day5]") {
+TEST_CASE("Doesn't He Have Intern-Elves For This?", "[2015]") {
   line_view lv{"adcccfadd", 9};
   REQUIRE(aoc2015::count_vowels(lv, "aeiou") == 2);
   REQUIRE(aoc2015::count_vowels(lv, "eiou") == 0);
@@ -89,7 +89,7 @@ TEST_CASE("Doesn't He Have Intern-Elves For This?", "[day5]") {
   REQUIRE(p.second == 55);
 }
 
-TEST_CASE("Probably a Fire Hazard", "[day6]") {
+TEST_CASE("Probably a Fire Hazard", "[2015]") {
   /*
   aoc2015::grid<aoc2015::Bit, 1000> grid;
   grid.turn_on({0, 0}, {0, 999});
@@ -106,7 +106,7 @@ TEST_CASE("Probably a Fire Hazard", "[day6]") {
   REQUIRE(14687245 == p.second);
 }
 
-TEST_CASE("Some Assembly Required", "[day7]") {
+TEST_CASE("Some Assembly Required", "[2015]") {
   aoc2015::cals cals;
   cals.parse("1 -> ab");
   cals.parse("8 RSHIFT ab -> x");
@@ -127,38 +127,38 @@ TEST_CASE("Some Assembly Required", "[day7]") {
   REQUIRE(14710 == r2.value);
 }
 
-TEST_CASE("Matchsticks", "[day8]") {
+TEST_CASE("Matchsticks", "[2015]") {
   line_view lv = load_file("../src/2015/day8/input");
   auto p = aoc2015::day8(lv);
   REQUIRE(1371 == p.first);
   REQUIRE(2117 == p.second);
 }
 
-TEST_CASE("All in a Single Night", "[day9]") {
+TEST_CASE("All in a Single Night", "[2015]") {
   line_view lv = load_file("../src/2015/day9/input");
   auto p = aoc2015::day9(lv);
   REQUIRE(117 == p.first);
   REQUIRE(909 == p.second);
 }
 
-TEST_CASE("Elves Look, Elves Say", "[day10]") {
+TEST_CASE("Elves Look, Elves Say", "[2015]") {
   REQUIRE(329356 == aoc2015::day10("3113322113", 40));
   REQUIRE(4666278 == aoc2015::day10("3113322113", 50));
 }
 
-TEST_CASE("Corporate Policy", "[day11]") {
+TEST_CASE("Corporate Policy", "[2015]") {
   REQUIRE(strcmp(aoc2015::day11("hxbxwxba"), "hxbxxyzz") == 0);
   REQUIRE(strcmp(aoc2015::day11("hxbxxyzz"), "hxcaabcc") == 0);
 }
 
-TEST_CASE("JSAbacusFramework.io", "[day12]") {
+TEST_CASE("JSAbacusFramework.io", "[2015]") {
   // printf("%d\n", aoc2015::day12_part2("[{ 5 {red1} {3{4 {10}}3}} 10 red 10]"));
   line_view lv = load_file("../src/2015/day12/input");
   REQUIRE(156366 == aoc2015::day12(lv));
   REQUIRE(96852 == aoc2015::day12_part2(lv));
 }
 
-TEST_CASE("Knights of the Dinner Table", "[day13]") {
+TEST_CASE("Knights of the Dinner Table", "[2015]") {
   line_view lv = load_file("../src/2015/day13/input");
   auto p1 = aoc2015::day13(lv);
   REQUIRE(-638 == p1.first);
@@ -169,41 +169,41 @@ TEST_CASE("Knights of the Dinner Table", "[day13]") {
   REQUIRE(668 == p2.second);
 }
 
-TEST_CASE("Reindeer Olympics", "[day14]") {
+TEST_CASE("Reindeer Olympics", "[2015]") {
   line_view lv = load_file("../src/2015/day14/input");
   auto p = aoc2015::day14(lv, 2503);
   REQUIRE(2640 == p.first);
   REQUIRE(1102 == p.second);
 }
 
-TEST_CASE("Science for Hungry People", "[day15]") {
+TEST_CASE("Science for Hungry People", "[2015]") {
   line_view lv = load_file("../src/2015/day15/input");
   REQUIRE(21367368 == aoc2015::day15(lv));
   int cals = 500;
   REQUIRE(1766400 == aoc2015::day15(lv, &cals));
 }
 
-TEST_CASE("Aunt Sue", "[day16]") {
+TEST_CASE("Aunt Sue", "[2015]") {
   line_view lv = load_file("../src/2015/day16/input");
   auto p = aoc2015::day16(lv);
   REQUIRE(103 == p.first);
   REQUIRE(405 == p.second);
 }
 
-TEST_CASE("No Such Thing as Too Much", "[day17]") {
+TEST_CASE("No Such Thing as Too Much", "[2015]") {
   line_view lv = load_file("../src/2015/day17/input");
   auto p = aoc2015::day17(lv, 150);
   REQUIRE(654 == p.first);
   REQUIRE(57 == p.second);
 }
 
-TEST_CASE("Like a GIF For Your Yard", "[day18]") {
+TEST_CASE("Like a GIF For Your Yard", "[2015]") {
   line_view lv = load_file("../src/2015/day18/input");
   // REQUIRE(821 == aoc2015::day18(lv, 100));
   REQUIRE(886 == aoc2015::day18(lv, 100));
 }
 
-TEST_CASE("Medicine for Rudolph", "[day19]") {
+TEST_CASE("Medicine for Rudolph", "[2015]") {
   line_view lv = load_file("../src/2015/day19/input");
   // line_view lv = line_view{"e => H\ne => O\nH => HO\nH => OH\nO => HH\n\nHOHOHO\n"};
   auto p = aoc2015::day19(lv);
@@ -211,17 +211,17 @@ TEST_CASE("Medicine for Rudolph", "[day19]") {
   REQUIRE(195 == p.second);
 }
 
-TEST_CASE("Infinite Elves and Infinite Houses", "[day20]") {
+TEST_CASE("Infinite Elves and Infinite Houses", "[2015]") {
   auto p = aoc2015::day20(36000000, 10);
   REQUIRE(831600 == p.first);
   REQUIRE(884520 == p.second);
 }
 
-TEST_CASE("RPG Simulator 20XX", "[day21]") {
+TEST_CASE("RPG Simulator 20XX", "[2015]") {
   auto p = aoc2015::day21();
   REQUIRE(91 == p.first);
   REQUIRE(158 == p.second);
 }
 
-TEST_CASE("Wizard Simulator 20XX", "[day22]") {
+TEST_CASE("Wizard Simulator 20XX", "[2015]") {
 }

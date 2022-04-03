@@ -2,6 +2,6 @@
 #include "catch.hpp"
 #include <stdio.h>
 
-TEST_CASE("", "[day1]") {
+TEST_CASE("", "[2019]") {
   // line_view lv = load_file("../src/2019/day1/input");
 }
