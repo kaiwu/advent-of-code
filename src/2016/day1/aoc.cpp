@@ -6,8 +6,6 @@ instruction parse_day1(const char** pp) {
   instruction i;
   const char* p = *pp;
   i.direction = (*p++) == 'R' ? instruction::right : instruction::left;
-  i.distance = 0;
-
   while (*p >= '0' && *p <= '9') {
     i.distance = i.distance * 10 + *p - '0';
     p++;
@@ -22,7 +20,7 @@ std::pair<int, int> day1(line_view file) {
   std::vector<instruction> is;
 
   bool found = false;
-  position first;
+  position first{position::north, 0, 0};
 
   const char* p1 = file.line;
   const char* p2 = file.line + file.length;

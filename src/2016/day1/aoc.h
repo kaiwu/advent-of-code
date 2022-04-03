@@ -4,6 +4,7 @@
 #include <math.h>
 #include <set>
 #include <vector>
+#include <functional>
 
 namespace aoc2016 {
 
@@ -12,7 +13,7 @@ struct instruction {
     left = 0,
     right,
   } direction;
-  int distance;
+  int distance = 0;
 };
 
 struct position {
