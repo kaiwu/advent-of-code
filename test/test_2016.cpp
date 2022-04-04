@@ -2,6 +2,7 @@
 #include "2016/day2/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
+#include <string.h>
 
 TEST_CASE("No Time for a Taxicab", "[2016]") {
   line_view lv = load_file("../src/2016/day1/input");
@@ -12,5 +13,8 @@ TEST_CASE("No Time for a Taxicab", "[2016]") {
 
 TEST_CASE("Bathroom Security", "[2016]") {
   line_view lv = load_file("../src/2016/day2/input");
-  REQUIRE(82958 == aoc2016::day2(lv));
+  char codes[6] = {0};
+  int code = aoc2016::day2(lv, codes);
+  REQUIRE(82958 == code);
+  REQUIRE(strcmp(codes, "B3DB8") == 0);
 }
