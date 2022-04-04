@@ -6,5 +6,5 @@ TEST_CASE("Report Repair", "[2020]") {
   line_view lv = load_file("../src/2020/day1/input");
   auto p = aoc2020::day1(lv, 2020);
   REQUIRE(1019904 == p.first);
-  REQUIRE(0 == p.second);
+  REQUIRE(176647680 == p.second);
 }
