@@ -1,4 +1,5 @@
 #include "aoc.h"
+#include <vector>
 
 namespace aoc2017 {
 
@@ -13,7 +14,27 @@ int get_number(const char** pp) {
   return d;
 }
 
-int diff(line_view lv) {
+int evenly_divisible(int x, int y) {
+  int max = std::max(x, y);
+  int min = std::min(x, y);
+  return max % min == 0 ? max / min : 0;
+}
+
+int diff(size_t i, const std::vector<int>& v) {
+  if (i == v.size() - 1) {
+    return 0;
+  } else {
+    for (size_t j = i + 1; j < v.size(); j++) {
+      int d = evenly_divisible(v[i], v[j]);
+      if (d > 0) {
+        return d;
+      }
+    }
+    return diff(i + 1, v);
+  }
+}
+
+int diff(line_view lv, std::vector<int>& v) {
   int max{INT_MIN};
   int min{INT_MAX};
   const char* p = lv.line;
@@ -24,19 +45,23 @@ int diff(line_view lv) {
         max = d;
       if (d < min)
         min = d;
+      v.push_back(d);
     }
     p++;
   }
   return max - min;
 }
 
-int day2(line_view file) {
-  int sum{0};
-  per_line(file, [&sum](line_view lv) {
-    sum += diff(lv);
+std::pair<int, int> day2(line_view file) {
+  int sum1{0};
+  int sum2{0};
+  per_line(file, [&sum1, &sum2](line_view lv) {
+    std::vector<int> v;
+    sum1 += diff(lv, v);
+    sum2 += diff(size_t(0), v);
     return true;
   });
-  return sum;
+  return {sum1, sum2};
 }
 
 } // namespace aoc2017

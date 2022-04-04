@@ -18,5 +18,7 @@ TEST_CASE("Inverse Captcha", "[2017]") {
 
 TEST_CASE("Corruption Checksum", "[2017]") {
   line_view lv = load_file("../src/2017/day2/input");
-  REQUIRE(43074 == aoc2017::day2(lv));
+  auto p = aoc2017::day2(lv);
+  REQUIRE(43074 == p.first);
+  REQUIRE(280 == p.second);
 }
