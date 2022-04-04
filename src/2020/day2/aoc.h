@@ -2,6 +2,6 @@
 
 #include "common.h"
 
-namespace aoc2016 {
+namespace aoc2020 {
 
 }
