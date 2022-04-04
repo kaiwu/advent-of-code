@@ -1,4 +1,5 @@
 #include "2017/day1/aoc.h"
+#include "2017/day2/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
@@ -13,4 +14,9 @@ TEST_CASE("Inverse Captcha", "[2017]") {
   REQUIRE(4 == aoc2017::day1part2("123425"));
   REQUIRE(12 == aoc2017::day1part2("123123"));
   REQUIRE(4 == aoc2017::day1part2("12131415"));
+}
+
+TEST_CASE("Corruption Checksum", "[2017]") {
+  line_view lv = load_file("../src/2017/day2/input");
+  REQUIRE(43074 == aoc2017::day2(lv));
 }
