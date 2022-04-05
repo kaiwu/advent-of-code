@@ -19,3 +19,8 @@ TEST_CASE("Bathroom Security", "[2016]") {
   REQUIRE(82958 == code);
   REQUIRE(strcmp(codes, "B3DB8") == 0);
 }
+
+TEST_CASE("Squares With Three Sides", "[2016]") {
+  line_view lv = load_file("../src/2016/day3/input");
+  REQUIRE(862 == aoc2016::day3(lv));
+}
