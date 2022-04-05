@@ -25,21 +25,27 @@ set(SOLUTION_FILES
 
   "2016/day1/aoc.cpp"
   "2016/day2/aoc.cpp"
+  "2016/day3/aoc.cpp"
 
   "2017/day1/aoc.cpp"
   "2017/day2/aoc.cpp"
+  "2016/day3/aoc.cpp"
 
   "2018/day1/aoc.cpp"
   "2018/day2/aoc.cpp"
+  "2016/day3/aoc.cpp"
 
   "2019/day1/aoc.cpp"
   "2019/day2/aoc.cpp"
+  "2016/day3/aoc.cpp"
 
   "2020/day1/aoc.cpp"
   "2020/day2/aoc.cpp"
+  "2016/day3/aoc.cpp"
 
   "2021/day1/aoc.cpp"
   "2021/day2/aoc.cpp"
+  "2016/day3/aoc.cpp"
 )
 
 add_library(solution SHARED ${SOLUTION_FILES})
