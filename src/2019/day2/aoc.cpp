@@ -33,7 +33,25 @@ void run(size_t i, std::vector<int>& codes) {
   }
 }
 
-int day2(line_view file) {
+int test(int n, int v, std::vector<int> codes) {
+  codes[1] = n;
+  codes[2] = v;
+  run(0, codes);
+  return codes[0];
+}
+
+int test(int target, const std::vector<int>& codes) {
+  for (int n = 0; n <= 99; n++) {
+    for (int v = 0; v <= 99; v++) {
+      if (target == test(n, v, codes)) {
+        return n * 100 + v;
+      }
+    }
+  }
+  return 0;
+}
+
+std::pair<int, int> day2(line_view file) {
   std::vector<int> optcodes;
   const char* p = file.line;
   while (p < file.line + file.length) {
@@ -42,10 +60,7 @@ int day2(line_view file) {
     }
     p++;
   }
-  optcodes[1] = 12;
-  optcodes[2] = 2;
-  run(0, optcodes);
-  return optcodes[0];
+  return {test(12, 2, optcodes), test(19690720, optcodes)};
 }
 
 } // namespace aoc2019
