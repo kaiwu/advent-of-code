@@ -9,3 +9,8 @@ TEST_CASE("The Tyranny of the Rocket Equation", "[2019]") {
   REQUIRE(5203967 == aoc2019::day1part2(lv));
   REQUIRE(50346 == aoc2019::day1part2("100756"));
 }
+
+TEST_CASE("1202 Program Alarm", "[2019]") {
+  line_view lv = load_file("../src/2019/day2/input");
+  REQUIRE(11590668 == aoc2019::day2(lv));
+}

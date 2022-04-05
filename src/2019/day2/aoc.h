@@ -4,4 +4,5 @@
 
 namespace aoc2019 {
 
+int day2(line_view);
 }
