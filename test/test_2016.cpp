@@ -22,5 +22,7 @@ TEST_CASE("Bathroom Security", "[2016]") {
 
 TEST_CASE("Squares With Three Sides", "[2016]") {
   line_view lv = load_file("../src/2016/day3/input");
-  REQUIRE(862 == aoc2016::day3(lv));
+  auto p = aoc2016::day3(lv);
+  REQUIRE(862 == p.first);
+  REQUIRE(1577 == p.second);
 }
