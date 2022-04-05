@@ -2,6 +2,7 @@
 #include "2018/day2/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
+#include <string.h>
 
 TEST_CASE("Chronal Calibration", "[2018]") {
   line_view lv = load_file("../src/2018/day1/input");
@@ -10,4 +11,12 @@ TEST_CASE("Chronal Calibration", "[2018]") {
   // REQUIRE(10 == aoc2018::day1part2("+3\n+3\n+4\n-2\n-4"));
   // REQUIRE(5 == aoc2018::day1part2("-6\n+3\n+8\n+5\n-6"));
   // REQUIRE(14 == aoc2018::day1part2("+7\n+7\n-2\n-7\n-4"));
+}
+
+TEST_CASE("Inventory Management System", "[2018]") {
+  line_view lv = load_file("../src/2018/day2/input");
+  char common[26] = {0};
+  auto p = aoc2018::day2(lv, common);
+  REQUIRE(6642 == p);
+  REQUIRE(strcmp("cvqlbidheyujgtrswxmckqnap", common) == 0);
 }
