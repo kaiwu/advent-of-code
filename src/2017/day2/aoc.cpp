@@ -1,5 +1,6 @@
 #include "aoc.h"
 #include <vector>
+#include <climits>
 
 namespace aoc2017 {
 
@@ -20,7 +21,7 @@ int evenly_divisible(int x, int y) {
   return max % min == 0 ? max / min : 0;
 }
 
-int diff(size_t i, const std::vector<int>& v) {
+int diffr(size_t i, const std::vector<int>& v) {
   if (i == v.size() - 1) {
     return 0;
   } else {
@@ -30,7 +31,7 @@ int diff(size_t i, const std::vector<int>& v) {
         return d;
       }
     }
-    return diff(i + 1, v);
+    return diffr(i + 1, v);
   }
 }
 
@@ -58,7 +59,7 @@ std::pair<int, int> day2(line_view file) {
   per_line(file, [&sum1, &sum2](line_view lv) {
     std::vector<int> v;
     sum1 += diff(lv, v);
-    sum2 += diff(size_t(0), v);
+    sum2 += diffr(0, v);
     return true;
   });
   return {sum1, sum2};
