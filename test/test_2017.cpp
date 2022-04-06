@@ -23,3 +23,12 @@ TEST_CASE("Corruption Checksum", "[2017]") {
   REQUIRE(43074 == p.first);
   REQUIRE(280 == p.second);
 }
+
+TEST_CASE("Spiral Memory", "[2017]") {
+  REQUIRE(2 == aoc2017::day3(9));
+  REQUIRE(2 == aoc2017::day3(11));
+  REQUIRE(3 == aoc2017::day3(10));
+  REQUIRE(4 == aoc2017::day3(13));
+  REQUIRE(4 == aoc2017::day3(25));
+  REQUIRE(430 == aoc2017::day3(312051));
+}
