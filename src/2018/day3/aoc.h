@@ -34,6 +34,17 @@ struct fabric {
     return total;
   }
 
+  bool overlap(const claim& c) {
+    for (int x = c.x; x < c.x + c.width; x++) {
+      for (int y = c.y; y < c.y + c.height; y++) {
+        if (claims[y * 1000 + x] > 1) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   void get_number(const char** pp, int* is[], int i) {
     *is[i] = 0;
     const char* p = *pp;
@@ -44,7 +55,7 @@ struct fabric {
     *pp = p;
   }
 
-  void parse(line_view lv) {
+  void parse(line_view lv, std::vector<claim>& cs) {
     claim c;
     int* is[] = {&c.id, &c.x, &c.y, &c.width, &c.height};
     int i{0};
@@ -56,9 +67,10 @@ struct fabric {
       p++;
     }
     apply(c);
+    cs.push_back(c);
   }
 };
 
-int day3(line_view, int);
+std::pair<int, int> day3(line_view, int);
 
 } // namespace aoc2018
