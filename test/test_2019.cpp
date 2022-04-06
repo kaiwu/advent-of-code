@@ -17,3 +17,8 @@ TEST_CASE("1202 Program Alarm", "[2019]") {
   REQUIRE(11590668 == p.first);
   REQUIRE(2254 == p.second);
 }
+
+TEST_CASE("Crossed Wires", "[2019]") {
+  line_view lv = load_file("../src/2019/day3/input");
+  REQUIRE(266 == aoc2019::day3(lv));
+}
