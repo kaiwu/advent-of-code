@@ -31,4 +31,5 @@ TEST_CASE("Spiral Memory", "[2017]") {
   REQUIRE(4 == aoc2017::day3(13));
   REQUIRE(4 == aoc2017::day3(25));
   REQUIRE(430 == aoc2017::day3(312051));
+  REQUIRE(312453 == aoc2017::day3part2(312051));
 }

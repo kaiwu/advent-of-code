@@ -42,4 +42,9 @@ int day3(int target) {
   return d + p.first;
 }
 
+int day3part2(int target) {
+  spiral_grid grid{9};
+  return grid.fill_until(target);
+}
+
 } // namespace aoc2017
