@@ -21,3 +21,8 @@ TEST_CASE("Inventory Management System", "[2018]") {
   REQUIRE(6642 == p);
   REQUIRE(strcmp("cvqlbidheyujgtrswxmckqnap", common) == 0);
 }
+
+TEST_CASE("No Matter How You Slice It", "[2018]") {
+  line_view lv = load_file("../src/2018/day3/input");
+  REQUIRE(109785 == aoc2018::day3(lv, 1));
+}
