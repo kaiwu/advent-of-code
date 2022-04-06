@@ -27,7 +27,22 @@ void match(const std::vector<wire::line>& lhs, const std::vector<wire::line>& lv
   }
 }
 
-int day3(line_view file) {
+int match_closest(wire ws[]) {
+  day3point p1;
+  day3point p2;
+  ws[0].sort();
+  ws[1].sort();
+  match(ws[0].psh, ws[1].psv, &p1);
+  match(ws[1].psh, ws[0].psv, &p2);
+  day3point p = std::min(p1, p2);
+  return p.distance() ;
+}
+
+int match_earliest(wire ws[]) {
+  return 0;
+}
+
+std::pair<int, int> day3(line_view file) {
   wire ws[2];
   day3point mp{0, 0};
   int i{0};
@@ -36,14 +51,7 @@ int day3(line_view file) {
     ws[i++].parse(lv, &cp, &mp);
     return true;
   });
-  ws[0].sort();
-  ws[1].sort();
-  day3point p1;
-  day3point p2;
-  match(ws[0].psh, ws[1].psv, &p1);
-  match(ws[1].psh, ws[0].psv, &p2);
-  day3point p = std::min(p1, p2);
-  return p.distance() ;
+  return {match_earliest(ws), match_closest(ws)};
 }
 
 } // namespace aoc2019
