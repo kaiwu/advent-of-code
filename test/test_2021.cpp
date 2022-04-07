@@ -18,3 +18,8 @@ TEST_CASE("Dive!", "[2021]") {
   REQUIRE(1762050 == p.first);
   REQUIRE(1855892637 == p.second);
 }
+
+TEST_CASE("Binary Diagnostic", "[2021]") {
+  line_view lv = load_file("../src/2021/day3/input");
+  REQUIRE(3885894 == aoc2021::day3(lv));
+}
