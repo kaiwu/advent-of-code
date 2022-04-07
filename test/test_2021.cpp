@@ -21,5 +21,8 @@ TEST_CASE("Dive!", "[2021]") {
 
 TEST_CASE("Binary Diagnostic", "[2021]") {
   line_view lv = load_file("../src/2021/day3/input");
-  REQUIRE(3885894 == aoc2021::day3(lv));
+  // line_view lv = load_file("../src/2021/day3/input0");
+  auto p = aoc2021::day3(lv);
+  REQUIRE(3885894 == p.first);
+  REQUIRE(4375225 == p.second);
 }
