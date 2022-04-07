@@ -20,5 +20,7 @@ TEST_CASE("Password Philosophy", "[2020]") {
 }
 
 TEST_CASE("Toboggan Trajectory", "[2020]") {
-  // line_view lv = load_file("../src/2020/day3/input");
+  // line_view lv = load_file("../src/2020/day3/input0");
+  line_view lv = load_file("../src/2020/day3/input");
+  REQUIRE(242 == aoc2020::day3(lv));
 }
