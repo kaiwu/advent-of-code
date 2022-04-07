@@ -3,5 +3,5 @@
 
 namespace aoc2020 {
 
-int day3(line_view);
+std::pair<int, size_t> day3(line_view);
 }

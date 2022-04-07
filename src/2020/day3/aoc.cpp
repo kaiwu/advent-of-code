@@ -30,7 +30,7 @@ void progress(pos p, pos* d1, pos* d2, int dx, const std::vector<line_view>& tre
   }
 }
 
-int day3(line_view file) {
+std::pair<int, size_t> day3(line_view file) {
   std::vector<line_view> trees;
   per_line(file, [&trees](line_view lv) {
     trees.push_back({lv.line, lv.line + lv.length - 1});
@@ -39,10 +39,18 @@ int day3(line_view file) {
 
   pos d1{3, 1};
   pos d2{0, 0};
-  int count{0};
-  progress({0, 0}, &d1, &d2, 0, trees, &count);
+  int count0{0};
+  progress({0, 0}, &d1, &d2, 0, trees, &count0);
 
-  return count;
+  int count1{0};
+  size_t total{1};
+  pos ds[] = {{1, 1}, {3, 1}, {5, 1}, {7, 1}, {1, 2}};
+  for (auto& d : ds) {
+    progress({0, 0}, &d, &d2, 0, trees, &count1);
+    total *= count1;
+    count1 = 0;
+  }
+  return {count0, total};
 }
 
 } // namespace aoc2020
