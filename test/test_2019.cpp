@@ -1,6 +1,7 @@
 #include "2019/day1/aoc.h"
 #include "2019/day2/aoc.h"
 #include "2019/day3/aoc.h"
+#include "2019/day4/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
