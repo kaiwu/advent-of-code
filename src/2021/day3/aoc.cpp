@@ -26,31 +26,27 @@ std::vector<line_view> filter(const std::vector<line_view>& vs, int i, char c) {
   return n;
 }
 
-char most_common(std::vector<line_view>& v, int i, char x) {
-  size_t t0{0};
-  size_t t1{0};
+void count(const std::vector<line_view>& v, int i, size_t* t0, size_t* t1) {
   for (auto& l : v) {
     if (*(l.line + i) == '1') {
-      t1++;
-    }
-    else {
-      t0++;
+      (*t1)++;
+    } else {
+      (*t0)++;
     }
   }
+}
+
+char most_common(const std::vector<line_view>& v, int i, char x) {
+  size_t t0{0};
+  size_t t1{0};
+  count(v, i, &t0, &t1);
   return t1 > t0 ? '1' : (t1 < t0 ? '0' : x);
 }
 
 char least_common(std::vector<line_view>& v, int i, char x) {
   size_t t0{0};
   size_t t1{0};
-  for (auto& l : v) {
-    if (*(l.line + i) == '1') {
-      t1++;
-    }
-    else {
-      t0++;
-    }
-  }
+  count(v, i, &t0, &t1);
   return t1 > t0 ? '0' : (t1 < t0 ? '1' : x);
 }
 
