@@ -35,12 +35,16 @@ struct wire {
   }
 
   struct line {
+    int id;
+    line_view label;
     day3point a;
     day3point b;
+    int length;
   };
 
   std::vector<line> psh;
   std::vector<line> psv;
+  std::vector<line> ps;
 
   void sort() {
     std::sort(psh.begin(), psh.end(),
@@ -59,30 +63,23 @@ struct wire {
     *pp = p;
   }
 
-  void largest(day3point* cp, day3point* mp) {
-    if (std::abs(cp->x) > std::abs(mp->x)) {
-      mp->x = cp->x;
-    }
-    if (std::abs(cp->y) > std::abs(mp->y)) {
-      mp->y = cp->y;
-    }
-  }
-
-  void parse(line_view lv, day3point* cp, day3point* mp) {
+  void parse(line_view lv, day3point* cp) {
     part p;
     const char* p1 = lv.line;
-    auto make_part = [&p, &p1, cp, mp, this](part::dir_t d) {
+    int i{0};
+    auto make_part = [&i, &p, &p1, cp, this](part::dir_t d) {
       p.dir = d;
+      const char* p0 = p1;
       get_part(&p1, &p.distance);
       day3point a = *cp;
       *cp = mov(*cp, p);
-      // printf("%d, %d\n", cp->x, cp->y);
-      largest(cp, mp);
+      line l{i++, {p0, p1}, a, *cp, p.distance};
+      ps.push_back(l);
       if (d == part::right || d == part::left) {
-        psh.push_back({a, *cp});
+        psh.push_back(l);
       }
       if (d == part::up || d == part::down) {
-        psv.push_back({a, *cp});
+        psv.push_back(l);
       }
     };
     while (p1 < lv.line + lv.length) {
@@ -107,6 +104,6 @@ struct wire {
   }
 };
 
-std::pair<int,int> day3(line_view);
+std::pair<int, int> day3(line_view);
 
 } // namespace aoc2019

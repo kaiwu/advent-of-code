@@ -21,6 +21,6 @@ TEST_CASE("1202 Program Alarm", "[2019]") {
 TEST_CASE("Crossed Wires", "[2019]") {
   line_view lv = load_file("../src/2019/day3/input");
   auto p = aoc2019::day3(lv);
-  REQUIRE(0 == p.first);
+  REQUIRE(19242 == p.first);
   REQUIRE(266 == p.second);
 }
