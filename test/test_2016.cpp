@@ -27,3 +27,10 @@ TEST_CASE("Squares With Three Sides", "[2016]") {
   REQUIRE(862 == p.first);
   REQUIRE(1577 == p.second);
 }
+
+TEST_CASE("Security Through Obscurity", "[2016]") {
+  line_view lv = load_file("../src/2016/day4/input");
+  auto p = aoc2016::day4(lv);
+  REQUIRE(185371 == p.first);
+  REQUIRE(984 == p.second);
+}
