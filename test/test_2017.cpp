@@ -34,3 +34,10 @@ TEST_CASE("Spiral Memory", "[2017]") {
   REQUIRE(430 == aoc2017::day3(312051));
   REQUIRE(312453 == aoc2017::day3part2(312051));
 }
+
+TEST_CASE("High-Entropy Passphrases", "[2017]") {
+  line_view lv = load_file("../src/2017/day4/input");
+  auto p = aoc2017::day4(lv);
+  REQUIRE(386 == p.first);
+  REQUIRE(208 == p.second);
+}
