@@ -5,6 +5,40 @@
 
 namespace aoc2018 {
 
+int mostlikely(guard* g) {
+  // int minute[60] = {0};
+  // for (int i = 0; i < 60; i++) {
+  //   int ms = g->offtime[i];
+  //   int j = i;
+  //   while (ms-- > 0) {
+  //     minute[j++] += 1;
+  //   }
+  // }
+  // int most{INT32_MIN};
+  // int highest{INT32_MIN};
+  for (int i = 0; i < 60; i++) {
+    // printf("%02d ", minute[i]);
+    printf("%02d ", g->offtime[i]);
+    // if (minute[i] > highest) {
+    //   most = i;
+    //   highest = minute[i];
+    // }
+    if ((i + 1) % 10 == 0) {
+       printf("\n");
+    }
+  }
+  // printf("%d\n", most);
+  return 0;
+}
+
+int totaloff(guard* g) {
+  int d{0};
+  for (int i = 0; i < 60; i++) {
+    d += g->offtime[i];
+  }
+  return d;
+}
+
 int day4(line_view file) {
   std::vector<guard> gs;
   per_line(file, [&gs](line_view lv) {
@@ -25,10 +59,10 @@ int day4(line_view file) {
     }
     return false;
   });
-  // std::for_each(gs.begin(), gs.end(), [](const guard& g) {
-  //   printf("%02d-%02d %02d:%02d #%d %s\n", g.timestamp.month, g.timestamp.day, g.timestamp.hour, g.timestamp.minute,
-  //          g.id, g.status == guard::on ? "on" : "off");
-  // });
+  std::for_each(gs.begin(), gs.end(), [](const guard& g) {
+    printf("%02d-%02d %02d:%02d #%d %s\n", g.timestamp.month, g.timestamp.day, g.timestamp.hour, g.timestamp.minute,
+           g.id, g.status == guard::on ? "on" : "off");
+  });
 
   std::unordered_map<int, guard*> hs;
   guard* p{nullptr};
@@ -62,23 +96,21 @@ int day4(line_view file) {
     guard* g = nullptr;
   } mostoff;
 
-  auto totaloff = [](guard* g) {
-    int d{0};
-    for (int i = 0; i < 60; i++) {
-      d += g->offtime[i];
-    }
-    return d;
-  };
-
   for (auto& kv : hs) {
     int off = totaloff(kv.second);
-    printf("%d: %d\n", kv.second->id, off);
+    // printf("%d: %d\n", kv.second->id, off);
     if (mostoff.g == nullptr || mostoff.off < off) {
       mostoff.g = kv.second;
       mostoff.off = off;
     }
   }
-  printf("%d: %d\n", mostoff.g->id, mostoff.off);
+
+  int minute = mostlikely(mostoff.g);
+  printf("\n%d: %d at %d\n", mostoff.g->id, mostoff.off, minute);
+
+  for (auto& kv : hs) {
+    delete kv.second;
+  }
   return 0;
 }
 
