@@ -32,5 +32,7 @@ TEST_CASE("No Matter How You Slice It", "[2018]") {
 
 TEST_CASE("Repose Record", "[2018]") {
   line_view lv = load_file("../src/2018/day4/input");
-  REQUIRE(0 == aoc2018::day4(lv));
+  auto p = aoc2018::day4(lv);
+  REQUIRE(14346 == p.first);
+  REQUIRE(5705 == p.second);
 }

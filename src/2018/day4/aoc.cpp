@@ -5,41 +5,39 @@
 
 namespace aoc2018 {
 
-int mostlikely(guard* g) {
-  // int minute[60] = {0};
-  // for (int i = 0; i < 60; i++) {
-  //   int ms = g->offtime[i];
-  //   int j = i;
-  //   while (ms-- > 0) {
-  //     minute[j++] += 1;
-  //   }
-  // }
-  // int most{INT32_MIN};
-  // int highest{INT32_MIN};
+std::pair<int, int> mostlikely(guard* g) {
+  int minute[60] = {0};
   for (int i = 0; i < 60; i++) {
-    // printf("%02d ", minute[i]);
-    printf("%02d ", g->offtime[i]);
-    // if (minute[i] > highest) {
-    //   most = i;
-    //   highest = minute[i];
-    // }
-    if ((i + 1) % 10 == 0) {
-       printf("\n");
+    for (auto ms : g->offtime[i]) {
+      for (int j = 0; j < ms; j++) {
+        minute[i + j] += 1;
+      }
     }
   }
-  // printf("%d\n", most);
-  return 0;
+  int most{INT32_MIN};
+  int highest{INT32_MIN};
+  for (int i = 0; i < 60; i++) {
+    // printf("%02d ", minute[i]);
+    if (minute[i] > highest) {
+      most = i;
+      highest = minute[i];
+    }
+    // if ((i + 1) % 10 == 0) {
+    //  printf("\n");
+    //}
+  }
+  return {most, highest};
 }
 
 int totaloff(guard* g) {
   int d{0};
   for (int i = 0; i < 60; i++) {
-    d += g->offtime[i];
+    std::for_each(g->offtime[i].begin(), g->offtime[i].end(), [&d](int x) { d += x; });
   }
   return d;
 }
 
-int day4(line_view file) {
+std::pair<int, int> day4(line_view file) {
   std::vector<guard> gs;
   per_line(file, [&gs](line_view lv) {
     gs.emplace_back(lv);
@@ -59,10 +57,10 @@ int day4(line_view file) {
     }
     return false;
   });
-  std::for_each(gs.begin(), gs.end(), [](const guard& g) {
-    printf("%02d-%02d %02d:%02d #%d %s\n", g.timestamp.month, g.timestamp.day, g.timestamp.hour, g.timestamp.minute,
-           g.id, g.status == guard::on ? "on" : "off");
-  });
+  // std::for_each(gs.begin(), gs.end(), [](const guard& g) {
+  //   printf("%02d-%02d %02d:%02d #%d %s\n", g.timestamp.month, g.timestamp.day, g.timestamp.hour, g.timestamp.minute,
+  //          g.id, g.status == guard::on ? "on" : "off");
+  // });
 
   std::unordered_map<int, guard*> hs;
   guard* p{nullptr};
@@ -81,11 +79,11 @@ int day4(line_view file) {
       ontime = g.timestamp.hour > 0 ? 0 : g.timestamp.minute;
     } else {
       if (g.status == guard::off) {
-        p->ontime[ontime] += g.timestamp.minute - ontime;
+        p->ontime[ontime].push_back(g.timestamp.minute - ontime);
         offtime = g.timestamp.minute;
       }
       if (g.status == guard::on) {
-        p->offtime[offtime] += g.timestamp.minute - offtime;
+        p->offtime[offtime].push_back(g.timestamp.minute - offtime);
         ontime = g.timestamp.minute;
       }
     }
@@ -96,6 +94,12 @@ int day4(line_view file) {
     guard* g = nullptr;
   } mostoff;
 
+  struct {
+    int minute = 0;
+    int times = 0;
+    guard* g = nullptr;
+  } mostfrequent;
+
   for (auto& kv : hs) {
     int off = totaloff(kv.second);
     // printf("%d: %d\n", kv.second->id, off);
@@ -103,15 +107,18 @@ int day4(line_view file) {
       mostoff.g = kv.second;
       mostoff.off = off;
     }
+
+    auto p = mostlikely(kv.second);
+    if (mostfrequent.g == nullptr || mostfrequent.times < p.second) {
+      mostfrequent.g = kv.second;
+      mostfrequent.minute = p.first;
+      mostfrequent.times = p.second;
+    }
   }
 
-  int minute = mostlikely(mostoff.g);
-  printf("\n%d: %d at %d\n", mostoff.g->id, mostoff.off, minute);
-
-  for (auto& kv : hs) {
-    delete kv.second;
-  }
-  return 0;
+  int minute = mostlikely(mostoff.g).first;
+  // printf("\n%d: %d at %d\n", mostoff.g->id, mostoff.off, minute);
+  return {mostoff.g->id * minute, mostfrequent.g->id * mostfrequent.minute};
 }
 
 } // namespace aoc2018

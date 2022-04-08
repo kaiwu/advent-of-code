@@ -1,5 +1,6 @@
 #pragma once
 #include "common.h"
+#include <vector>
 
 namespace aoc2018 {
 
@@ -16,8 +17,8 @@ struct guard {
     off,
   } status = off;
 
-  int offtime[60] = {0};
-  int ontime[60] = {0};
+  std::vector<int> offtime[60];
+  std::vector<int> ontime[60];
 
   void get_number(const char** pp, int* d) {
     const char* p = *pp;
@@ -47,6 +48,6 @@ struct guard {
   };
 };
 
-int day4(line_view);
+std::pair<int, int> day4(line_view);
 
 } // namespace aoc2018
