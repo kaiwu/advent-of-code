@@ -17,14 +17,10 @@ std::pair<int, int> mostlikely(guard* g) {
   int most{INT32_MIN};
   int highest{INT32_MIN};
   for (int i = 0; i < 60; i++) {
-    // printf("%02d ", minute[i]);
     if (minute[i] > highest) {
       most = i;
       highest = minute[i];
     }
-    // if ((i + 1) % 10 == 0) {
-    //  printf("\n");
-    //}
   }
   return {most, highest};
 }
@@ -102,7 +98,6 @@ std::pair<int, int> day4(line_view file) {
 
   for (auto& kv : hs) {
     int off = totaloff(kv.second);
-    // printf("%d: %d\n", kv.second->id, off);
     if (mostoff.g == nullptr || mostoff.off < off) {
       mostoff.g = kv.second;
       mostoff.off = off;

@@ -25,3 +25,6 @@ TEST_CASE("Crossed Wires", "[2019]") {
   REQUIRE(19242 == p.first);
   REQUIRE(266 == p.second);
 }
+
+TEST_CASE("Secure Container", "[2019]") {
+}
