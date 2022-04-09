@@ -2,6 +2,7 @@
 #include "2017/day2/aoc.h"
 #include "2017/day3/aoc.h"
 #include "2017/day4/aoc.h"
+#include "2017/day5/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
