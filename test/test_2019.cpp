@@ -27,4 +27,7 @@ TEST_CASE("Crossed Wires", "[2019]") {
 }
 
 TEST_CASE("Secure Container", "[2019]") {
+  auto p = aoc2019::day4("264793", "803935");
+  REQUIRE(966 == p.first);
+  REQUIRE(628 == p.second);
 }

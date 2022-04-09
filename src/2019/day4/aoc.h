@@ -3,5 +3,5 @@
 
 namespace aoc2019 {
 
-int day4(line_view);
+std::pair<int, int> day4(const char*, const char*);
 }
