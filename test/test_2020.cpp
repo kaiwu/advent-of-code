@@ -29,5 +29,7 @@ TEST_CASE("Toboggan Trajectory", "[2020]") {
 
 TEST_CASE("Passport Processing", "[2020]") {
   line_view lv = load_file("../src/2020/day4/input");
-  REQUIRE(256 == aoc2020::day4(lv));
+  auto p = aoc2020::day4(lv);
+  REQUIRE(256 == p.first);
+  REQUIRE(198 == p.second);
 }
