@@ -42,3 +42,9 @@ TEST_CASE("High-Entropy Passphrases", "[2017]") {
   REQUIRE(386 == p.first);
   REQUIRE(208 == p.second);
 }
+
+TEST_CASE("A Maze of Twisty Trampolines, All Alike", "[2017]") {
+  line_view lv = load_file("../src/2017/day5/input");
+  // line_view lv = load_file("../src/2017/day5/input0");
+  REQUIRE(360603 == aoc2017::day5(lv));
+}
