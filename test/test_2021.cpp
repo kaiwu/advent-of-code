@@ -30,5 +30,7 @@ TEST_CASE("Binary Diagnostic", "[2021]") {
 
 TEST_CASE("Giant Squid", "[2021]") {
   line_view lv = load_file("../src/2021/day4/input");
-  REQUIRE(5685 == aoc2021::day4(lv));
+  auto p = aoc2021::day4(lv);
+  REQUIRE(5685 == p.first);
+  REQUIRE(21070 == p.second);
 }

@@ -78,7 +78,7 @@ struct board {
       p++;
     }
     at = bingo_at();
-    //print();
+    // print();
   }
 
   void print() const noexcept {
@@ -161,7 +161,7 @@ struct board {
   }
 };
 
-int day4(line_view file) {
+std::pair<int, int> day4(line_view file) {
   const char* p1 = file.line;
   const char* p2 = file.line + file.length;
   const char* p = p1;
@@ -184,7 +184,8 @@ int day4(line_view file) {
   // for (auto& b : bs) {
   //   printf("%d, %d\n", b.at.i, b.sum_unmarked(b.at.i) * b.at.v);
   // }
-  return bs[0].sum_unmarked(bs[0].at.i) * bs[0].at.v;
+  auto score = [&bs](int x) { return bs[x].sum_unmarked(bs[x].at.i) * bs[x].at.v; };
+  return {score(0), score(bs.size() - 1)};
 }
 
 } // namespace aoc2021

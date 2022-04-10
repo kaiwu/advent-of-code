@@ -3,5 +3,5 @@
 
 namespace aoc2021 {
 
-int day4(line_view);
+  std::pair<int,int> day4(line_view);
 } // namespace aoc2021
