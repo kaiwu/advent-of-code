@@ -52,10 +52,43 @@ void deduct(char* p1, char* p2) {
       char* pb = p + 1;
       deduct(&pa, &pb, p1, p2);
       p = pb;
+    } else if (*p == ' ') {
+      char* pa = p - 1;
+      while (*p == ' ')
+        p++;
+      char* pb = p;
+      deduct(&pa, &pb, p1, p2);
+      p = pb;
     } else {
       p++;
     }
   }
+}
+
+void remove(char* p1, char* p2, char c) {
+  while (p1 < p2) {
+    if (*p1 == c || *p1 == c - 32) {
+      *p1 = ' ';
+    }
+    p1++;
+  }
+}
+
+int shortest(line_view file) {
+  int s{INT32_MAX};
+  for (char i = 'a'; i <= 'z'; i++) {
+    char* p1 = (char*)malloc(file.length);
+    memcpy(p1, file.line, file.length);
+    char* p2 = p1 + file.length;
+    remove(p1, p2, i);
+    deduct(p1, p2);
+    int c = count({p1, p2});
+    if (c < s) {
+      s = c;
+    }
+    free(p1);
+  }
+  return s;
 }
 
 void print(char* p1, char* p2) {
@@ -68,13 +101,13 @@ void print(char* p1, char* p2) {
   printf("\n");
 }
 
-int day5(line_view file) {
+std::pair<int, int> day5(line_view file) {
   char* p1 = (char*)malloc(file.length);
   memcpy(p1, file.line, file.length);
   char* p2 = p1 + file.length;
   deduct(p1, p2);
   // print(p1, p2);
-  return count({p1, p2});
+  return {count({p1, p2}), shortest(file)};
 }
 
 } // namespace aoc2018
