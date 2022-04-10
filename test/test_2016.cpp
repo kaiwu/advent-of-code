@@ -35,3 +35,10 @@ TEST_CASE("Security Through Obscurity", "[2016]") {
   REQUIRE(185371 == p.first);
   REQUIRE(984 == p.second);
 }
+
+TEST_CASE("How About a Nice Game of Chess?", "[2016]") {
+  // char pass1[9] = {0};
+  // char pass2[9] = {0};
+  // aoc2016::day5("abbhdwsy", 8, pass1, pass2);
+  // printf("%s %s\n", pass1, pass2);
+}
