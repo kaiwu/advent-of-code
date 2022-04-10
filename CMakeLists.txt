@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_EXTENSIONS Off)
 
 set(COMMON_FILES
+    "src/md5.cpp"
     "src/common.cpp"
 )
 
