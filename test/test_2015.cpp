@@ -60,10 +60,10 @@ TEST_CASE("The Ideal Stocking Stuffer", "[2015]") {
   char s3[] = "bgvyzdsv254575";
   char s4[] = "bgvyzdsv1038736";
 
-  REQUIRE(aoc2015::lead_zeros(aoc2015::md5sum(s1)) >= 5);
-  REQUIRE(aoc2015::lead_zeros(aoc2015::md5sum(s2)) >= 5);
-  REQUIRE(aoc2015::lead_zeros(aoc2015::md5sum(s3)) >= 5);
-  REQUIRE(aoc2015::lead_zeros(aoc2015::md5sum(s4)) >= 6);
+  REQUIRE(lead_zeros(md5sum(s1)) >= 5);
+  REQUIRE(lead_zeros(md5sum(s2)) >= 5);
+  REQUIRE(lead_zeros(md5sum(s3)) >= 5);
+  REQUIRE(lead_zeros(md5sum(s4)) >= 6);
 }
 
 TEST_CASE("Doesn't He Have Intern-Elves For This?", "[2015]") {

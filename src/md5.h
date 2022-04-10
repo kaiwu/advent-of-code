@@ -27,4 +27,6 @@ uint32_t H(uint32_t X, uint32_t Y, uint32_t Z);
 uint32_t I(uint32_t X, uint32_t Y, uint32_t Z);
 
 uint32_t rotateLeft(uint32_t x, uint32_t n);
+char* md5sum(char*); 
+int lead_zeros(char* s);
 }
