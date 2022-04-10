@@ -63,7 +63,7 @@ int search(int n, bingo& b) {
 
 struct board {
   bnum is[25];
-  int at;
+  bnum at;
 
   board(line_view lv, bingo* b) {
     const char* p = lv.line;
@@ -92,13 +92,13 @@ struct board {
         printf(" ");
       }
     }
-    printf("\n");
+    printf("-> %d %d\n", at.i, at.v);
   }
 
-  int sum_unmarked() {
+  int sum_unmarked(int x) {
     int s{0};
     for (auto& n : is) {
-      if (n.i == INT32_MAX) {
+      if (n.i > x) {
         s += n.v;
       }
     }
@@ -106,42 +106,46 @@ struct board {
   }
 
   bool operator<(const board& b) const noexcept { return at < b.at; }
-  int bingo_at() const noexcept {
-    int b{INT32_MAX};
+  bnum bingo_at() const noexcept {
+    bnum b{INT32_MAX, 0};
 
-    auto is_bingo_r = [this](int y) -> int {
+    auto is_bingo_r = [this](int y) -> bnum {
       int m{INT32_MIN};
+      int v{0};
       for (int x : {0, 1, 2, 3, 4}) {
         auto p = is[y * 5 + x].i;
         if (p == INT32_MAX) {
-          return INT32_MAX;
+          return {INT32_MAX, v};
         } else {
           if (p > m) {
             m = p;
+            v = is[y * 5 + x].v;
           }
         }
       }
-      return m;
+      return {m, v};
     };
 
-    auto is_bingo_c = [this](int x) -> int {
+    auto is_bingo_c = [this](int x) -> bnum {
       int m{INT32_MIN};
+      int v{0};
       for (int y : {0, 1, 2, 3, 4}) {
         auto p = is[y * 5 + x].i;
         if (p == INT32_MAX) {
-          return INT32_MAX;
+          return {INT32_MAX, v};
         } else {
           if (p > m) {
             m = p;
+            v = is[y * 5 + x].v;
           }
         }
       }
-      return m;
+      return {m, v};
     };
 
     for (int i : {0, 1, 2, 3, 4}) {
-      int b1 = is_bingo_r(i);
-      int b2 = is_bingo_c(i);
+      bnum b1 = is_bingo_r(i);
+      bnum b2 = is_bingo_c(i);
       b = std::min(b, std::min(b1, b2));
     }
 
@@ -169,7 +173,7 @@ int day4(line_view file) {
   bs.emplace_back(line_view{p1, p}, &b);
 
   std::sort(bs.begin(), bs.end());
-  printf("%d\n", bs[0].sum_unmarked());
+  printf("%d\n", bs[0].sum_unmarked(bs[0].at.i));
   return 0;
 }
 
