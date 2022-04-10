@@ -37,3 +37,9 @@ TEST_CASE("Repose Record", "[2018]") {
   REQUIRE(14346 == p.first);
   REQUIRE(5705 == p.second);
 }
+
+TEST_CASE("Alchemical Reduction", "[2018]") {
+  line_view lv = load_file("../src/2018/day5/input");
+  REQUIRE(11042 == aoc2018::day5(lv));
+  // REQUIRE(10 == aoc2018::day5("dabAcCaCBAcCcaDA"));
+}
