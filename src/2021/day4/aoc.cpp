@@ -78,37 +78,35 @@ struct board {
       p++;
     }
     at = bingo_at();
-    print();
+    //print();
   }
 
   void print() const noexcept {
     int i{0};
     for (auto& b : is) {
-      // printf("{%02d,%02d}", b.v, b.i);
-      printf("{%02d}", b.v);
+      printf("{%02d,%02d}", b.v, b.i);
       if (++i % 5 == 0) {
         printf("\n");
       } else {
         printf(" ");
       }
     }
-    printf("-> %d %d\n", at.i, at.v);
+    printf("-> %d %d\n", at.v, at.i);
   }
 
   int sum_unmarked(int x) {
     int s{0};
     for (auto& n : is) {
       if (n.i > x) {
+        // printf("%d ", n.v);
         s += n.v;
       }
     }
     return s;
   }
 
-  bool operator<(const board& b) const noexcept { return at < b.at; }
+  bool operator<(const board& b) const noexcept { return at.i < b.at.i; }
   bnum bingo_at() const noexcept {
-    bnum b{INT32_MAX, 0};
-
     auto is_bingo_r = [this](int y) -> bnum {
       int m{INT32_MIN};
       int v{0};
@@ -123,6 +121,7 @@ struct board {
           }
         }
       }
+      // printf("row %d is {%d, %d}\n", y, v, m);
       return {m, v};
     };
 
@@ -140,13 +139,22 @@ struct board {
           }
         }
       }
+      // printf("col %d is {%d, %d}\n", x, v, m);
       return {m, v};
     };
 
+    bnum b{INT32_MAX, 0};
     for (int i : {0, 1, 2, 3, 4}) {
       bnum b1 = is_bingo_r(i);
       bnum b2 = is_bingo_c(i);
-      b = std::min(b, std::min(b1, b2));
+
+      bnum bx{0, 0};
+      bx.i = b1.i < b2.i ? b1.i : b2.i;
+      bx.v = b1.i < b2.i ? b1.v : b2.v;
+
+      if (bx.i < b.i) {
+        b = bx;
+      }
     }
 
     return b;
@@ -173,8 +181,10 @@ int day4(line_view file) {
   bs.emplace_back(line_view{p1, p}, &b);
 
   std::sort(bs.begin(), bs.end());
-  printf("%d\n", bs[0].sum_unmarked(bs[0].at.i));
-  return 0;
+  // for (auto& b : bs) {
+  //   printf("%d, %d\n", b.at.i, b.sum_unmarked(b.at.i) * b.at.v);
+  // }
+  return bs[0].sum_unmarked(bs[0].at.i) * bs[0].at.v;
 }
 
 } // namespace aoc2021
