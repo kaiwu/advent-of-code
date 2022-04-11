@@ -14,7 +14,7 @@ int get_number(const char** pp) {
   return d;
 }
 
-void run(size_t i, std::vector<int>& codes) {
+static void run(size_t i, std::vector<int>& codes) {
   // printf("execute %d at %zu\n", codes[i], i);
   switch (codes[i]) {
   case 1:
