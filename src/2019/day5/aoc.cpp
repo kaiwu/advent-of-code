@@ -4,7 +4,6 @@
 namespace aoc2019 {
 
 static int input = 1;
-static std::vector<int> outputs = {};
 
 void get_number(const char** pp, int* d) {
   const char* p = *pp;
@@ -21,64 +20,89 @@ void get_number(const char** pp, int* d) {
   *pp = p;
 }
 
-static void run(size_t i, std::vector<int>& codes) {
+// 0001
+// 0101
+// 1001
+// 1101
+static int mode(int x, int* m1, int* m2) {
+  int m{0}, m0{0};
+  int* is[] = {&m, &m0, m1, m2};
+  int i{0};
+  while (x > 0) {
+    *is[i++] = x % 10;
+    x /= 10;
+  }
+  return m;
+}
+
+static int& get(std::vector<int>& codes, int mode, int i) { return mode == 0 ? codes[codes[i]] : codes[i]; }
+
+static size_t opt1(std::vector<int>& codes, std::vector<int>& outputs, size_t i, int m1, int m2) {
+  get(codes, 0, i + 3) = get(codes, m1, i + 1) + get(codes, m2, i + 2);
+  return i + 4;
+}
+
+static size_t opt2(std::vector<int>& codes, std::vector<int>& outputs, size_t i, int m1, int m2) {
+  get(codes, 0, i + 3) = get(codes, m1, i + 1) * get(codes, m2, i + 2);
+  return i + 4;
+}
+
+static size_t opt3(std::vector<int>& codes, std::vector<int>& outputs, size_t i, int m1, int m2) {
+  get(codes, 0, i + 1) = input;
+  return i + 2;
+}
+
+static size_t opt4(std::vector<int>& codes, std::vector<int>& outputs, size_t i, int m1, int m2) {
+  outputs.push_back(get(codes, m1, i + 1));
+  return i + 2;
+}
+
+static size_t opt5(std::vector<int>& codes, std::vector<int>& outputs, size_t i, int m1, int m2) {
+  size_t x = i + 3;
+  if (get(codes, m1, i + 1) != 0) {
+    x = get(codes, m2, i + 2);
+  }
+  return x;
+}
+
+static size_t opt6(std::vector<int>& codes, std::vector<int>& outputs, size_t i, int m1, int m2) {
+  size_t x = i + 3;
+  if (get(codes, m1, i + 1) == 0) {
+    x = get(codes, m2, i + 2);
+  }
+  return x;
+}
+
+static size_t opt7(std::vector<int>& codes, std::vector<int>& outputs, size_t i, int m1, int m2) {
+  get(codes, 0, i + 3) = int(get(codes, m1, i + 1) < get(codes, m2, i + 2));
+  return i + 4;
+}
+
+static size_t opt8(std::vector<int>& codes, std::vector<int>& outputs, size_t i, int m1, int m2) {
+  get(codes, 0, i + 3) = int(get(codes, m1, i + 1) == get(codes, m2, i + 2));
+  return i + 4;
+}
+
+typedef size_t (*opt_f)(std::vector<int>&, std::vector<int>&, size_t, int, int);
+static void run(size_t i, std::vector<int>& codes, std::vector<int>& outputs) {
   // printf("execute %d at %zu\n", codes[i], i);
-  switch (codes[i]) {
-  case 1:
-    codes[codes[i + 3]] = codes[codes[i + 1]] + codes[codes[i + 2]];
-    run(i + 4, codes);
-    break;
-  case 101:
-    codes[codes[i + 3]] = codes[i + 1] + codes[codes[i + 2]];
-    run(i + 4, codes);
-    break;
-  case 1001:
-    codes[codes[i + 3]] = codes[codes[i + 1]] + codes[i + 2];
-    run(i + 4, codes);
-    break;
-  case 1101:
-    codes[codes[i + 3]] = codes[i + 1] + codes[i + 2];
-    run(i + 4, codes);
-    break;
-  case 2:
-    codes[codes[i + 3]] = codes[codes[i + 1]] * codes[codes[i + 2]];
-    run(i + 4, codes);
-    break;
-  case 102:
-    codes[codes[i + 3]] = codes[i + 1] * codes[codes[i + 2]];
-    run(i + 4, codes);
-    break;
-  case 1002:
-    codes[codes[i + 3]] = codes[codes[i + 1]] * codes[i + 2];
-    run(i + 4, codes);
-    break;
-  case 1102:
-    codes[codes[i + 3]] = codes[i + 1] * codes[i + 2];
-    run(i + 4, codes);
-    break;
-  case 3:
-    codes[codes[i + 1]] = input;
-    run(i + 2, codes);
-    break;
-  case 4:
-    // printf("%d\n", codes[codes[i + 1]]);
-    outputs.push_back(codes[codes[i + 1]]);
-    run(i + 2, codes);
-    break;
-  case 104:
-    // printf("%d\n", codes[i + 1]);
-    outputs.push_back(codes[i + 1]);
-    run(i + 2, codes);
-    break;
-  case 99:
-    break;
-  default:
-    printf("UNKNOWN CODE %d at %zu\n", codes[i], i);
-    break;
+  static opt_f opts[] = {opt1, opt2, opt3, opt4, opt5, opt6, opt7, opt8};
+  if (codes[i] != 99) {
+    int m1{0}, m2{0};
+    int m = mode(codes[i], &m1, &m2);
+    int x = opts[m - 1](codes, outputs, i, m1, m2);
+    run(x, codes, outputs);
   }
 }
 
-int day5(line_view file) {
+static int run(int i, std::vector<int> codes) {
+  input = i;
+  std::vector<int> outputs;
+  run(0, codes, outputs);
+  return outputs[outputs.size() - 1];
+}
+
+std::pair<int, int> day5(line_view file) {
   const char* p = file.line;
   std::vector<int> optcodes;
   while (p < file.line + file.length) {
@@ -89,9 +113,7 @@ int day5(line_view file) {
     }
     p++;
   }
-  input = 1;
-  run(0, optcodes);
-  return outputs[outputs.size() - 1];
+  return {run(1, optcodes), run(5, optcodes)};
 }
 
 } // namespace aoc2019

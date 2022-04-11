@@ -35,5 +35,7 @@ TEST_CASE("Secure Container", "[2019]") {
 
 TEST_CASE("Sunny with a Chance of Asteroids", "[2019]") {
   line_view lv = load_file("../src/2019/day5/input");
-  REQUIRE(6761139 == aoc2019::day5(lv));
+  auto p = aoc2019::day5(lv);
+  REQUIRE(6761139 == p.first);
+  REQUIRE(9217546 == p.second);
 }
