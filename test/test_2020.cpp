@@ -34,3 +34,9 @@ TEST_CASE("Passport Processing", "[2020]") {
   REQUIRE(256 == p.first);
   REQUIRE(198 == p.second);
 }
+
+TEST_CASE("Binary Boarding", "[2020]") {
+  // line_view lv("BFFFBBFRRR\nFFFBBBFRRR\nBBFFBBFRLL\n");
+  line_view lv = load_file("../src/2020/day5/input");
+  REQUIRE(842 == aoc2020::day5(lv));
+}
