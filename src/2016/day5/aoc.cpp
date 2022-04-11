@@ -12,10 +12,10 @@ void day5(const char* secret, int len, char pass1[], char pass2[]) {
   int x1 = len;
   int x2 = 0;
   while (i < INT64_MAX && x2 < 8) {
-    sprintf(buf + l, "%zu", i);
+    sprintf(buf + l, "%lld", i);
     char* hash = md5sum(buf);
     if (lead_zeros(hash) >= 5) {
-      printf("%zu %s\n", i, hash);
+      printf("%lld %s\n", i, hash);
       if (x1 > 0) {
         pass1[len - x1] = hash[5];
         x1--;

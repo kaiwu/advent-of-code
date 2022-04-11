@@ -14,7 +14,7 @@ struct seat {
   int col;
 
   int id() const noexcept { return row * 8 + col; }
-  bool operator<(const seat& other) { return id() < other.id(); }
+  bool operator<(const seat& other) const noexcept { return id() < other.id(); }
 
   seat(int r, int c) : row(r), col(c) {}
 
