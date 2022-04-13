@@ -15,45 +15,6 @@ static void get_number(const char** pp, int* d) {
 }
 
 void fill(std::vector<int>& b1, std::vector<int>& b2, const line& l, int width) {
-  int maxx = std::max(l.p1.x, l.p2.x);
-  int minx = std::min(l.p1.x, l.p2.x);
-  int maxy = std::max(l.p1.y, l.p2.y);
-  int miny = std::min(l.p1.y, l.p2.y);
-
-  if (l.p1.x == l.p2.x || l.p1.y == l.p2.y) {
-    for (int i = minx; i <= maxx; i++) {
-      for (int j = miny; j <= maxy; j++) {
-        // printf("[%d, %d]\n", i, j);
-        b1[j * width + i] += 1;
-        b2[j * width + i] += 1;
-        if (b2[j * width + i] > 1) {
-          printf("[%d, %d]\n", i, j);
-        }
-      }
-    }
-  }
-
-  if (l.p1.x == l.p1.y && l.p2.x == l.p2.y) {
-    int j = miny;
-    for (int i = minx; i <= maxx; i++) {
-      b2[j * width + i] += 1;
-      if (b2[j * width + i] > 1) {
-        printf("[%d, %d]\n", i, j);
-      }
-      j++;
-    }
-  }
-
-  if (l.p1.x == l.p2.y && l.p2.x == l.p1.y) {
-    int j = maxy;
-    for (int i = minx; i <= maxx; i++) {
-      b2[j * width + i] += 1;
-      if (b2[j * width + i] > 1) {
-        printf("[%d, %d]\n", i, j);
-      }
-      j--;
-    }
-  }
 }
 
 std::pair<int, int> day5(line_view file) {
