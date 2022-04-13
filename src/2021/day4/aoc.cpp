@@ -12,7 +12,7 @@ struct bnum {
   bool operator<(const bnum& b) const noexcept { return v < b.v; }
 };
 
-void get_number(const char** pp, int* d) {
+static void get_number(const char** pp, int* d) {
   const char* p = *pp;
   while (*p >= '0' && *p <= '9') {
     *d = *d * 10 + *p - '0';
