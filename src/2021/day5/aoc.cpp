@@ -15,6 +15,16 @@ static void get_number(const char** pp, int* d) {
 }
 
 void fill(std::vector<int>& b1, std::vector<int>& b2, const line& l, int width) {
+  if (l.is_vertical() || l.is_horizontal()) {
+    l.traverse([&b1, &b2, width](line::point p) {
+      b1[p.y * width + p.x] += 1;
+      b2[p.y * width + p.x] += 1;
+    });
+  }
+
+  if (l.is_diagonal()) {
+    l.traverse([&b2, width](line::point p) { b2[p.y * width + p.x] += 1; });
+  }
 }
 
 std::pair<int, int> day5(line_view file) {
@@ -33,6 +43,9 @@ std::pair<int, int> day5(line_view file) {
       }
       p++;
     }
+    if (l.p2 < l.p1) {
+      std::swap(l.p1, l.p2);
+    }
     maxx = std::max(maxx, std::max(l.p1.x, l.p2.x));
     maxy = std::max(maxy, std::max(l.p1.y, l.p2.y));
     vs.push_back(l);
@@ -42,7 +55,7 @@ std::pair<int, int> day5(line_view file) {
   maxx += 1;
   maxy += 1;
 
-  printf("%d, %d\n", maxx, maxy);
+  // printf("%d, %d\n", maxx, maxy);
   std::vector<int> board1(maxx * maxy, 0);
   std::vector<int> board2(maxx * maxy, 0);
   for (auto& l : vs) {

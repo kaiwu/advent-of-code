@@ -37,9 +37,8 @@ TEST_CASE("Giant Squid", "[2021]") {
 }
 
 TEST_CASE("Hydrothermal Venture", "[2021]") {
-  line_view lv = load_file("../src/2021/day5/input0");
+  line_view lv = load_file("../src/2021/day5/input");
   auto p = aoc2021::day5(lv);
-  // REQUIRE(5774 == p.first);
-  REQUIRE(5 == p.first);
-  REQUIRE(12 == p.second);
+  REQUIRE(5774 == p.first);
+  REQUIRE(18423 == p.second);
 }
