@@ -3,7 +3,7 @@
 
 namespace aoc2017 {
 
-void next(int* step, memory_bank& m, std::set<memory_bank>& ms) {
+void next(int* step, int* gap, memory_bank& m, std::set<memory_bank>& ms) {
   if (ms.find(m) == ms.end()) {
     ms.insert(m);
     *step += 1;
@@ -11,16 +11,19 @@ void next(int* step, memory_bank& m, std::set<memory_bank>& ms) {
     int i = m.highest(&d);
     // printf("%d %d %d\n", *step, i, d);
     m.distribute(i, d);
-    next(step, m, ms);
+    next(step, gap, m, ms);
   }
+  auto it = ms.find(m);
+  *gap = *step - it->index;
 }
 
-int day6(line_view file) {
+std::pair<int, int> day6(line_view file) {
   std::set<memory_bank> ms;
   memory_bank m{file};
   int steps{0};
-  next(&steps, m, ms);
-  return steps;
+  int gap{0};
+  next(&steps, &gap, m, ms);
+  return {steps, gap};
 }
 
 } // namespace aoc2017

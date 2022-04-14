@@ -52,6 +52,10 @@ TEST_CASE("A Maze of Twisty Trampolines, All Alike", "[2017]") {
 
 TEST_CASE("Memory Reallocation", "[2017]") {
   line_view lv = load_file("../src/2017/day6/input");
-  // REQUIRE(5 == aoc2017::day6("0 2 7 0\n"));
-  REQUIRE(6681 == aoc2017::day6(lv));
+  // auto p = aoc2017::day6("0 2 7 0\n");
+  // REQUIRE(5 == p.first);
+  // REQUIRE(4 == p.second);
+  auto p = aoc2017::day6(lv);
+  REQUIRE(6681 == p.first);
+  REQUIRE(2392 == p.second);
 }

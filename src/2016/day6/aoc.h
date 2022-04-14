@@ -3,5 +3,5 @@
 
 namespace aoc2016 {
 
-void day6(line_view, char[]);
+void day6(line_view, char[], char[]);
 }

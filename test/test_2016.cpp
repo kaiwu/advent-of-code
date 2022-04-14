@@ -46,7 +46,9 @@ TEST_CASE("How About a Nice Game of Chess?", "[2016]") {
 
 TEST_CASE("Signals and Noise", "[2016]") {
   line_view lv = load_file("../src/2016/day6/input");
-  char msg[9] = {0};
-  aoc2016::day6(lv, msg);
-  REQUIRE(strcmp("gebzfnbt", msg) == 0);
+  char msg1[9] = {0};
+  char msg2[9] = {0};
+  aoc2016::day6(lv, msg1, msg2);
+  REQUIRE(strcmp("gebzfnbt", msg1) == 0);
+  REQUIRE(strcmp("fykjtwyn", msg2) == 0);
 }

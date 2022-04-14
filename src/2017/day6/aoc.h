@@ -5,6 +5,7 @@ namespace aoc2017 {
 
 struct memory_bank {
   int banks[16];
+  int index = 0;
 
   void get_number(const char** pp, int* d) {
     const char* p = *pp;
@@ -59,9 +60,10 @@ struct memory_bank {
       banks[i] += 1;
       x -= 1;
     }
+    index += 1;
   }
 };
 
-int day6(line_view);
+std::pair<int, int> day6(line_view);
 
 } // namespace aoc2017
