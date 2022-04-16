@@ -35,11 +35,11 @@ struct coordinate {
   }
 
   int distance(coordinate c = coordinate{0, 0}) const noexcept { return std::abs(x - c.x) + std::abs(y - c.y); }
-  coordinate right(int d) { return {x + d, y}; }
-  coordinate up(int d) { return {x, y - d}; }
-  coordinate left(int d) { return {x - d, y}; }
-  coordinate down(int d) { return {x, y + d}; }
-  typedef coordinate (coordinate::*move)(int);
+  coordinate right(int d) const noexcept { return {x + d, y}; }
+  coordinate up(int d) const noexcept { return {x, y - d}; }
+  coordinate left(int d) const noexcept { return {x - d, y}; }
+  coordinate down(int d) const noexcept { return {x, y + d}; }
+  typedef coordinate (coordinate::*move)(int) const;
 
   bool operator<(const coordinate& c) const noexcept {
     int d1 = distance();
