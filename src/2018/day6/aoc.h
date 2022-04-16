@@ -74,22 +74,38 @@ struct space_board {
   // -1 no one
   // -2 same distance
   struct point {
-    int id;
-    int distance;
+    int id = -1;
+    int distance = INT32_MAX;
   };
 
-  int rows;
-  int cols;
+  int width;
+  int height;
   std::vector<point> ps;
-  space_board(int x, int y) : rows(y), cols(x), ps(x * y, {-1, INT32_MAX}){};
+  space_board(int x, int y) : width(x), height(y), ps(x * y){};
 
-  int size() const noexcept { return rows * cols; }
+  int size() const noexcept { return width * height; }
+
+  void print() const noexcept {
+    for (size_t i = 0; i < ps.size(); i++) {
+      if (i % width == 0) {
+        printf("\n");
+      }
+      char c = ps[i].id >= 0 ? 'a' + ps[i].id : '.';
+      if (ps[i].distance == 0) {
+        c = c - 32;
+      }
+      std::cout << c;
+    }
+  }
 
   void count(std::vector<int>& area) const noexcept {
-    for (int y = 0; y < rows; y++) {
-      for (int x = 0; x < cols; x++) {
-        auto& p = ps[y * rows + x];
-        if (x == 0 || y == 0 || x == cols - 1 || y == rows - 1) {
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        auto& p = ps[y * width + x];
+        if (p.id == -2) {
+          continue;
+        }
+        if (x == 0 || y == 0 || x == width - 1 || y == height - 1) {
           area[p.id] = INT32_MAX;
         }
         if (area[p.id] < INT32_MAX) {

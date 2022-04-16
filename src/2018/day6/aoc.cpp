@@ -18,12 +18,12 @@ int day6(line_view file) {
 
   std::sort(cs.begin(), cs.end());
   space_board b{maxx + 1, maxy + 1};
-  printf("%d\n", b.size());
+  //printf("%d %d\n", b.width, b.height);
 
   for (size_t i = 0; i < cs.size(); i++) {
     coordinate& c = cs[i];
 
-    auto& p = b.ps[c.y * b.rows + c.x];
+    auto& p = b.ps[c.y * b.width + c.x];
     p.id = i;
     p.distance = 0;
 
@@ -32,11 +32,10 @@ int day6(line_view file) {
 
     auto f = [&win, &total, &b, &c, &i](size_t lap, coordinate x) {
       if (lap == total.size()) {
-        // printf("%zu, %d %d\n", lap - 1, total[lap - 1], win);
         total.push_back(0);
       }
-      if (x.x >= 0 && x.x < b.cols && x.y >= 0 && x.y < b.rows) {
-        auto& p = b.ps[x.y * b.rows + x.x];
+      if (x.x >= 0 && x.x < b.width && x.y >= 0 && x.y < b.height) {
+        auto& p = b.ps[x.y * b.width + x.x];
         int d = x.distance(c);
         if (d == p.distance) {
           p.id = -2; // same distance
@@ -56,14 +55,12 @@ int day6(line_view file) {
       return total[last] == 0;
     };
     c.traverse(f, g);
-    printf("%zu %d\n", i, win);
+    // b.print();
+    // printf("%zu %d\n", i, win);
   }
 
   std::vector<int> xs(cs.size(), 0);
   b.count(xs);
-
-  std::for_each(xs.begin(), xs.end(), [](int d) { printf("%d ", d); });
-  printf("\n");
 
   int max{INT32_MIN};
   for (auto& x : xs) {
