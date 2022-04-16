@@ -54,14 +54,14 @@ struct coordinate {
       return (c.*(fs[i]))(1);
     };
     int steps[] = {1, 1, 2, 2};
-    int i{0};
+    size_t i{0};
     coordinate c = *this;
     bool stop{false};
     while (!stop) {
       int s = i % 4;
       for (int x = 0; x < steps[s] && !stop; x++) {
         c = next(s, c);
-        stop = !f(i / 4, s, c, std::forward<Args>(args)...);
+        stop = !f(i / 4, c, std::forward<Args>(args)...);
       }
       steps[s] += 2;
       i++;
@@ -81,7 +81,7 @@ struct space_board {
   int rows;
   int cols;
   std::vector<point> ps;
-  space_board(int x, int y) : rows(x), cols(y), ps(x * y, {-1, INT32_MAX}){};
+  space_board(int x, int y) : rows(y), cols(x), ps(x * y, {-1, INT32_MAX}){};
 
   void count(std::vector<int>& area) {
     for (int y = 0; y < cols; y++) {
@@ -89,7 +89,8 @@ struct space_board {
         auto p = ps[y * rows + x];
         if (x == 0 || y == 0 || x == rows - 1 || y == cols - 1) {
           area[p.id] = INT32_MAX;
-        } else {
+        }
+        if (area[p.id] < INT32_MAX) {
           area[p.id] += 1;
         }
       }
