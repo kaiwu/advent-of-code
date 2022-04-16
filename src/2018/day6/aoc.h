@@ -1,5 +1,6 @@
 #pragma once
 #include "common.h"
+#include <algorithm>
 #include <math.h>
 #include <utility>
 #include <vector>
@@ -98,6 +99,17 @@ struct space_board {
     }
   }
 
+  int safe(int d, const std::vector<coordinate>& cs) {
+    int total{0};
+    for (size_t i = 0; i < ps.size(); i++) {
+      coordinate c{int(i % width), int(i / width)};
+      int sum{0};
+      std::for_each(cs.begin(), cs.end(), [&sum, &c](coordinate x) { sum += c.distance(x); });
+      total += int(sum < d);
+    }
+    return total;
+  }
+
   void count(std::vector<int>& area) const noexcept {
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
@@ -116,6 +128,6 @@ struct space_board {
   }
 };
 
-int day6(line_view);
+std::pair<int, int> day6(line_view, int);
 
 } // namespace aoc2018

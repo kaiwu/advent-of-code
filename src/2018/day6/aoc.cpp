@@ -3,7 +3,7 @@
 
 namespace aoc2018 {
 
-int day6(line_view file) {
+std::pair<int, int> day6(line_view file, int sd) {
   std::vector<coordinate> cs;
   int maxx{INT32_MIN};
   int maxy{INT32_MIN};
@@ -18,7 +18,7 @@ int day6(line_view file) {
 
   std::sort(cs.begin(), cs.end());
   space_board b{maxx + 1, maxy + 1};
-  //printf("%d %d\n", b.width, b.height);
+  // printf("%d %d\n", b.width, b.height);
 
   for (size_t i = 0; i < cs.size(); i++) {
     coordinate& c = cs[i];
@@ -68,7 +68,7 @@ int day6(line_view file) {
       max = x;
     }
   }
-  return max;
+  return {max, b.safe(sd, cs)};
 }
 
 } // namespace aoc2018

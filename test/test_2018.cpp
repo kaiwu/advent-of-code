@@ -48,6 +48,7 @@ TEST_CASE("Alchemical Reduction", "[2018]") {
 
 TEST_CASE("Chronal Coordinates", "[2018]") {
   line_view lv = load_file("../src/2018/day6/input");
-  auto p = aoc2018::day6(lv);
-  REQUIRE(3260 == p);
+  auto p = aoc2018::day6(lv, 10000);
+  REQUIRE(3260 == p.first);
+  REQUIRE(42535 == p.second);
 }
