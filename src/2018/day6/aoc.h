@@ -83,11 +83,13 @@ struct space_board {
   std::vector<point> ps;
   space_board(int x, int y) : rows(y), cols(x), ps(x * y, {-1, INT32_MAX}){};
 
-  void count(std::vector<int>& area) {
-    for (int y = 0; y < cols; y++) {
-      for (int x = 0; x < rows; x++) {
-        auto p = ps[y * rows + x];
-        if (x == 0 || y == 0 || x == rows - 1 || y == cols - 1) {
+  int size() const noexcept { return rows * cols; }
+
+  void count(std::vector<int>& area) const noexcept {
+    for (int y = 0; y < rows; y++) {
+      for (int x = 0; x < cols; x++) {
+        auto& p = ps[y * rows + x];
+        if (x == 0 || y == 0 || x == cols - 1 || y == rows - 1) {
           area[p.id] = INT32_MAX;
         }
         if (area[p.id] < INT32_MAX) {
