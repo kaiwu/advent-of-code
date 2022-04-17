@@ -43,3 +43,16 @@ TEST_CASE("Hydrothermal Venture", "[2021]") {
   REQUIRE(5774 == p.first);
   REQUIRE(18423 == p.second);
 }
+
+TEST_CASE("Lanternfish", "[2021]") {
+  // line_view lv("3,4,3,1,2");
+  // line_view lv = load_file("../src/2021/day6/input");
+  // REQUIRE(26 == aoc2021::day6(lv, 18));
+  // REQUIRE(5934 == aoc2021::day6(lv, 80));
+  // REQUIRE(26984457539 == aoc2021::day6(lv, 256));
+  // REQUIRE(379114 == aoc2021::day6(lv, 80));
+  // REQUIRE(0 == aoc2021::day6(lv, 256));
+  for (int i : {0, 1, 2, 3, 4, 5, 6}) {
+    printf("--> %i, %zu\n", i, aoc2021::day6(i, 7));
+  }
+}
