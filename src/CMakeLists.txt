@@ -28,6 +28,7 @@ set(SOLUTION_FILES
   "2016/day4/aoc.cpp"
   "2016/day5/aoc.cpp"
   "2016/day6/aoc.cpp"
+  "2016/day7/aoc.cpp"
 
   "2017/day1/aoc.cpp"
   "2017/day2/aoc.cpp"
@@ -35,6 +36,7 @@ set(SOLUTION_FILES
   "2017/day4/aoc.cpp"
   "2017/day5/aoc.cpp"
   "2017/day6/aoc.cpp"
+  "2017/day7/aoc.cpp"
 
   "2018/day1/aoc.cpp"
   "2018/day2/aoc.cpp"
@@ -42,6 +44,7 @@ set(SOLUTION_FILES
   "2018/day4/aoc.cpp"
   "2018/day5/aoc.cpp"
   "2018/day6/aoc.cpp"
+  "2018/day7/aoc.cpp"
 
   "2019/day1/aoc.cpp"
   "2019/day2/aoc.cpp"
@@ -49,6 +52,7 @@ set(SOLUTION_FILES
   "2019/day4/aoc.cpp"
   "2019/day5/aoc.cpp"
   "2019/day6/aoc.cpp"
+  "2019/day7/aoc.cpp"
 
   "2020/day1/aoc.cpp"
   "2020/day2/aoc.cpp"
@@ -56,6 +60,7 @@ set(SOLUTION_FILES
   "2020/day4/aoc.cpp"
   "2020/day5/aoc.cpp"
   "2020/day6/aoc.cpp"
+  "2020/day7/aoc.cpp"
 
   "2021/day1/aoc.cpp"
   "2021/day2/aoc.cpp"
@@ -63,6 +68,7 @@ set(SOLUTION_FILES
   "2021/day4/aoc.cpp"
   "2021/day5/aoc.cpp"
   "2021/day6/aoc.cpp"
+  "2021/day7/aoc.cpp"
 )
 
 add_library(solution SHARED ${SOLUTION_FILES})
