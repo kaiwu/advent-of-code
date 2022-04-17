@@ -40,3 +40,9 @@ TEST_CASE("Sunny with a Chance of Asteroids", "[2019]") {
   REQUIRE(6761139 == p.first);
   REQUIRE(9217546 == p.second);
 }
+
+TEST_CASE("Universal Orbit Map", "[2019]") {
+  line_view lv = load_file("../src/2019/day6/input");
+  auto p = aoc2019::day6(lv);
+  REQUIRE(0 == p);
+}
