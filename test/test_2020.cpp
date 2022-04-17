@@ -44,5 +44,7 @@ TEST_CASE("Binary Boarding", "[2020]") {
 
 TEST_CASE("Custom Customs", "[2020]") {
   line_view lv = load_file("../src/2020/day6/input");
-  REQUIRE(7120 == aoc2020::day6(lv));
+  auto p = aoc2020::day6(lv);
+  REQUIRE(7120 == p.first);
+  REQUIRE(3570 == p.second);
 }
