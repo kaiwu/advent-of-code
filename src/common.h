@@ -1,5 +1,6 @@
 #pragma once
 
+#include "wyhash.h"
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
@@ -98,6 +99,13 @@ struct line_view {
     return nullptr;
   }
 };
+
+namespace std {
+template <>
+struct hash<line_view> {
+  size_t operator()(const line_view& lv) const noexcept { return wyhash(lv.line, lv.length, 0, _wyp); }
+};
+} // namespace std
 
 line_view load_file(const char*);
 line_view next_line(line_view, size_t*);
