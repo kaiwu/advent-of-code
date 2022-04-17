@@ -11,6 +11,6 @@ struct star {
   star(line_view lv): name(lv) {}
 };
 
-int day6(line_view);
+std::pair<int, int> day6(line_view);
 
 } // namespace aoc2019
