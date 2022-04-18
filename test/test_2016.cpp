@@ -53,3 +53,10 @@ TEST_CASE("Signals and Noise", "[2016]") {
   REQUIRE(strcmp("gebzfnbt", msg1) == 0);
   REQUIRE(strcmp("fykjtwyn", msg2) == 0);
 }
+
+TEST_CASE("Internet Protocol Version 7", "[2016]") {
+  line_view lv = load_file("../src/2016/day7/input");
+  auto p = aoc2016::day7(lv);
+  REQUIRE(115 == p.first);
+  REQUIRE(231 == p.second);
+}
