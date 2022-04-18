@@ -62,8 +62,10 @@ TEST_CASE("Memory Reallocation", "[2017]") {
 }
 
 TEST_CASE("Recursive Circus", "[2017]") {
+  // line_view lv = load_file("../src/2017/day7/input0");
   line_view lv = load_file("../src/2017/day7/input");
   char x[10] = {0};
   aoc2017::day7(lv, x);
+  // REQUIRE(strcmp(x, "tknk") == 0);
   REQUIRE(strcmp(x, "svugo") == 0);
 }

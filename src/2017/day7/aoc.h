@@ -7,6 +7,7 @@ namespace aoc2017 {
 struct disc {
   line_view name;
   int weight;
+  int total = 0;
   std::vector<disc*> subs;
   const char* xp = nullptr;
 
