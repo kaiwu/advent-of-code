@@ -53,3 +53,11 @@ TEST_CASE("Chronal Coordinates", "[2018]") {
   REQUIRE(3260 == p.first);
   REQUIRE(42535 == p.second);
 }
+
+TEST_CASE("The Sum of Its Parts", "[2018]") {
+  // line_view lv = load_file("../src/2018/day7/input0");
+  line_view lv = load_file("../src/2018/day7/input");
+  char sequence[100] = {0};
+  aoc2018::day7(lv, sequence);
+  printf("%s\n", sequence);
+}
