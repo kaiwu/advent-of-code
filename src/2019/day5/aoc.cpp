@@ -1,9 +1,9 @@
 #include "aoc.h"
-#include <vector>
 
 namespace aoc2019 {
 
-static int input = 1;
+static int* input = nullptr;
+static int input_sequence = 0;
 
 void get_number(const char** pp, int* d) {
   const char* p = *pp;
@@ -48,7 +48,7 @@ static size_t opt2(std::vector<int>& codes, std::vector<int>& outputs, size_t i,
 }
 
 static size_t opt3(std::vector<int>& codes, std::vector<int>& outputs, size_t i, int m1, int m2) {
-  get(codes, 0, i + 1) = input;
+  get(codes, 0, i + 1) = *(input + input_sequence++);
   return i + 2;
 }
 
@@ -96,6 +96,14 @@ static void run(size_t i, std::vector<int>& codes, std::vector<int>& outputs) {
 }
 
 static int run(int i, std::vector<int> codes) {
+  input = &i;
+  input_sequence = 0;
+  std::vector<int> outputs;
+  run(0, codes, outputs);
+  return outputs[outputs.size() - 1];
+}
+
+int int_computer(int i[], std::vector<int> codes) {
   input = i;
   std::vector<int> outputs;
   run(0, codes, outputs);
