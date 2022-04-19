@@ -8,6 +8,7 @@ void find_max(int* is, int i, std::set<int>& ns, int* max, const std::vector<int
   if (i == 10) {
     set_computer(&is[i - 2]);
     int n = run_computer(codes);
+    // printf("%d %d %d %d %d -> %d\n", is[0], is[2], is[4], is[6], is[8], n);
     if (n > *max) {
       *max = n;
     }
