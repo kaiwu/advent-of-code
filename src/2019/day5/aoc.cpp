@@ -95,16 +95,18 @@ static void run(size_t i, std::vector<int>& codes, std::vector<int>& outputs) {
   }
 }
 
-static int run(int i, std::vector<int> codes) {
-  input = &i;
-  input_sequence = 0;
-  std::vector<int> outputs;
-  run(0, codes, outputs);
-  return outputs[outputs.size() - 1];
+static int run(int i, const std::vector<int>& codes) {
+  int is[] = {i};
+  set_computer(is);
+  return run_computer(codes);
 }
 
-int int_computer(int i[], std::vector<int> codes) {
+void set_computer(int i[]) {
   input = i;
+  input_sequence = 0;
+}
+
+int run_computer(std::vector<int> codes) {
   std::vector<int> outputs;
   run(0, codes, outputs);
   return outputs[outputs.size() - 1];
