@@ -5,7 +5,7 @@ namespace aoc2019 {
 static int* input = nullptr;
 static int input_sequence = 0;
 
-void get_number(const char** pp, int* d) {
+static void get_number(const char** pp, int* d) {
   const char* p = *pp;
   int sign = 1;
   if (*p == '-') {
@@ -101,7 +101,7 @@ static int run(int i, const std::vector<int>& codes) {
   return run_computer(codes);
 }
 
-void set_computer(int i[]) {
+void set_computer(int* i) {
   input = i;
   input_sequence = 0;
 }
