@@ -112,6 +112,8 @@ int run_computer(std::vector<int> codes) {
   return outputs[outputs.size() - 1];
 }
 
+void run_computer(std::vector<int> codes, std::vector<int>& outputs) { run(0, codes, outputs); }
+
 std::pair<int, int> day5(line_view file) {
   const char* p = file.line;
   std::vector<int> optcodes;

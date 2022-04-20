@@ -1,5 +1,6 @@
 #include "aoc.h"
 #include "../day5/aoc.h"
+#include <algorithm>
 #include <set>
 
 namespace aoc2019 {
@@ -45,10 +46,7 @@ static void get_number(const char** pp, int* d) {
   *pp = p;
 }
 
-int day7(line_view file) {
-  int max{INT32_MIN};
-  int is[10] = {0};
-  std::set<int> ns;
+std::pair<int, int> day7(line_view file) {
   std::vector<int> codes;
   const char* p = file.line;
   while (p < file.line + file.length) {
@@ -59,7 +57,22 @@ int day7(line_view file) {
     }
     p++;
   }
-  find_max(is, 0, ns, &max, codes);
-  return max;
+  int m1{INT32_MIN};
+  int is1[10] = {0};
+  std::set<int> ns1;
+  find_max(is1, 0, ns1, &m1, codes);
+
+  for (int i : {5, 6, 7, 8, 9}) {
+    int is2[10] = {0};
+    is2[0] = i;
+    is2[1] = 33;
+    set_computer(is2);
+    std::vector<int> outputs;
+    run_computer(codes, outputs);
+    std::for_each(outputs.begin(), outputs.end(), [](int x) { printf("%d ", x); });
+    printf("\n");
+  }
+
+  return {m1, 0};
 }
 } // namespace aoc2019
