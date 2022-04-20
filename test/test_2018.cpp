@@ -58,6 +58,6 @@ TEST_CASE("The Sum of Its Parts", "[2018]") {
   // line_view lv = load_file("../src/2018/day7/input0");
   line_view lv = load_file("../src/2018/day7/input");
   char sequence[100] = {0};
-  REQUIRE(942 == aoc2018::day7(lv, sequence));
+  REQUIRE(941 == aoc2018::day7(lv, sequence));
   REQUIRE(strcmp("BGKDMJCNEQRSTUZWHYLPAFIVXO", sequence) == 0);
 }

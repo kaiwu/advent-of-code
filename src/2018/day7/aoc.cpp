@@ -1,8 +1,19 @@
 #include "aoc.h"
+#include <algorithm>
 
 namespace aoc2018 {
 std::map<char, instruction*> instruction::instructions = {};
 size_t instruction::done_total = 0;
+
+void print() {
+  for (auto& kv : instruction::instructions) {
+    std::cout << kv.second->label << " -> ";
+    for (auto x : kv.second->deps) {
+      std::cout << x->label << " ";
+    }
+    std::cout << std::endl;
+  }
+}
 
 int day7(line_view file, char sequence[]) {
   per_line(file, [](line_view lv) {
@@ -22,18 +33,22 @@ int day7(line_view file, char sequence[]) {
     n = instruction::next();
   }
 
-  auto check = [](int s, instruction** w) {
-    if (*w != nullptr && (*w)->finished(s)) {
-      (*w)->make_done();
-      // std::cout << (*w)->label << " finishes at " << s << std::endl;
-      *w = nullptr;
+  // print();
+
+  auto check = [](int s, instruction** w, size_t size) {
+    for (size_t i = 0; i < size; i++) {
+      if (w[i] != nullptr && w[i]->finished(s)) {
+        (w[i])->make_done();
+        w[i] = nullptr;
+      }
     }
 
-    if (*w == nullptr) {
-      instruction::next(w);
-      if (*w != nullptr) {
-        // std::cout << (*w)->label << " starts at " << s << std::endl;
-        (*w)->begin(s);
+    for (size_t i = 0; i < size; i++) {
+      if (w[i] == nullptr) {
+        instruction::next(&w[i]);
+        if (w[i] != nullptr) {
+          w[i]->begin(s);
+        }
       }
     }
   };
@@ -44,9 +59,7 @@ int day7(line_view file, char sequence[]) {
   // instruction* workers[2] = {nullptr, nullptr};
   bool stop{false};
   while (!stop) {
-    for (size_t i = 0; i < ARRAY_SIZE(workers) && !stop; i++) {
-      check(second, &workers[i]);
-    }
+    check(second, workers, ARRAY_SIZE(workers));
     stop = instruction::all_done();
     second += int(!stop);
   }
