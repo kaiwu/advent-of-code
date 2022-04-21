@@ -84,14 +84,18 @@ static size_t opt8(std::vector<int>& codes, std::vector<int>& outputs, size_t i,
 }
 
 typedef size_t (*opt_f)(std::vector<int>&, std::vector<int>&, size_t, int, int);
-static void run(size_t i, std::vector<int>& codes, std::vector<int>& outputs) {
+static void run(size_t i, std::vector<int>& codes, std::vector<int>& outputs, interrupt_f f) {
   // printf("execute %d at %zu\n", codes[i], i);
   static opt_f opts[] = {opt1, opt2, opt3, opt4, opt5, opt6, opt7, opt8};
   if (codes[i] != 99) {
     int m1{0}, m2{0};
     int m = mode(codes[i], &m1, &m2);
     int x = opts[m - 1](codes, outputs, i, m1, m2);
-    run(x, codes, outputs);
+    if (f == nullptr) {
+      run(x, codes, outputs, f);
+    } else {
+      f(x, outputs);
+    }
   }
 }
 
@@ -108,11 +112,13 @@ void set_computer(int* i) {
 
 int run_computer(std::vector<int> codes) {
   std::vector<int> outputs;
-  run(0, codes, outputs);
+  run(0, codes, outputs, nullptr);
   return outputs[outputs.size() - 1];
 }
 
-void run_computer(std::vector<int> codes, std::vector<int>& outputs) { run(0, codes, outputs); }
+void run_computer(size_t i, std::vector<int> codes, std::vector<int>& outputs, interrupt_f f) {
+  run(i, codes, outputs, f);
+}
 
 std::pair<int, int> day5(line_view file) {
   const char* p = file.line;

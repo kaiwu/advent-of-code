@@ -68,7 +68,7 @@ std::pair<int, int> day7(line_view file) {
     is2[1] = 33;
     set_computer(is2);
     std::vector<int> outputs;
-    run_computer(codes, outputs);
+    run_computer(0, codes, outputs, nullptr);
     std::for_each(outputs.begin(), outputs.end(), [](int x) { printf("%d ", x); });
     printf("\n");
   }
