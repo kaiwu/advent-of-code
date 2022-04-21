@@ -46,6 +46,26 @@ static void get_number(const char** pp, int* d) {
   *pp = p;
 }
 
+struct check_t {
+  int* a;
+  int* b;
+};
+
+bool interrupt(size_t i, std::vector<int>& outputs, void* out) {
+  if (outputs.size() > 0) {
+    check_t* x = (check_t*)out;
+    if (x->b - x->a == 12) {
+      *(x->b + 2) = i;
+      *(x->a + 1) = outputs[0];
+    } else {
+      *(x->b + 2) = i;
+      *(x->b + 4) = outputs[0];
+    }
+    return true;
+  }
+  return false;
+}
+
 std::pair<int, int> day7(line_view file) {
   std::vector<int> codes;
   const char* p = file.line;
@@ -62,16 +82,44 @@ std::pair<int, int> day7(line_view file) {
   std::set<int> ns1;
   find_max(is1, 0, ns1, &m1, codes);
 
-  for (int i : {5, 6, 7, 8, 9}) {
-    int is2[10] = {0};
-    is2[0] = i;
-    is2[1] = 33;
-    set_computer(is2);
-    std::vector<int> outputs;
-    run_computer(0, codes, outputs, nullptr);
-    std::for_each(outputs.begin(), outputs.end(), [](int x) { printf("%d ", x); });
+  auto print = [](int* is) {
+    for (size_t i = 0; i < 15; i++) {
+      printf("%d ", is[i]);
+    }
     printf("\n");
+  };
+
+  auto copy = [](int* s1, int* s2) {
+    for (int i = 0; i < 15; i++) {
+      s1[i] = s2[i];
+    }
+  };
+
+  auto equal = [](int* s1, int* s2) -> bool {
+    for (int i = 0; i < 15; i++) {
+      if (s1[i] != s2[i]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  int is2[15] = {9, 0, 0, 7, 0, 0, 8, 0, 0, 5, 0, 0, 6, 0, 0};
+  int is3[15] = {0};
+  std::vector<int> cs[] = {codes, codes, codes, codes, codes};
+  bool stop{false};
+  while (!stop) {
+    copy(is3, is2);
+    for (size_t i = 0; i < ARRAY_SIZE(is2); i += 3) {
+      std::vector<int> outputs;
+      check_t chk{is2, &is2[i]};
+      is2[i + 2] == 0 ? set_computer(&is2[i]) : set_computer(&is2[i + 1]);
+      run_computer(is2[i + 2], cs[i / 3], outputs, interrupt, &chk);
+    }
+    stop = equal(is3, is2);
+    print(is2);
   }
+  printf("%d\n", is2[1]);
 
   return {m1, 0};
 }
