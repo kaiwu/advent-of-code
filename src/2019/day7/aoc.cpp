@@ -4,6 +4,90 @@
 #include <set>
 
 namespace aoc2019 {
+static constexpr size_t size = 15;
+
+struct check_t {
+  int* a;
+  int* b;
+};
+
+static void copy(int* s1, int* s2) {
+  for (size_t i = 0; i < size; i++) {
+    s1[i] = s2[i];
+  }
+}
+
+bool interrupt(size_t i, std::vector<int>& outputs, void* out) {
+  if (outputs.size() > 0) {
+    check_t* x = (check_t*)out;
+    if (x->b - x->a == 12) {
+      *(x->b + 2) = i;
+      *(x->a + 1) = outputs[0];
+    } else {
+      *(x->b + 2) = i;
+      *(x->b + 4) = outputs[0];
+    }
+    return true;
+  }
+  return false;
+}
+
+int find_max(int* is, const std::vector<int>& codes) {
+  // auto print = [](int* is) {
+  //   for (size_t i = 0; i < size; i++) {
+  //     printf("%d ", is[i]);
+  //   }
+  //   printf("\n");
+  // };
+
+  auto equal = [](int* s1, int* s2) -> bool {
+    for (size_t i = 0; i < size; i++) {
+      if (s1[i] != s2[i]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  int is1[size] = {0};
+  std::vector<int> cs[] = {codes, codes, codes, codes, codes};
+  bool stop{false};
+  while (!stop) {
+    copy(is1, is);
+    for (size_t i = 0; i < size; i += 3) {
+      std::vector<int> outputs;
+      check_t chk{is, &is[i]};
+      is[i + 2] == 0 ? set_computer(&is[i]) : set_computer(&is[i + 1]);
+      run_computer(is[i + 2], cs[i / 3], outputs, interrupt, &chk);
+    }
+    stop = equal(is1, is);
+    // print(is);
+  }
+  return is[1];
+}
+
+void find_max_loopback(int* is, int i, std::set<int>& ns, int* max, const std::vector<int>& codes) {
+  if (i == 15) {
+    int xs[size] = {0};
+    copy(xs, is);
+    int n = find_max(xs, codes);
+    // printf("%d %d %d %d %d -> %d\n", xs[0], xs[3], xs[6], xs[9], xs[12], n);
+    if (n > *max) {
+      *max = n;
+    }
+  } else {
+    for (int x : {5, 6, 7, 8, 9}) {
+      if (ns.find(x) != ns.end()) {
+        continue;
+      } else {
+        is[i] = x;
+        ns.insert(x);
+        find_max_loopback(is, i + 3, ns, max, codes);
+        ns.erase(x);
+      }
+    }
+  }
+}
 
 void find_max(int* is, int i, std::set<int>& ns, int* max, const std::vector<int>& codes) {
   if (i == 10) {
@@ -46,26 +130,6 @@ static void get_number(const char** pp, int* d) {
   *pp = p;
 }
 
-struct check_t {
-  int* a;
-  int* b;
-};
-
-bool interrupt(size_t i, std::vector<int>& outputs, void* out) {
-  if (outputs.size() > 0) {
-    check_t* x = (check_t*)out;
-    if (x->b - x->a == 12) {
-      *(x->b + 2) = i;
-      *(x->a + 1) = outputs[0];
-    } else {
-      *(x->b + 2) = i;
-      *(x->b + 4) = outputs[0];
-    }
-    return true;
-  }
-  return false;
-}
-
 std::pair<int, int> day7(line_view file) {
   std::vector<int> codes;
   const char* p = file.line;
@@ -82,45 +146,11 @@ std::pair<int, int> day7(line_view file) {
   std::set<int> ns1;
   find_max(is1, 0, ns1, &m1, codes);
 
-  auto print = [](int* is) {
-    for (size_t i = 0; i < 15; i++) {
-      printf("%d ", is[i]);
-    }
-    printf("\n");
-  };
+  int m2{INT32_MIN};
+  int is2[15] = {0};
+  std::set<int> ns2;
+  find_max_loopback(is2, 0, ns2, &m2, codes);
 
-  auto copy = [](int* s1, int* s2) {
-    for (int i = 0; i < 15; i++) {
-      s1[i] = s2[i];
-    }
-  };
-
-  auto equal = [](int* s1, int* s2) -> bool {
-    for (int i = 0; i < 15; i++) {
-      if (s1[i] != s2[i]) {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  int is2[15] = {9, 0, 0, 7, 0, 0, 8, 0, 0, 5, 0, 0, 6, 0, 0};
-  int is3[15] = {0};
-  std::vector<int> cs[] = {codes, codes, codes, codes, codes};
-  bool stop{false};
-  while (!stop) {
-    copy(is3, is2);
-    for (size_t i = 0; i < ARRAY_SIZE(is2); i += 3) {
-      std::vector<int> outputs;
-      check_t chk{is2, &is2[i]};
-      is2[i + 2] == 0 ? set_computer(&is2[i]) : set_computer(&is2[i + 1]);
-      run_computer(is2[i + 2], cs[i / 3], outputs, interrupt, &chk);
-    }
-    stop = equal(is3, is2);
-    print(is2);
-  }
-  printf("%d\n", is2[1]);
-
-  return {m1, 0};
+  return {m1, m2};
 }
 } // namespace aoc2019
