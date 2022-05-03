@@ -13,7 +13,5 @@ set(TEST_FILES
 add_executable(aoc ${TEST_FILES})
 target_include_directories(aoc PRIVATE ${PROJECT_SOURCE_DIR}/src)
 target_link_libraries(aoc PRIVATE common solution)
-add_test(NAME test_aoc COMMAND aoc
-  PROPERTY WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-  
-
+add_test(NAME test_aoc COMMAND aoc)
+set_property(TEST test_aoc PROPERTY WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
