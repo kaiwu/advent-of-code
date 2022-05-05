@@ -1,6 +1,7 @@
 #include "common.h"
 #include <fcntl.h>
 #include <unistd.h>
+#include <assert.h>
 
 static size_t file_size(FILE* fd, size_t s) {
   char buf[1024];
@@ -20,8 +21,12 @@ line_view load_file(const char* path) {
     return {nullptr, size_t(0)};
   }
   size_t size = file_size(fd, 0);
+  // printf("%s has size[%zu]\n", path, size);
   fseek(fd, 0, SEEK_SET);
   char* ptr = (char *) malloc(size);
+  size_t x = fread(ptr, sizeof(char), size, fd);
+  assert(x == size);
+  fclose(fd);
   return {ptr, size};
 }
 
