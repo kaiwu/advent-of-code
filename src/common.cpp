@@ -1,24 +1,28 @@
 #include "common.h"
-
 #include <fcntl.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
 #include <unistd.h>
 
-line_view load_file(const char* path) {
-  int fd;
-  struct stat fs;
-  fd = open(path, O_RDONLY);
-  if (fd == -1)
-    return {nullptr, size_t(0)};
-  if (fstat(fd, &fs) == -1)
-    return {nullptr, size_t(0)};
+static size_t file_size(FILE* fd, size_t s) {
+  char buf[1024];
+  size_t x = fread(buf, sizeof(char), 1024, fd);
+  if (x < 1024) {
+    return x + s;
+  }
+  else {
+    return file_size(fd, x + s);
+  }
+}
 
-  line_view lv;
-  lv.length = fs.st_size;
-  lv.line = static_cast<const char*>(mmap(NULL, lv.length, PROT_READ, MAP_PRIVATE, fd, 0));
-  close(fd);
-  return lv;
+
+line_view load_file(const char* path) {
+  FILE* fd = fopen(path, "r");
+  if (fd == nullptr) {
+    return {nullptr, size_t(0)};
+  }
+  size_t size = file_size(fd, 0);
+  fseek(fd, 0, SEEK_SET);
+  char* ptr = (char *) malloc(size);
+  return {ptr, size};
 }
 
 line_view next_line(line_view file, size_t* offset) {
