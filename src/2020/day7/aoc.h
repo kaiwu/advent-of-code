@@ -55,5 +55,5 @@ struct bag_regulations {
   }
 };
 
-int day7(line_view, const char*);
+std::pair<int, int> day7(line_view, const char*);
 } // namespace aoc2020

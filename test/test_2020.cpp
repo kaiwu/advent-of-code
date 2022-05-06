@@ -53,5 +53,6 @@ TEST_CASE("Custom Customs", "[2020]") {
 TEST_CASE("Handy Haversacks", "[2020]") {
   line_view lv = load_file("../src/2020/day7/input");
   auto p = aoc2020::day7(lv, "shiny gold");
-  REQUIRE(126 == p);
+  REQUIRE(126 == p.first);
+  REQUIRE(220149 == p.second);
 }

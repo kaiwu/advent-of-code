@@ -16,20 +16,32 @@ bool find_color(color_bag* bag, line_view color) {
   }
 }
 
-int day7(line_view file, const char* color) {
+void count_color(color_bag* bag, int* total) {
+  for (auto& b : bag->bags) {
+    *total += b.second;
+    for (int i = 0; i < b.second; i++) {
+      count_color(b.first, total);
+    }
+  }
+}
+
+std::pair<int, int> day7(line_view file, const char* color) {
   bag_regulations rs;
   per_line(file, [&rs](line_view lv) {
     rs.parse(lv);
     return true;
   });
 
-  int total{0};
+  int t0{0};
   for (auto& b : rs.regulations) {
     if (!(b.second->color == color)) {
-      total += int(find_color(b.second, color));
+      t0 += int(find_color(b.second, color));
     }
   }
 
-  return total;
+  int t1{0};
+  count_color(rs.regulations[color], &t1);
+
+  return {t0, t1};
 }
 } // namespace aoc2020
