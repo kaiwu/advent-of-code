@@ -56,6 +56,8 @@ TEST_CASE("Lanternfish", "[2021]") {
 
 TEST_CASE("The Treachery of Whales", "[2021]") {
   line_view lv = load_file("../src/2021/day7/input");
-  // REQUIRE(37 == aoc2021::day7("16,1,2,0,4,2,7,1,2,14"));
-  REQUIRE(354129 == aoc2021::day7(lv));
+  // auto p = aoc2021::day7("16,1,2,0,4,2,7,1,2,14");
+  auto p = aoc2021::day7(lv);
+  REQUIRE(354129 == p.first);
+  REQUIRE(98905973 == p.second);
 }
