@@ -49,3 +49,9 @@ TEST_CASE("Custom Customs", "[2020]") {
   REQUIRE(7120 == p.first);
   REQUIRE(3570 == p.second);
 }
+
+TEST_CASE("Handy Haversacks", "[2020]") {
+  line_view lv = load_file("../src/2020/day7/input");
+  auto p = aoc2020::day7(lv, "shiny gold");
+  REQUIRE(126 == p);
+}
