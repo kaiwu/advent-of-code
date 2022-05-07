@@ -5,6 +5,7 @@
 #include "2016/day5/aoc.h"
 #include "2016/day6/aoc.h"
 #include "2016/day7/aoc.h"
+#include "2016/day8/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 #include <string.h>
