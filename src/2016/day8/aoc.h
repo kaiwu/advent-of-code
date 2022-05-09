@@ -7,9 +7,17 @@ template <size_t W, size_t H>
 struct grid {
   char cells[W * H] = {0};
 
+  int count() const noexcept {
+    int total{0};
+    for (size_t i = 0; i < ARRAY_SIZE(cells); i++) {
+      total += int(cells[i] == 1);
+    }
+    return total;
+  }
+
   void print() {
     for (size_t i = 0; i < ARRAY_SIZE(cells); i++) {
-      printf("%d", cells[i]);
+      printf("%s", cells[i] == 0 ? "." : "#");
       if (i % W == W - 1) {
         printf("\n");
       }
