@@ -61,3 +61,9 @@ TEST_CASE("Internet Protocol Version 7", "[2016]") {
   REQUIRE(115 == p.first);
   REQUIRE(231 == p.second);
 }
+
+TEST_CASE("Two-Factor Authentication", "[2016]") {
+  line_view lv = load_file("../src/2016/day8/input");
+  auto p = aoc2016::day8(lv);
+  REQUIRE(0 == p);
+}
