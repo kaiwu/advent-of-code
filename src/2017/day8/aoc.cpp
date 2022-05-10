@@ -42,16 +42,14 @@ line_view get_label(const char** pp) {
 static int inc(int x, int i) { return x + i; }
 static int dec(int x, int i) { return x - i; }
 static bool condition_met(line_view cond, int x, int i) {
-  if (cond.length > 1) {
-    if (*cond.line == '!') {
-      return x != i;
-    }
-    if (*cond.line == '=') {
-      return x == i;
-    }
-    return (*cond.line == '>') ? x >= i : x <= i;
+  if (*cond.line == '=') {
+    return x == i;
   }
-  return (*cond.line == '>') ? x > i : x < i;
+  if (*cond.line == '!') {
+    return x != i;
+  }
+  bool bs[] = {x > i, x < i, x >= i, x <= i};
+  return bs[size_t(*cond.line == '<') + (cond.length & 2)];
 }
 
 typedef int (*op)(int, int);
