@@ -70,3 +70,10 @@ TEST_CASE("Recursive Circus", "[2017]") {
   // REQUIRE(strcmp(x, "tknk") == 0);
   REQUIRE(strcmp(x, "svugo") == 0);
 }
+
+TEST_CASE("I Heard You Like Registers", "[2017]") {
+  line_view lv = load_file("../src/2017/day8/input");
+  auto p = aoc2017::day8(lv);
+  REQUIRE(4567 == p.first);
+  REQUIRE(5636 == p.second);
+}
