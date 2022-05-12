@@ -62,3 +62,10 @@ TEST_CASE("The Sum of Its Parts", "[2018]") {
   REQUIRE(941 == aoc2018::day7(lv, sequence));
   REQUIRE(strcmp("BGKDMJCNEQRSTUZWHYLPAFIVXO", sequence) == 0);
 }
+
+TEST_CASE("Memory Maneuver", "[2018]") {
+  line_view lv = load_file("../src/2018/day8/input");
+  auto p = aoc2018::day8(lv);
+  // auto p = aoc2018::day8("2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2");
+  REQUIRE(36891 == p);
+}
