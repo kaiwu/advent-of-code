@@ -6,6 +6,7 @@
 #include "2020/day6/aoc.h"
 #include "2020/day7/aoc.h"
 #include "2020/day8/aoc.h"
+#include "2020/day9/aoc.h"
 #include "catch.hpp"
 #include <stdio.h>
 
