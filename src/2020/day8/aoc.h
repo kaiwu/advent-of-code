@@ -44,6 +44,6 @@ struct code {
   }
 };
 
-int day8(line_view);
+std::pair<int, int> day8(line_view);
 
 } // namespace aoc2020
