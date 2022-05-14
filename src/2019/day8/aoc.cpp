@@ -36,7 +36,7 @@ std::pair<int, int> day8(line_view file) {
   digits ds[100];
   int x = 6 * 25;
   layer top;
-  memset(&top, 2, sizeof(layer));
+  memset(&top.ds, 2, sizeof(layer));
   for (int i = 0; i < 100; i++) {
     const char* p1 = file.line + i * x;
     const char* p2 = file.line + (i + 1) * x;
