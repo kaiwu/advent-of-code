@@ -57,3 +57,9 @@ TEST_CASE("Handy Haversacks", "[2020]") {
   REQUIRE(126 == p.first);
   REQUIRE(220149 == p.second);
 }
+
+TEST_CASE("Handheld Halting", "[2020]") {
+  line_view lv = load_file("../src/2020/day8/input");
+  auto p = aoc2020::day8(lv);
+  REQUIRE(1814 == p);
+}
