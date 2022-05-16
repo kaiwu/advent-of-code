@@ -63,3 +63,9 @@ TEST_CASE("The Treachery of Whales", "[2021]") {
   REQUIRE(354129 == p.first);
   REQUIRE(98905973 == p.second);
 }
+
+TEST_CASE("Seven Segment Search", "[2021]") {
+  line_view lv = load_file("../src/2021/day8/input");
+  auto p = aoc2021::day8(lv);
+  REQUIRE(519 == p);
+}
