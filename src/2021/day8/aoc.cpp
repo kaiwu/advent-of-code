@@ -4,11 +4,9 @@
 
 namespace aoc2021 {
 
-static void get_length(const char** pp, int* d) {
+static void get_length(const char** pp) {
   const char* p = *pp;
-  *d = 0;
   while (*p >= 'a' && *p <= 'g') {
-    *d += 1;
     p++;
   }
   *pp = p;
@@ -28,7 +26,6 @@ static char diff(line_view l1, line_view l2) {
   add(l2);
   for (int i = 0; i < 7; i++) {
     if (d[i] == 1) {
-      // std::cout << l1 << " " << l2 << " " << char('a' + i) << std::endl;
       return 'a' + i;
     }
   }
@@ -196,7 +193,7 @@ void get_digits(digitx* ds, uint8_t* digits) {
         digits[c - 'a'] = digit::get_c();
         c4[1] = c;
         c7[3] = c;
-        char f = diff(lv1, line_view{&c, 1});
+        char f = *lv1.line == c ? *(lv1.line + 1) : *lv1.line;
         digits[f - 'a'] = digit::get_f();
         c4[2] = f;
         c7[4] = f;
@@ -211,38 +208,42 @@ void get_digits(digitx* ds, uint8_t* digits) {
   char g = diff(lv8, line_view{c7, 7});
   digits[g - 'a'] = digit::get_g();
 
-  for (int i = 0; i < 14; i++) {
-    printf("%d ", ds[i].get(digits));
-  }
-  printf("\n");
+  // for (int i = 0; i < 14; i++) {
+  //   printf("%d ", ds[i].get(digits));
+  // }
+  // printf("\n");
 }
 
 std::pair<int, int> day8(line_view file) {
   int t0{0};
   int t1{0};
-  int ls[14] = {0};
-  digitx lvs[14];
 
-  // abcdefg
-  uint8_t digits[7];
+  auto is1478 = [](line_view lv) -> bool {
+    auto b1 = lv.length == 2;
+    auto b2 = lv.length == 3;
+    auto b3 = lv.length == 4;
+    auto b4 = lv.length == 7;
+    return b1 || b2 || b3 || b4;
+  };
 
-  per_line(file, [&ls, &t0, &t1, &lvs, &digits](line_view lv) {
+  per_line(file, [&t0, &t1, &is1478](line_view lv) {
+    digitx ds[14];
     const char* p = lv.line;
     int index{0};
     while (p < lv.line + lv.length) {
       const char* p1 = p;
-      get_length(&p, &ls[index]);
-      lvs[index].lv = line_view{p1, p};
+      get_length(&p);
+      ds[index].lv = line_view{p1, p};
       if (index >= 10) {
-        t0 += int(ls[index] == 2 || ls[index] == 3 || ls[index] == 4 || ls[index] == 7);
+        t0 += int(is1478(ds[index].lv));
       }
       index++;
       p = index == 10 ? p + 3 : p + 1;
     }
 
-    memset(digits, 0, 7);
-    get_digits(lvs, digits);
-    t1 += toint(lvs + 10, digits);
+    uint8_t digits[7] = {0};
+    get_digits(ds, digits);
+    t1 += toint(ds + 10, digits);
     return true;
   });
 
