@@ -1,6 +1,6 @@
 #pragma once
 #include "common.h"
 
-namespace aoc {
+namespace aoc2016 {
 
 }

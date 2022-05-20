@@ -1,5 +1,5 @@
 #include "aoc.h"
 
-namespace aoc {
+namespace aoc2016 {
 
 }
