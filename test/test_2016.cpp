@@ -72,9 +72,13 @@ TEST_CASE("Two-Factor Authentication", "[2016]") {
 TEST_CASE("Explosives in Cyberspace", "[2016]") {
   line_view lv = load_file("../src/2016/day9/input");
   auto p = aoc2016::day9(lv);
-  REQUIRE(112830 == p);
+  REQUIRE(112830 == p.first);
+  REQUIRE(10931789799 == p.second);
   // const char* ps[] = {"ADVENT", "A(1x5)BC", "(3x3)XYZ", "A(2x2)BCD(2x2)EFG", "(6x1)(1x3)A", "X(8x2)(3x3)ABCY"};
+  // const char* ps[] = {"(3x3)XYZ", "X(8x2)(3x3)ABCY", "(27x12)(20x12)(13x14)(7x10)(1x12)A",
+  //                     "(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN"};
   // for (auto p : ps) {
-  //   printf("%s -> %d\n", p, aoc2016::day9(p));
+  //   auto x = aoc2016::day9(p);
+  //   printf("%s -> (%d, %d)\n", p, x.first, x.second);
   // }
 }

@@ -3,5 +3,5 @@
 
 namespace aoc2016 {
 
-int day9(line_view);
+std::pair<int, size_t> day9(line_view);
 }
