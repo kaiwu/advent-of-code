@@ -3,4 +3,5 @@
 
 namespace aoc2016 {
 
+int day9(line_view);
 }
