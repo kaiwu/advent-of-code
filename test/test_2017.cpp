@@ -78,3 +78,20 @@ TEST_CASE("I Heard You Like Registers", "[2017]") {
   REQUIRE(4567 == p.first);
   REQUIRE(5636 == p.second);
 }
+
+TEST_CASE("Stream Processing", "[2017]") {
+  line_view lv = load_file("../src/2017/day9/input");
+  auto p = aoc2017::day9(lv);
+  REQUIRE(7640 == p);
+  // const char* ps[] = {"{}",
+  //                     "{{{}}}",
+  //                     "{{},{}}",
+  //                     "{{{},{},{{}}}}",
+  //                     "{<a>,<a>,<a>,<a>}",
+  //                     "{{<ab>},{<ab>},{<ab>},{<ab>}}",
+  //                     "{{<!!>},{<!!>},{<!!>},{<!!>}}",
+  //                     "{{<a!>},{<a!>},{<a!>},{<ab>}}"};
+  // for (auto& p : ps) {
+  //   printf("%s -> %d\n", p, aoc2017::day9(p));
+  // }
+}
