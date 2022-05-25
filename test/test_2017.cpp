@@ -82,16 +82,18 @@ TEST_CASE("I Heard You Like Registers", "[2017]") {
 TEST_CASE("Stream Processing", "[2017]") {
   line_view lv = load_file("../src/2017/day9/input");
   auto p = aoc2017::day9(lv);
-  REQUIRE(7640 == p);
-  // const char* ps[] = {"{}",
-  //                     "{{{}}}",
-  //                     "{{},{}}",
+  REQUIRE(7640 == p.first);
+  REQUIRE(4368 == p.second);
+  // const char* ps[] = {"{<{o\"i!a,<{i<a>}",
+  //                     "{{{<<<<>}}}",
+  //                     "{{<!!!>>},{<{!>}>}}",
   //                     "{{{},{},{{}}}}",
   //                     "{<a>,<a>,<a>,<a>}",
   //                     "{{<ab>},{<ab>},{<ab>},{<ab>}}",
   //                     "{{<!!>},{<!!>},{<!!>},{<!!>}}",
   //                     "{{<a!>},{<a!>},{<a!>},{<ab>}}"};
   // for (auto& p : ps) {
-  //   printf("%s -> %d\n", p, aoc2017::day9(p));
+  //   auto x = aoc2017::day9(p);
+  //   printf("%s -> %d, %d\n", p, x.first, x.second);
   // }
 }
