@@ -72,3 +72,8 @@ TEST_CASE("Memory Maneuver", "[2018]") {
   // auto p = aoc2018::day8("2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2");
   // REQUIRE(138 == p.first);
 }
+
+TEST_CASE("Marble Mania", "[2018]") {
+  auto p = aoc2018::day9(9, 25);
+  REQUIRE(0 == p);
+}
