@@ -74,6 +74,6 @@ TEST_CASE("Memory Maneuver", "[2018]") {
 }
 
 TEST_CASE("Marble Mania", "[2018]") {
-  auto p = aoc2018::day9(9, 25);
-  REQUIRE(0 == p);
+  REQUIRE(425688 == aoc2018::day9(411, 71170));
+  REQUIRE(3526561003 == aoc2018::day9(411, 7117000));
 }
